@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F5B67CC91B731BDC0036D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CC81B731BDC0036D56C /* AppDelegate.swift */; };
+		F5B67CCB1B731BDC0036D56C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F5B67CCA1B731BDC0036D56C /* GameScene.sks */; };
+		F5B67CCD1B731BDC0036D56C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CCC1B731BDC0036D56C /* GameScene.swift */; };
+		F5B67CCF1B731BDC0036D56C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CCE1B731BDC0036D56C /* GameViewController.swift */; };
+		F5B67CD21B731BDC0036D56C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5B67CD01B731BDC0036D56C /* Main.storyboard */; };
+		F5B67CD41B731BDC0036D56C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5B67CD31B731BDC0036D56C /* Images.xcassets */; };
+		F5B67CD71B731BDC0036D56C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B67CD51B731BDC0036D56C /* LaunchScreen.xib */; };
+		F5B67CE31B731BDC0036D56C /* SimpleDungeonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F5B67CDD1B731BDC0036D56C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5B67CBB1B731BDC0036D56C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5B67CC21B731BDC0036D56C;
+			remoteInfo = SimpleDungeon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleDungeon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5B67CC71B731BDC0036D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5B67CC81B731BDC0036D56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F5B67CCA1B731BDC0036D56C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		F5B67CCC1B731BDC0036D56C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		F5B67CCE1B731BDC0036D56C /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		F5B67CD11B731BDC0036D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F5B67CD31B731BDC0036D56C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F5B67CD61B731BDC0036D56C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F5B67CDC1B731BDC0036D56C /* SimpleDungeonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleDungeonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5B67CE11B731BDC0036D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDungeonTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F5B67CC01B731BDC0036D56C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5B67CD91B731BDC0036D56C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F5B67CBA1B731BDC0036D56C = {
+			isa = PBXGroup;
+			children = (
+				F5B67CC51B731BDC0036D56C /* SimpleDungeon */,
+				F5B67CDF1B731BDC0036D56C /* SimpleDungeonTests */,
+				F5B67CC41B731BDC0036D56C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5B67CC41B731BDC0036D56C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */,
+				F5B67CDC1B731BDC0036D56C /* SimpleDungeonTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5B67CC51B731BDC0036D56C /* SimpleDungeon */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67CC81B731BDC0036D56C /* AppDelegate.swift */,
+				F5B67CCA1B731BDC0036D56C /* GameScene.sks */,
+				F5B67CCC1B731BDC0036D56C /* GameScene.swift */,
+				F5B67CCE1B731BDC0036D56C /* GameViewController.swift */,
+				F5B67CD01B731BDC0036D56C /* Main.storyboard */,
+				F5B67CD31B731BDC0036D56C /* Images.xcassets */,
+				F5B67CD51B731BDC0036D56C /* LaunchScreen.xib */,
+				F5B67CC61B731BDC0036D56C /* Supporting Files */,
+			);
+			path = SimpleDungeon;
+			sourceTree = "<group>";
+		};
+		F5B67CC61B731BDC0036D56C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67CC71B731BDC0036D56C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F5B67CDF1B731BDC0036D56C /* SimpleDungeonTests */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */,
+				F5B67CE01B731BDC0036D56C /* Supporting Files */,
+			);
+			path = SimpleDungeonTests;
+			sourceTree = "<group>";
+		};
+		F5B67CE01B731BDC0036D56C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67CE11B731BDC0036D56C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F5B67CC21B731BDC0036D56C /* SimpleDungeon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5B67CE61B731BDC0036D56C /* Build configuration list for PBXNativeTarget "SimpleDungeon" */;
+			buildPhases = (
+				F5B67CBF1B731BDC0036D56C /* Sources */,
+				F5B67CC01B731BDC0036D56C /* Frameworks */,
+				F5B67CC11B731BDC0036D56C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleDungeon;
+			productName = SimpleDungeon;
+			productReference = F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F5B67CDB1B731BDC0036D56C /* SimpleDungeonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5B67CE91B731BDC0036D56C /* Build configuration list for PBXNativeTarget "SimpleDungeonTests" */;
+			buildPhases = (
+				F5B67CD81B731BDC0036D56C /* Sources */,
+				F5B67CD91B731BDC0036D56C /* Frameworks */,
+				F5B67CDA1B731BDC0036D56C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5B67CDE1B731BDC0036D56C /* PBXTargetDependency */,
+			);
+			name = SimpleDungeonTests;
+			productName = SimpleDungeonTests;
+			productReference = F5B67CDC1B731BDC0036D56C /* SimpleDungeonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5B67CBB1B731BDC0036D56C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Todd Greener";
+				TargetAttributes = {
+					F5B67CC21B731BDC0036D56C = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					F5B67CDB1B731BDC0036D56C = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = F5B67CC21B731BDC0036D56C;
+					};
+				};
+			};
+			buildConfigurationList = F5B67CBE1B731BDC0036D56C /* Build configuration list for PBXProject "SimpleDungeon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F5B67CBA1B731BDC0036D56C;
+			productRefGroup = F5B67CC41B731BDC0036D56C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F5B67CC21B731BDC0036D56C /* SimpleDungeon */,
+				F5B67CDB1B731BDC0036D56C /* SimpleDungeonTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F5B67CC11B731BDC0036D56C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B67CD71B731BDC0036D56C /* LaunchScreen.xib in Resources */,
+				F5B67CD41B731BDC0036D56C /* Images.xcassets in Resources */,
+				F5B67CCB1B731BDC0036D56C /* GameScene.sks in Resources */,
+				F5B67CD21B731BDC0036D56C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5B67CDA1B731BDC0036D56C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F5B67CBF1B731BDC0036D56C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B67CCD1B731BDC0036D56C /* GameScene.swift in Sources */,
+				F5B67CCF1B731BDC0036D56C /* GameViewController.swift in Sources */,
+				F5B67CC91B731BDC0036D56C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5B67CD81B731BDC0036D56C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B67CE31B731BDC0036D56C /* SimpleDungeonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F5B67CDE1B731BDC0036D56C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5B67CC21B731BDC0036D56C /* SimpleDungeon */;
+			targetProxy = F5B67CDD1B731BDC0036D56C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F5B67CD01B731BDC0036D56C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B67CD11B731BDC0036D56C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F5B67CD51B731BDC0036D56C /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5B67CD61B731BDC0036D56C /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F5B67CE41B731BDC0036D56C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F5B67CE51B731BDC0036D56C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F5B67CE71B731BDC0036D56C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleDungeon/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F5B67CE81B731BDC0036D56C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SimpleDungeon/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F5B67CEA1B731BDC0036D56C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimpleDungeonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleDungeon.app/SimpleDungeon";
+			};
+			name = Debug;
+		};
+		F5B67CEB1B731BDC0036D56C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SimpleDungeonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleDungeon.app/SimpleDungeon";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F5B67CBE1B731BDC0036D56C /* Build configuration list for PBXProject "SimpleDungeon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5B67CE41B731BDC0036D56C /* Debug */,
+				F5B67CE51B731BDC0036D56C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5B67CE61B731BDC0036D56C /* Build configuration list for PBXNativeTarget "SimpleDungeon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5B67CE71B731BDC0036D56C /* Debug */,
+				F5B67CE81B731BDC0036D56C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F5B67CE91B731BDC0036D56C /* Build configuration list for PBXNativeTarget "SimpleDungeonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5B67CEA1B731BDC0036D56C /* Debug */,
+				F5B67CEB1B731BDC0036D56C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5B67CBB1B731BDC0036D56C /* Project object */;
+}
