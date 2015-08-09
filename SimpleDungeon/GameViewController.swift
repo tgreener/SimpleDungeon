@@ -1,68 +1,60 @@
 //
 //  GameViewController.swift
-//  SimpleDungeon
+//  TextRPG
 //
-//  Created by Todd Greener on 8/5/15.
+//  Created by Todd Greener on 4/14/15.
 //  Copyright (c) 2015 Todd Greener. All rights reserved.
 //
-
 import UIKit
 import SpriteKit
 
-extension SKNode {
-    class func unarchiveFromFile(file : String) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
-            archiver.finishDecoding()
-            return scene
-        } else {
-            return nil
-        }
-    }
-}
-
 class GameViewController: UIViewController {
-
-    override func viewDidLoad() {
+    var startScene : TitleScene!
+    var showNodeCount : Bool = true
+    var showFPS : Bool = true
+    var ignoreSiblingOrder : Bool = true
+    
+    override func loadView() {
+        super.loadView();
+        
+        let gameView : SKView = SKView(frame: UIScreen.mainScreen().bounds)
+        
+        self.view = gameView;
+    }
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
-            let skView = self.view as! SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
-            
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            
-            skView.presentScene(scene)
-        }
+        let spriteView : SKView = self.view as! SKView
+        spriteView.showsNodeCount = self.showNodeCount
+        spriteView.showsFPS = self.showFPS
+        spriteView.ignoresSiblingOrder = self.ignoreSiblingOrder
+        
+        let playerSquare = SKSpriteNode(color: SKColor.redColor(), size: CGSizeMake(10, 10))
+        let character = GameCharacter(strVal: 5, intVal: 5, wilVal: 5)
+        let player = Entity(graphic: playerSquare, position: IPoint(x: 0, y: 0), character : character)
+        
+        let explore = ExploreScene(player : player)
+        let battle = BattleScene(player : player)
+        
+        let sceneController = SceneController(view: spriteView, explore: explore, battle: battle, title : startScene)
+        explore.sceneController = sceneController
+        battle.sceneController = sceneController
+        startScene.sceneController = sceneController
+        
+        sceneController.gotoTitleScene()
     }
-
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
-
-    override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+        // Dispose of any resources that can be recreated.
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
