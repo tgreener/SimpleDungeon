@@ -13,25 +13,38 @@ class GameCharacter {
     var intelligence : DescriptiveStatistic
     var will         : DescriptiveStatistic
     
+    var health : CharacterResource
+    var magic  : CharacterResource
+    
+    var power : UInt = 0
+    var spell : UInt = 0
+    var hit   : UInt = 0
+    var dodge : UInt = 0
+    var block : UInt = 0
+    var parry : UInt = 0
+    
     init(strVal : UInt, intVal : UInt, wilVal : UInt) {
-        strength = CharacterStatistic(beginningValue: strVal)
-        intelligence = CharacterStatistic(beginningValue: intVal)
-        will = CharacterStatistic(beginningValue: wilVal)
+        strength = CharacterStatistic(name : "Strength", beginningValue: strVal)
+        intelligence = CharacterStatistic(name : "Intelligence", beginningValue: intVal)
+        will = CharacterStatistic(name : "Will", beginningValue: wilVal)
+        
+        health = BaseCharacterResource()
+        magic  = BaseCharacterResource()
     }
     
     func onSuccessfulStrengthChallenge(#difficulty : UInt) {
-        onSuccessfulChallenge(difficulty, stat: strength)
+        onSuccessfulChallenge(difficulty: difficulty, stat: strength)
     }
     
     func onSuccessfulIntelligenceChallenge(#difficulty : UInt) {
-        onSuccessfulChallenge(difficulty, stat: intelligence)
+        onSuccessfulChallenge(difficulty: difficulty, stat: intelligence)
     }
     
     func onSuccessfulWillChallenge(#difficulty : UInt) {
-        onSuccessfulChallenge(difficulty, stat: will)
+        onSuccessfulChallenge(difficulty: difficulty, stat: will)
     }
     
-    func onSuccessfulChallenge(difficulty : UInt, stat : DescriptiveStatistic) {
+    func onSuccessfulChallenge(#difficulty : UInt, stat : DescriptiveStatistic) {
         let boundedDifficulty = min(max(difficulty, 1), 10)
         stat.grow([Float(boundedDifficulty) / 50])
     }

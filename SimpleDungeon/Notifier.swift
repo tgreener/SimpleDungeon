@@ -9,14 +9,28 @@
 
 import Foundation
 
-public class Notifier<ListenerType> {
+class Notifier<ListenerType> {
     var listeners : [ListenerType] = [ListenerType]()
+    var listenerIndexes : [String: Int] = [String: Int]()
     
-    public func addListener(listener: ListenerType) {
+    func addListener(listener: ListenerType) {
         listeners.append(listener)
     }
     
-    public func notify(closure: (ListenerType) -> Void) {
+    func addListenerWithName(listener: ListenerType, name : String) {
+        addListener(listener)
+        listenerIndexes[name] = listeners.endIndex - 1
+    }
+    
+    func removeListener(#named : String) {
+        if let index = listenerIndexes[named] { listeners.removeAtIndex(index) }
+    }
+    
+    func removeAllListeners() {
+        listeners.removeAll(keepCapacity: false)
+    }
+    
+    func notify(closure: (ListenerType) -> Void) {
         for listener in listeners {
             closure(listener)
         }

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let winFrame : CGRect = UIScreen.mainScreen().bounds
         
         self.window = UIWindow(frame: winFrame)
-        self.window!.rootViewController = createGameViewController()
+        self.window!.rootViewController = GameViewController()
         self.window?.makeKeyAndVisible();
         
         return true
@@ -46,14 +46,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    func createGameViewController() -> GameViewController {
-        let gvc = GameViewController()
-        
-        gvc.startScene = TitleScene()
-        
-        return gvc
-    }
-    
 }
 

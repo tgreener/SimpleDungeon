@@ -26,6 +26,12 @@
 		F5B67E111B75BE300036D56C /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E101B75BE300036D56C /* BattleScene.swift */; };
 		F5B67E131B75C1060036D56C /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E121B75C1060036D56C /* SceneController.swift */; };
 		F5D5B8921B779A4F0067BBD2 /* GameplayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */; };
+		F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */; };
+		F5D5B8961B77AACC0067BBD2 /* TouchSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */; };
+		F5D5B8981B78187F0067BBD2 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8971B78187F0067BBD2 /* Inventory.swift */; };
+		F5D5B89A1B7818E50067BBD2 /* InventoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8991B7818E50067BBD2 /* InventoryItem.swift */; };
+		F5D5B89C1B7852050067BBD2 /* CharacterMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B89B1B7852050067BBD2 /* CharacterMenuScene.swift */; };
+		F5D5B89E1B7C532C0067BBD2 /* Battle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B89D1B7C532C0067BBD2 /* Battle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,12 @@
 		F5B67E101B75BE300036D56C /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
 		F5B67E121B75C1060036D56C /* SceneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
 		F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayScene.swift; sourceTree = "<group>"; };
+		F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphicComponent.swift; sourceTree = "<group>"; };
+		F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchSprite.swift; sourceTree = "<group>"; };
+		F5D5B8971B78187F0067BBD2 /* Inventory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
+		F5D5B8991B7818E50067BBD2 /* InventoryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryItem.swift; sourceTree = "<group>"; };
+		F5D5B89B1B7852050067BBD2 /* CharacterMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterMenuScene.swift; sourceTree = "<group>"; };
+		F5D5B89D1B7C532C0067BBD2 /* Battle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Battle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,14 +116,13 @@
 		F5B67CC51B731BDC0036D56C /* SimpleDungeon */ = {
 			isa = PBXGroup;
 			children = (
+				F5D5B89F1B7C53370067BBD2 /* Character */,
 				F5B67DEB1B73274C0036D56C /* Util */,
 				F5B67DED1B7327640036D56C /* Scenes */,
 				F5B67DEC1B7327590036D56C /* App */,
 				F5B67CC61B731BDC0036D56C /* Supporting Files */,
-				F5B67E0C1B75B0CB0036D56C /* GameCharacter.swift */,
-				F5B67E021B7477B30036D56C /* Entity.swift */,
-				F5B67E081B759C7E0036D56C /* CharacterResource.swift */,
-				F5B67E091B759C7E0036D56C /* DescriptiveStatistic.swift */,
+				F5D5B89D1B7C532C0067BBD2 /* Battle.swift */,
+				F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */,
 				F5B67E041B7479CC0036D56C /* Icons.xcassets */,
 			);
 			path = SimpleDungeon;
@@ -182,8 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				F5B67DF91B732AAD0036D56C /* UI */,
-				F5B67DF01B7328760036D56C /* ExploreScene.swift */,
 				F5B67E101B75BE300036D56C /* BattleScene.swift */,
+				F5D5B89B1B7852050067BBD2 /* CharacterMenuScene.swift */,
+				F5B67DF01B7328760036D56C /* ExploreScene.swift */,
 				F5B67E121B75C1060036D56C /* SceneController.swift */,
 				F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */,
 			);
@@ -195,8 +207,22 @@
 			children = (
 				F5B67DFA1B732AC40036D56C /* Grid.swift */,
 				F5B67DFC1B746F510036D56C /* TileSprite.swift */,
+				F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		F5D5B89F1B7C53370067BBD2 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				F5D5B8971B78187F0067BBD2 /* Inventory.swift */,
+				F5B67E021B7477B30036D56C /* Entity.swift */,
+				F5B67E0C1B75B0CB0036D56C /* GameCharacter.swift */,
+				F5B67E081B759C7E0036D56C /* CharacterResource.swift */,
+				F5B67E091B759C7E0036D56C /* DescriptiveStatistic.swift */,
+				F5D5B8991B7818E50067BBD2 /* InventoryItem.swift */,
+			);
+			name = Character;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,14 +326,20 @@
 			files = (
 				F5B67DFD1B746F510036D56C /* TileSprite.swift in Sources */,
 				F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */,
+				F5D5B89E1B7C532C0067BBD2 /* Battle.swift in Sources */,
+				F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
 				F5B67DEA1B7327240036D56C /* Notifier.swift in Sources */,
+				F5D5B89C1B7852050067BBD2 /* CharacterMenuScene.swift in Sources */,
 				F5B67E0F1B75B67B0036D56C /* Math.swift in Sources */,
 				F5B67DE91B7327240036D56C /* GameViewController.swift in Sources */,
 				F5B67DE81B7327240036D56C /* BaseScene.swift in Sources */,
 				F5B67DF11B7328760036D56C /* ExploreScene.swift in Sources */,
 				F5B67E031B7477B30036D56C /* Entity.swift in Sources */,
 				F5B67DFF1B74760B0036D56C /* IPoint.swift in Sources */,
+				F5D5B8961B77AACC0067BBD2 /* TouchSprite.swift in Sources */,
+				F5D5B89A1B7818E50067BBD2 /* InventoryItem.swift in Sources */,
+				F5D5B8981B78187F0067BBD2 /* Inventory.swift in Sources */,
 				F5D5B8921B779A4F0067BBD2 /* GameplayScene.swift in Sources */,
 				F5B67E0A1B759C7E0036D56C /* CharacterResource.swift in Sources */,
 				F5B67DFB1B732AC40036D56C /* Grid.swift in Sources */,

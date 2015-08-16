@@ -9,7 +9,6 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    var startScene : TitleScene!
     var showNodeCount : Bool = true
     var showFPS : Bool = true
     var ignoreSiblingOrder : Bool = true
@@ -30,17 +29,24 @@ class GameViewController: UIViewController {
         spriteView.showsFPS = self.showFPS
         spriteView.ignoresSiblingOrder = self.ignoreSiblingOrder
         
-        let playerSquare = SKSpriteNode(color: SKColor.redColor(), size: CGSizeMake(10, 10))
+        let playerAdventureSquare = TouchSprite(color: SKColor.redColor(), size: CGSizeMake(10, 10))
+        let playerBattleSquare = TouchSprite(color: SKColor.redColor(), size: CGSizeMake(10, 10))
+        let graphicComponent = GraphicComponent(explore: playerAdventureSquare, battle: playerBattleSquare)
         let character = GameCharacter(strVal: 5, intVal: 5, wilVal: 5)
-        let player = Entity(graphic: playerSquare, position: IPoint(x: 0, y: 0), character : character)
+        let player = Entity(graphic: graphicComponent, position: IPoint(x: 0, y: 0), character : character)
         
+        let titleScene = TitleScene()
         let explore = ExploreScene(player : player)
         let battle = BattleScene(player : player)
+        let characterMenu = CharacterMenuScene(player: player)
         
-        let sceneController = SceneController(view: spriteView, explore: explore, battle: battle, title : startScene)
-        explore.sceneController = sceneController
-        battle.sceneController = sceneController
-        startScene.sceneController = sceneController
+        let sceneController = SceneController(
+            view: spriteView,
+            explore: explore,
+            battle: battle,
+            title : titleScene,
+            character : characterMenu
+        )
         
         sceneController.gotoTitleScene()
     }

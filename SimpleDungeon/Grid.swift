@@ -124,26 +124,30 @@ class GridNode : SKNode {
         sprite.anchorPoint = CGPointMake(0.5, 0.5)
         sprite.position = CGPointMake(xPosition, yPosition)
         
-        addChild(sprite)
+        if sprite.parent !== self && sprite.parent == nil { addChild(sprite) }
     }
     
     func placeSpriteAtLocation(point : IPoint, sprite : SKSpriteNode) {
         placeSpriteAtLocation(point.x, y: point.y, sprite: sprite)
     }
     
-    func moveSpriteToLocation(x : Int, y : Int, sprite : SKSpriteNode) {
+    func moveSpriteToLocation(x : Int, y : Int, sprite : SKSpriteNode, completionHandler : () -> Void) {
         if (sprite.parent === self) {
             let tileSprite = grid.getSpriteAt(x: x, y: y)
             let xPosition = tileSprite.position.x + (tileSprite.frame.width / 2)
             let yPosition = tileSprite.position.y + (tileSprite.frame.height / 2)
             
             let moveAction = SKAction.moveTo(CGPointMake(xPosition, yPosition), duration: 0.2)
-            sprite.runAction(moveAction)
+            let afterMoveCall = SKAction.runBlock(completionHandler)
+            sprite.runAction(SKAction.sequence([
+                moveAction,
+                afterMoveCall
+                ]))
         }
     }
     
-    func moveSpriteToLocation(point : IPoint, sprite : SKSpriteNode) {
-        moveSpriteToLocation(point.x, y: point.y, sprite: sprite)
+    func moveSpriteToLocation(point : IPoint, sprite : SKSpriteNode, completionHandler : () -> Void) {
+        moveSpriteToLocation(point.x, y: point.y, sprite: sprite, completionHandler: completionHandler)
     }
 
     required init?(coder aDecoder: NSCoder) {

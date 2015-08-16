@@ -14,13 +14,13 @@ protocol TileSpriteListener {
 
 class TileSprite : SKSpriteNode {
     var gridPosition : IPoint = IPoint(x: 0, y: 0)
-    let notifier : Notifier<TileSpriteListener> = Notifier<TileSpriteListener>()
+    let tileNotifier : Notifier<TileSpriteListener> = Notifier<TileSpriteListener>()
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        notifier.notify({ listener in  listener.onTileTouched(self) })
+        tileNotifier.notify({ listener in  listener.onTileTouched(self) })
     }
     
     func addListener(listener : TileSpriteListener) {
-        notifier.addListener(listener)
+        tileNotifier.addListener(listener)
     }
 }

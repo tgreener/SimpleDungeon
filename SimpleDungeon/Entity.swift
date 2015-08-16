@@ -8,14 +8,24 @@
 
 import SpriteKit
 
-class Entity {
-    let graphicComponent : SKSpriteNode?
+class Entity : Hashable {
+    let graphicComponent : GraphicComponent?
     let characterComponent : GameCharacter?
     var positionComponent : IPoint?
     
-    init(graphic : SKSpriteNode?, position : IPoint?, character : GameCharacter?) {
+    init(graphic : GraphicComponent?, position : IPoint?, character : GameCharacter?) {
         graphicComponent = graphic
         positionComponent = position
         characterComponent = character
     }
+    
+    var hashValue : Int {
+        get {
+            return Int(ObjectIdentifier(self).uintValue)
+        }
+    }
+}
+
+func == (lhs : Entity, rhs : Entity) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }

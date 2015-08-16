@@ -19,7 +19,7 @@ public class BaseScene : SKScene {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override public func didMoveToView(view: SKView) -> Void
     {
         if !self.contentCreated
@@ -31,6 +31,11 @@ public class BaseScene : SKScene {
         }
     }
     
+    /**
+    * This method will only be run the first time a scene moves to the view.
+    * If you override didMoveToView make sure to call super.didMoveToView to
+    * ensure that this method is executed correctly.
+    */
     public func createSceneContents() {
         self.contentCreated = true
     }

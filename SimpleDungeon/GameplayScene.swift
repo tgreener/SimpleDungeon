@@ -11,6 +11,7 @@ import SpriteKit
 class GameplayScene : BaseScene {
     
     let player : Entity
+    var viewSize : CGSize = CGSize.zeroSize
     
     init(player : Entity) {
         self.player = player
@@ -19,5 +20,10 @@ class GameplayScene : BaseScene {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMoveToView(view: SKView) {
+        viewSize = view.frame.size
+        super.didMoveToView(view)
     }
 }

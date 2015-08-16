@@ -10,6 +10,7 @@ import Foundation
 
 protocol DescriptiveStatistic {
     var currentValue : UInt { get }
+    var name : String { get }
     
     func grow(parameters: [Float]?)
     func decay(parameters: [Float]?)
@@ -21,13 +22,14 @@ protocol DescriptiveStatistic {
 class CharacterStatistic : DescriptiveStatistic {
     var growthFunction : (startingValue: Float, parameters: [Float]?) -> Float
     var decayFunction  : (startingValue: Float, parameters: [Float]?) -> Float
+    var name : String
     
     var currentValue : UInt = 0
     let MAX_VALUE : UInt = 100
     
     var currentProgression : Float = 0.5
     
-    init() {
+    init(name : String) {
         growthFunction = { (startingValue: Float, parameters: [Float]?) -> Float in
             if let delta = parameters?[0] { return startingValue + delta }
             return startingValue
@@ -37,10 +39,12 @@ class CharacterStatistic : DescriptiveStatistic {
             if let delta = parameters?[0] { return startingValue - delta }
             return startingValue
         }
+        
+        self.name = name
     }
     
-    convenience init(beginningValue : UInt) {
-        self.init()
+    convenience init(name : String, beginningValue : UInt) {
+        self.init(name : name)
         currentValue = beginningValue
     }
     

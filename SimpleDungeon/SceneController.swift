@@ -9,20 +9,29 @@
 import SpriteKit
 
 class SceneController {
-    let exploreScene : SKScene
+    let exploreScene : ExploreScene
     let battleScene : BattleScene
-    let titleScene : SKScene
+    let characterMenuScene : CharacterMenuScene
+    let titleScene : BaseScene
     let view : SKView
     
-    init(view : SKView, explore : SKScene, battle : BattleScene, title : SKScene) {
+    init(view : SKView, explore : ExploreScene, battle : BattleScene, title : BaseScene, character : CharacterMenuScene) {
         exploreScene = explore
         battleScene  = battle
         titleScene = title
+        characterMenuScene = character
         self.view = view
+        
+        exploreScene.sceneController = self
+        battleScene.sceneController = self
+        characterMenuScene.sceneController = self
+        titleScene.sceneController = self
     }
     
-    func gotoBattleScene(badGuys : [Entity]) {
-        battleScene.badGuys = badGuys
+    func gotoBattleScene(badGuys : [Entity?]) {
+        let battle = BattleModel(player: battleScene.player, badGuys: badGuys)
+        battleScene.battle = battle
+        
         let transitionScene = SKScene()
         transitionScene.backgroundColor = SKColor.redColor()
         view.presentScene(transitionScene, transition: SKTransition.doorsCloseHorizontalWithDuration(0.2))
@@ -42,6 +51,18 @@ class SceneController {
             SKAction.waitForDuration(0.3),
             SKAction.runBlock({
                 self.view.presentScene(self.exploreScene, transition: SKTransition.doorsOpenHorizontalWithDuration(0.2))
+            })
+        ]))
+    }
+    
+    func gotoCharacterMenuScene() {
+        let transitionScene = SKScene()
+        transitionScene.backgroundColor = SKColor.blueColor()
+        view.presentScene(transitionScene, transition: SKTransition.doorsCloseHorizontalWithDuration(0.2))
+        transitionScene.runAction(SKAction.sequence([
+            SKAction.waitForDuration(0.3),
+            SKAction.runBlock({
+                self.view.presentScene(self.characterMenuScene, transition: SKTransition.doorsOpenHorizontalWithDuration(0.2))
             })
         ]))
     }
