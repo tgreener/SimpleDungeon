@@ -10,10 +10,23 @@ import Foundation
 
 class Equipment {
     
+    enum EquipmentSlot {
+        case Armor, Weapon
+    }
+    
+    var slotMap : [EquipmentSlot: InventoryItem] = [EquipmentSlot: InventoryItem]()
+    
+    func setEquipment(equip : InventoryItem, slot : EquipmentSlot) {
+        slotMap[slot] = equip
+    }
+    
+    func calculateBonus(bonusType : EquipmentAffix.Bonus) -> Int {
+        return slotMap.values.array.map( { item in item.getBonus(bonusType)} ).reduce(0, combine: { accum, stat in return accum + stat })
+    }
 }
 
 class Pack {
-    
+    var items : [InventoryItem] = []
 }
 
 class Inventory {

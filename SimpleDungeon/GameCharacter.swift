@@ -16,12 +16,14 @@ class GameCharacter {
     var health : CharacterResource
     var magic  : CharacterResource
     
-    var power : UInt = 0
-    var spell : UInt = 0
-    var hit   : UInt = 0
-    var dodge : UInt = 0
-    var block : UInt = 0
-    var parry : UInt = 0
+    var power : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Power) } }
+    var spell : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Spell) } }
+    var hit   : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Hit) } }
+    var dodge : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Dodge) } }
+    var block : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Block) } }
+    var parry : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Parry) } }
+    
+    let inventory : Inventory = Inventory()
     
     init(strVal : UInt, intVal : UInt, wilVal : UInt) {
         strength = CharacterStatistic(name : "Strength", beginningValue: strVal)

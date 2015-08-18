@@ -35,6 +35,19 @@ class GameViewController: UIViewController {
         let character = GameCharacter(strVal: 5, intVal: 5, wilVal: 5)
         let player = Entity(graphic: graphicComponent, position: IPoint(x: 0, y: 0), character : character)
         
+        var swordAffix : EquipmentAffix = EquipmentAffix()
+        swordAffix.bonus[EquipmentAffix.Bonus.Power] = 5
+        let swordEquipable : Equipable = EquipableItem(slot: Equipment.EquipmentSlot.Weapon, affixes: [swordAffix])
+        let sword : InventoryItem = InventoryItem(name: "Sword", stackable: nil, consumable: nil, equipable: swordEquipable)
+        
+        var shieldAffix : EquipmentAffix = EquipmentAffix()
+        shieldAffix.bonus[EquipmentAffix.Bonus.Block] = 5
+        let shieldEquipable : Equipable = EquipableItem(slot: Equipment.EquipmentSlot.Armor, affixes: [shieldAffix])
+        let shield : InventoryItem = InventoryItem(name: "Shield", stackable: nil, consumable: nil, equipable: shieldEquipable)
+        
+        player.characterComponent?.inventory.equipment.setEquipment(sword, slot: sword.slot!)
+        player.characterComponent?.inventory.equipment.setEquipment(shield, slot: shield.slot!)
+        
         let titleScene = TitleScene()
         let explore = ExploreScene(player : player)
         let battle = BattleScene(player : player)

@@ -192,9 +192,9 @@
 		F5B67DF81B732AA20036D56C /* PlayScenes */ = {
 			isa = PBXGroup;
 			children = (
+				F5B8803D1B82F3EE00AF7645 /* CharacterDetailsScene */,
 				F5B67DF91B732AAD0036D56C /* UI */,
 				F5B67E101B75BE300036D56C /* BattleScene.swift */,
-				F5D5B89B1B7852050067BBD2 /* CharacterMenuScene.swift */,
 				F5B67DF01B7328760036D56C /* ExploreScene.swift */,
 				F5B67E121B75C1060036D56C /* SceneController.swift */,
 				F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */,
@@ -210,6 +210,14 @@
 				F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		F5B8803D1B82F3EE00AF7645 /* CharacterDetailsScene */ = {
+			isa = PBXGroup;
+			children = (
+				F5D5B89B1B7852050067BBD2 /* CharacterMenuScene.swift */,
+			);
+			name = CharacterDetailsScene;
 			sourceTree = "<group>";
 		};
 		F5D5B89F1B7C53370067BBD2 /* Character */ = {
