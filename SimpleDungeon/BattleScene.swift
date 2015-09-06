@@ -17,6 +17,8 @@ class BattleScene : GameplayScene, BattleListener {
     let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
     let abilityRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 100, 40), nil), centered: true)
     
+    var touchEnabled : Bool = true
+    
     override func createSceneContents() {
         super.createSceneContents()
         
@@ -71,9 +73,11 @@ class BattleScene : GameplayScene, BattleListener {
             }
             
             func onSpriteTouched(sprite: TouchSprite) {
-                battle.setAbility(ability)
-                scene.abilityChosen(sprite)
-                battle.actWhenReady()
+                if scene.touchEnabled {
+                    battle.setAbility(ability)
+                    scene.abilityChosen(sprite)
+                    // battle.actWhenReady()
+                }
             }
         }
         
@@ -102,7 +106,7 @@ class BattleScene : GameplayScene, BattleListener {
                     }
                     
                     func onSpriteTouched(sprite: TouchSprite) {
-                        if battle.currentAbility != Ability.None {
+                        if battle.currentSkill != nil && scene.touchEnabled {
                             battle.setTarget(guy)
                             scene.primaryTargetChosen(sprite)
                             battle.actWhenReady()
@@ -149,5 +153,21 @@ class BattleScene : GameplayScene, BattleListener {
     
     func onBattleEnded() {
         sceneController?.gotoExploreScene()
+    }
+    
+    func onActionPerformed() {
+        touchEnabled = false
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(0.2),
+            SKAction.runBlock({
+                self.targetRectangle.removeFromParent()
+                self.touchEnabled = true
+            })
+        ]))
+    }
+    
+    func onTurnChanged(turn: Turn) {
+        touchEnabled = turn == Turn.Player
+        if turn == Turn.Enemy { battle.performBadGuyActions() }
     }
 }

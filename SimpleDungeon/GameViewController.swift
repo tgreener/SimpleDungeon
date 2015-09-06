@@ -30,23 +30,13 @@ class GameViewController: UIViewController {
         spriteView.ignoresSiblingOrder = self.ignoreSiblingOrder
         
         let playerAdventureSquare = TouchSprite(color: SKColor.redColor(), size: CGSizeMake(10, 10))
-        let playerBattleSquare = TouchSprite(color: SKColor.redColor(), size: CGSizeMake(10, 10))
+        let playerBattleSquare = BattleGraphic(color: SKColor.redColor(), size: CGSizeMake(10, 10))
         let graphicComponent = GraphicComponent(explore: playerAdventureSquare, battle: playerBattleSquare)
         let character = GameCharacter(strVal: 5, intVal: 5, wilVal: 5)
         let player = Entity(graphic: graphicComponent, position: IPoint(x: 0, y: 0), character : character)
         
-        var swordAffix : EquipmentAffix = EquipmentAffix()
-        swordAffix.bonus[EquipmentAffix.Bonus.Power] = 5
-        let swordEquipable : Equipable = EquipableItem(slot: Equipment.EquipmentSlot.Weapon, affixes: [swordAffix])
-        let sword : InventoryItem = InventoryItem(name: "Sword", stackable: nil, consumable: nil, equipable: swordEquipable)
-        
-        var shieldAffix : EquipmentAffix = EquipmentAffix()
-        shieldAffix.bonus[EquipmentAffix.Bonus.Block] = 5
-        let shieldEquipable : Equipable = EquipableItem(slot: Equipment.EquipmentSlot.Armor, affixes: [shieldAffix])
-        let shield : InventoryItem = InventoryItem(name: "Shield", stackable: nil, consumable: nil, equipable: shieldEquipable)
-        
-        player.characterComponent?.inventory.equipment.setEquipment(sword, slot: sword.slot!)
-        player.characterComponent?.inventory.equipment.setEquipment(shield, slot: shield.slot!)
+        player.characterComponent?.inventory.equipment.setEquipment(ItemFactory.createBoringSword())
+        player.characterComponent?.inventory.equipment.setEquipment(ItemFactory.createBoringShield())
         
         let titleScene = TitleScene()
         let explore = ExploreScene(player : player)

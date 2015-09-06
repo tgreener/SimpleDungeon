@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */; };
+		F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */; };
 		F5B67CE31B731BDC0036D56C /* SimpleDungeonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */; };
 		F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67DE31B7327240036D56C /* AppDelegate.swift */; };
 		F5B67DE81B7327240036D56C /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67DE41B7327240036D56C /* BaseScene.swift */; };
@@ -25,6 +27,8 @@
 		F5B67E0F1B75B67B0036D56C /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E0E1B75B67B0036D56C /* Math.swift */; };
 		F5B67E111B75BE300036D56C /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E101B75BE300036D56C /* BattleScene.swift */; };
 		F5B67E131B75C1060036D56C /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E121B75C1060036D56C /* SceneController.swift */; };
+		F5B8803F1B86D30300AF7645 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B8803E1B86D30300AF7645 /* Skill.swift */; };
+		F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B880401B89048100AF7645 /* SkillFactory.swift */; };
 		F5D5B8921B779A4F0067BBD2 /* GameplayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */; };
 		F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */; };
 		F5D5B8961B77AACC0067BBD2 /* TouchSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */; };
@@ -45,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemFactory.swift; sourceTree = "<group>"; };
+		F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleGraphic.swift; sourceTree = "<group>"; };
 		F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleDungeon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B67CC71B731BDC0036D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5B67CDC1B731BDC0036D56C /* SimpleDungeonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleDungeonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +73,8 @@
 		F5B67E0E1B75B67B0036D56C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		F5B67E101B75BE300036D56C /* BattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
 		F5B67E121B75C1060036D56C /* SceneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
+		F5B8803E1B86D30300AF7645 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		F5B880401B89048100AF7645 /* SkillFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillFactory.swift; sourceTree = "<group>"; };
 		F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayScene.swift; sourceTree = "<group>"; };
 		F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphicComponent.swift; sourceTree = "<group>"; };
 		F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchSprite.swift; sourceTree = "<group>"; };
@@ -94,6 +102,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F5B3DA411B9CCBA60072A4F9 /* BattleScene */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67E101B75BE300036D56C /* BattleScene.swift */,
+			);
+			name = BattleScene;
+			sourceTree = "<group>";
+		};
+		F5B3DA421B9CCBB40072A4F9 /* ExploreScene */ = {
+			isa = PBXGroup;
+			children = (
+				F5B67DF01B7328760036D56C /* ExploreScene.swift */,
+			);
+			name = ExploreScene;
+			sourceTree = "<group>";
+		};
+		F5B3DA431B9CCC220072A4F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F5B3DA461B9CCC920072A4F9 /* Battle */,
+				F5D5B89F1B7C53370067BBD2 /* Character */,
+				F5B3DA441B9CCC540072A4F9 /* Item */,
+				F5B3DA451B9CCC7F0072A4F9 /* Skill */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F5B3DA441B9CCC540072A4F9 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				F5D5B8991B7818E50067BBD2 /* InventoryItem.swift */,
+				F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */,
+			);
+			name = Item;
+			sourceTree = "<group>";
+		};
+		F5B3DA451B9CCC7F0072A4F9 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				F5B8803E1B86D30300AF7645 /* Skill.swift */,
+				F5B880401B89048100AF7645 /* SkillFactory.swift */,
+			);
+			name = Skill;
+			sourceTree = "<group>";
+		};
+		F5B3DA461B9CCC920072A4F9 /* Battle */ = {
+			isa = PBXGroup;
+			children = (
+				F5D5B89D1B7C532C0067BBD2 /* Battle.swift */,
+			);
+			name = Battle;
+			sourceTree = "<group>";
+		};
 		F5B67CBA1B731BDC0036D56C = {
 			isa = PBXGroup;
 			children = (
@@ -116,13 +177,11 @@
 		F5B67CC51B731BDC0036D56C /* SimpleDungeon */ = {
 			isa = PBXGroup;
 			children = (
-				F5D5B89F1B7C53370067BBD2 /* Character */,
+				F5B3DA431B9CCC220072A4F9 /* Model */,
 				F5B67DEB1B73274C0036D56C /* Util */,
 				F5B67DED1B7327640036D56C /* Scenes */,
 				F5B67DEC1B7327590036D56C /* App */,
 				F5B67CC61B731BDC0036D56C /* Supporting Files */,
-				F5D5B89D1B7C532C0067BBD2 /* Battle.swift */,
-				F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */,
 				F5B67E041B7479CC0036D56C /* Icons.xcassets */,
 			);
 			path = SimpleDungeon;
@@ -175,9 +234,12 @@
 		F5B67DED1B7327640036D56C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F5B67DF91B732AAD0036D56C /* UI */,
 				F5B67DF81B732AA20036D56C /* PlayScenes */,
 				F5B67DE41B7327240036D56C /* BaseScene.swift */,
 				F5B67DEE1B7327730036D56C /* TitleScene.swift */,
+				F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */,
+				F5B67E121B75C1060036D56C /* SceneController.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -192,12 +254,9 @@
 		F5B67DF81B732AA20036D56C /* PlayScenes */ = {
 			isa = PBXGroup;
 			children = (
+				F5B3DA411B9CCBA60072A4F9 /* BattleScene */,
 				F5B8803D1B82F3EE00AF7645 /* CharacterDetailsScene */,
-				F5B67DF91B732AAD0036D56C /* UI */,
-				F5B67E101B75BE300036D56C /* BattleScene.swift */,
-				F5B67DF01B7328760036D56C /* ExploreScene.swift */,
-				F5B67E121B75C1060036D56C /* SceneController.swift */,
-				F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */,
+				F5B3DA421B9CCBB40072A4F9 /* ExploreScene */,
 			);
 			name = PlayScenes;
 			sourceTree = "<group>";
@@ -205,6 +264,8 @@
 		F5B67DF91B732AAD0036D56C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */,
+				F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */,
 				F5B67DFA1B732AC40036D56C /* Grid.swift */,
 				F5B67DFC1B746F510036D56C /* TileSprite.swift */,
 				F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */,
@@ -228,7 +289,6 @@
 				F5B67E0C1B75B0CB0036D56C /* GameCharacter.swift */,
 				F5B67E081B759C7E0036D56C /* CharacterResource.swift */,
 				F5B67E091B759C7E0036D56C /* DescriptiveStatistic.swift */,
-				F5D5B8991B7818E50067BBD2 /* InventoryItem.swift */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -336,12 +396,15 @@
 				F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */,
 				F5D5B89E1B7C532C0067BBD2 /* Battle.swift in Sources */,
 				F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */,
+				F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
+				F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */,
 				F5B67DEA1B7327240036D56C /* Notifier.swift in Sources */,
 				F5D5B89C1B7852050067BBD2 /* CharacterMenuScene.swift in Sources */,
 				F5B67E0F1B75B67B0036D56C /* Math.swift in Sources */,
 				F5B67DE91B7327240036D56C /* GameViewController.swift in Sources */,
 				F5B67DE81B7327240036D56C /* BaseScene.swift in Sources */,
+				F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */,
 				F5B67DF11B7328760036D56C /* ExploreScene.swift in Sources */,
 				F5B67E031B7477B30036D56C /* Entity.swift in Sources */,
 				F5B67DFF1B74760B0036D56C /* IPoint.swift in Sources */,
@@ -353,6 +416,7 @@
 				F5B67DFB1B732AC40036D56C /* Grid.swift in Sources */,
 				F5B67E0D1B75B0CB0036D56C /* GameCharacter.swift in Sources */,
 				F5B67E111B75BE300036D56C /* BattleScene.swift in Sources */,
+				F5B8803F1B86D30300AF7645 /* Skill.swift in Sources */,
 				F5B67DEF1B7327730036D56C /* TitleScene.swift in Sources */,
 				F5B67E0B1B759C7E0036D56C /* DescriptiveStatistic.swift in Sources */,
 			);

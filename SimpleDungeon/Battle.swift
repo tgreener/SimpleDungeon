@@ -11,6 +11,9 @@ import Foundation
 protocol BattleListener {
     func onEntityDestroyed(entity : Entity) -> Void
     func onBattleEnded() -> Void
+    
+    func onActionPerformed() -> Void
+    func onTurnChanged(turn : Turn) -> Void
 }
 
 // Super janky proto-demo/just-make-it work code
@@ -19,15 +22,62 @@ enum Ability {
 }
 // End jankiness //
 
+enum Turn {
+    case Player, Enemy
+}
+
 class BattleModel {
     let notifier : Notifier<BattleListener> = Notifier<BattleListener>()
-    var badGuys : [Entity?]
-    let player  : Entity
     
-    var currentAbility = Ability.None
-    var primaryTarget : Entity?
-    var secondaryTargets : [Entity?] = []
+    var badGuys : [Entity?]
     var entityIndexes : [Entity : Int] = [Entity : Int]()
+    
+    let player  : Entity
+    var currentSkill : Skill?
+    
+    let strSkill : Skill
+    let intSkill : Skill
+    let wilSkill : Skill
+    
+    var currentTurn : Turn = Turn.Player
+
+    struct SkillListener : SkillApplicationListener {
+        let model : BattleModel
+        
+        init(model : BattleModel) {
+            self.model = model
+        }
+        
+        func receivesDamage(#target: Entity, amount: Int) {
+            target.characterComponent?.health.decrease(amount)
+            
+            println((target === model.player ? "Player" : "Target") + " HP : \(target.characterComponent!.health.currentValue)")
+            if target.characterComponent?.health.currentValue == 0 {
+                model.notifier.notify() { listener in listener.onEntityDestroyed(target) }
+                model.badGuys = model.badGuys.filter() { $0 !== target }
+            }
+        }
+        
+        func receivesHealing(#target: Entity, amount: Int) {
+            
+        }
+        
+        func receivesBuff(#target: Entity, buff: AnyObject?) {
+            
+        }
+        
+        func blocksAttack(#target: Entity, baseDamage: Int) {
+            println((target === model.player ? "Player" : "Target") + " blocks!")
+        }
+        
+        func dodgesAttack(#target: Entity, baseDamage: Int) {
+            
+        }
+        
+        func parriesAttack(#target: Entity, baseDamage: Int) {
+            
+        }
+    }
     
     init(player : Entity, badGuys : [Entity?]) {
         self.player = player
@@ -36,68 +86,60 @@ class BattleModel {
         for (index, g) in enumerate(self.badGuys) {
             if let guy = g { entityIndexes[guy] = index }
         }
+        
+        strSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetNone)
+        intSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetRow)
+        wilSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetNextInColumn)
+        
+        strSkill.updateTargetFilter(self)
+        intSkill.updateTargetFilter(self)
+        wilSkill.updateTargetFilter(self)
     }
     
     func setAbility(a : Ability) {
-        currentAbility = a
+        switch a {
+        case Ability.Str : currentSkill = strSkill
+        case Ability.Int : currentSkill = intSkill
+        case Ability.Wil : currentSkill = wilSkill
+        default : currentSkill = nil
+        }
     }
     
     func setTarget(guy : Entity) {
-        secondaryTargets.removeAll(keepCapacity: true)
-        primaryTarget = guy
-        calcSecondaryTargets()
-    }
-    
-    func calcSecondaryTargets() {
-        func wilFilter(guy : Entity?) -> Bool {
-            if let g = guy {
-                let primaryIndex = entityIndexes[self.primaryTarget!]
-                let currentIndex = entityIndexes[g]
-                let difference = abs(primaryIndex! - currentIndex!)
-                let modDifference = abs((primaryIndex! % 3) - (currentIndex! % 3))
-                
-                return difference == 1 && modDifference == 1
-            }
-            return false
+        if let s = currentSkill {
+            s.setTarget(badGuys, primary: guy)
         }
-        
-        func intFilter(guy : Entity?) -> Bool {
-            if let g = guy {
-                let primaryIndex = entityIndexes[self.primaryTarget!]
-                let currentIndex = entityIndexes[g]
-                let modDifference = abs((primaryIndex! % 3) - (currentIndex! % 3))
-                
-                return modDifference == 0
-            }
-            
-            return false
-        }
-        
-        var filter : (Entity?) -> Bool = { (guy : Entity?) -> Bool in return false }
-        
-        if currentAbility == Ability.Int { filter = intFilter }
-        else if currentAbility == Ability.Wil { filter = wilFilter }
-        
-        secondaryTargets = badGuys.filter(filter)
     }
     
     func performAction() {
-        if let target = primaryTarget {
-            notifier.notify({ listener in listener.onEntityDestroyed(target) })
-            badGuys = badGuys.filter() { $0 !== self.primaryTarget }
-            for guy in secondaryTargets {
-                notifier.notify({ listener in listener.onEntityDestroyed(guy!) })
-                badGuys = badGuys.filter() { $0 !== guy }
-            }
+        if let s = currentSkill {
+            s.perform(SkillListener(model: self))
+            currentTurn = Turn.Enemy
+            
+            notifier.notify() { listener in listener.onActionPerformed() }
+            notifier.notify() { listener in listener.onTurnChanged(self.currentTurn) }
+            
+            if badGuys.count == 0 { notifier.notify({ listener in listener.onBattleEnded() }) }
         }
-        
-        if badGuys.count == 0 { notifier.notify({ listener in listener.onBattleEnded() }) }
     }
     
     func actWhenReady() {
-        let hasTarget = primaryTarget != nil
-        let hasAbility = currentAbility != Ability.None
+        let hasTarget = currentSkill?.primaryTarget != nil
+        let hasAbility = currentSkill != nil
         
         if hasTarget && hasAbility { performAction() }
+    }
+    
+    func performBadGuyActions() {
+        for guy in badGuys {
+            let badSkill = Skill(character: guy!.characterComponent!, targetFilterCreator: skillTargetNone)
+            badSkill.setTarget([], primary: player)
+            badSkill.perform(SkillListener(model: self))
+        }
+        
+        currentTurn = Turn.Player
+        notifier.notify() { listener in listener.onTurnChanged(self.currentTurn) }
+        
+        if player.characterComponent?.health.currentValue <= 0 { notifier.notify { listener in listener.onBattleEnded() } }
     }
 }

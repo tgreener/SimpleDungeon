@@ -10,9 +10,9 @@ import SpriteKit
 
 class GraphicComponent {
     let exploreGraphic : TouchSprite?
-    let battleGraphic : TouchSprite?
+    let battleGraphic : BattleGraphic?
     
-    init(explore : TouchSprite?, battle : TouchSprite?) {
+    init(explore : TouchSprite?, battle : BattleGraphic?) {
         exploreGraphic = explore
         battleGraphic = battle
     }

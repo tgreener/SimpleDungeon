@@ -16,8 +16,8 @@ class Equipment {
     
     var slotMap : [EquipmentSlot: InventoryItem] = [EquipmentSlot: InventoryItem]()
     
-    func setEquipment(equip : InventoryItem, slot : EquipmentSlot) {
-        slotMap[slot] = equip
+    func setEquipment(equip : InventoryItem) {
+        if let slot = equip.slot { slotMap[slot] = equip }
     }
     
     func calculateBonus(bonusType : EquipmentAffix.Bonus) -> Int {
