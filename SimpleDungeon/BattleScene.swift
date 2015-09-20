@@ -90,7 +90,7 @@ class BattleScene : GameplayScene, BattleListener {
         addChild(willBattleButton)
         addChild(player.graphicComponent!.battleGraphic!)
         
-        for (index, guy) in enumerate(battle.badGuys) {
+        for (index, guy) in battle.badGuys.enumerate() {
             if !(index < 6) { break }
             
             if let battleSprite = guy?.graphicComponent?.battleGraphic {

@@ -9,14 +9,14 @@
 import Foundation
 
 protocol SkillApplicationListener {
-    func receivesDamage(#target : Entity, amount : Int) -> Void
-    func receivesHealing(#target : Entity, amount : Int) -> Void
+    func receivesDamage(target target : Entity, amount : Int) -> Void
+    func receivesHealing(target target : Entity, amount : Int) -> Void
     
-    func blocksAttack(#target : Entity, baseDamage : Int) -> Void
-    func parriesAttack(#target : Entity, baseDamage : Int) -> Void
-    func dodgesAttack(#target : Entity, baseDamage : Int) -> Void
+    func blocksAttack(target target : Entity, baseDamage : Int) -> Void
+    func parriesAttack(target target : Entity, baseDamage : Int) -> Void
+    func dodgesAttack(target target : Entity, baseDamage : Int) -> Void
     
-    func receivesBuff(#target : Entity, buff : AnyObject?) -> Void
+    func receivesBuff(target target : Entity, buff : AnyObject?) -> Void
 }
 
 class Skill {
@@ -43,16 +43,16 @@ class Skill {
     }
     
     func perform(skillListener : SkillApplicationListener) -> Void {
-        if let target = primaryTarget {
-            apply(target : self.primaryTarget, skillListener : skillListener)
+        if let target = self.primaryTarget {
+            apply(target : target, skillListener : skillListener)
             for guy in targets {
                 apply(target : guy!, skillListener : skillListener)
             }
         }
     }
     
-    func apply(#target : Entity, skillListener : SkillApplicationListener) {
-        let defenseRoll : Int = Int(random(0, 99))
+    func apply(target target : Entity, skillListener : SkillApplicationListener) {
+        let defenseRoll : Int = Int(random(0, maxVal: 99))
         let baseDamage : Int = character.power
         
         if defenseRoll < target.characterComponent?.block {

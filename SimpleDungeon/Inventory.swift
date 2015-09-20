@@ -21,7 +21,7 @@ class Equipment {
     }
     
     func calculateBonus(bonusType : EquipmentAffix.Bonus) -> Int {
-        return slotMap.values.array.map( { item in item.getBonus(bonusType)} ).reduce(0, combine: { accum, stat in return accum + stat })
+        return Array(slotMap.values).map( { item in item.getBonus(bonusType)} ).reduce(0, combine: { accum, stat in return accum + stat })
     }
 }
 

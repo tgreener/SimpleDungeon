@@ -34,19 +34,19 @@ class GameCharacter {
         magic  = BaseCharacterResource()
     }
     
-    func onSuccessfulStrengthChallenge(#difficulty : UInt) {
+    func onSuccessfulStrengthChallenge(difficulty difficulty : UInt) {
         onSuccessfulChallenge(difficulty: difficulty, stat: strength)
     }
     
-    func onSuccessfulIntelligenceChallenge(#difficulty : UInt) {
+    func onSuccessfulIntelligenceChallenge(difficulty difficulty : UInt) {
         onSuccessfulChallenge(difficulty: difficulty, stat: intelligence)
     }
     
-    func onSuccessfulWillChallenge(#difficulty : UInt) {
+    func onSuccessfulWillChallenge(difficulty difficulty : UInt) {
         onSuccessfulChallenge(difficulty: difficulty, stat: will)
     }
     
-    func onSuccessfulChallenge(#difficulty : UInt, stat : DescriptiveStatistic) {
+    func onSuccessfulChallenge(difficulty difficulty : UInt, stat : DescriptiveStatistic) {
         let boundedDifficulty = min(max(difficulty, 1), 10)
         stat.grow([Float(boundedDifficulty) / 50])
     }
@@ -54,8 +54,8 @@ class GameCharacter {
     func gameClockAdvanced(dt : Float) {
         
         func makeRandomizedDecay(numerator : Float) -> Float {
-            let randomModiferAmount : Float = Float(random(0, 10))
-            let randomSignDecider : Float = Float(random(1, 100))
+            let randomModiferAmount : Float = Float(random(0, maxVal: 10))
+            let randomSignDecider : Float = Float(random(1, maxVal: 100))
             let sign : Float = randomSignDecider < 50 ? 1 : -1
             
             return dt / (50 + (randomModiferAmount * sign))

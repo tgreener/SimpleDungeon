@@ -10,7 +10,7 @@ import SpriteKit
 
 class TitleScene : BaseScene {
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         sceneController?.gotoExploreScene()
     }
     
@@ -32,7 +32,6 @@ class TitleScene : BaseScene {
         
         titleNode.addChild(touchToStartNode)
         
-        let size = self.size
         let pos = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         titleNode.position = pos
         touchToStartNode.position = CGPointMake(0, -50)

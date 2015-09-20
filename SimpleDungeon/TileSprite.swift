@@ -16,7 +16,7 @@ class TileSprite : SKSpriteNode {
     var gridPosition : IPoint = IPoint(x: 0, y: 0)
     let tileNotifier : Notifier<TileSpriteListener> = Notifier<TileSpriteListener>()
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         tileNotifier.notify({ listener in  listener.onTileTouched(self) })
     }
     

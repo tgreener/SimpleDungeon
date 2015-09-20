@@ -85,16 +85,16 @@ class CharacterMenuScene : GameplayScene, TouchSpriteListener {
         
         divider.position = CGPointMake(0, statsRect.height * 0.75)
         
-        statsPane.addChild(createStatNameLabel(player.characterComponent!.strength.name, strNamePosition))
-        statsPane.addChild(createStatNameLabel(player.characterComponent!.intelligence.name, intNamePosition))
-        statsPane.addChild(createStatNameLabel(player.characterComponent!.will.name, wilNamePosition))
+        statsPane.addChild(createStatNameLabel(player.characterComponent!.strength.name, position: strNamePosition))
+        statsPane.addChild(createStatNameLabel(player.characterComponent!.intelligence.name, position: intNamePosition))
+        statsPane.addChild(createStatNameLabel(player.characterComponent!.will.name, position: wilNamePosition))
         
-        statsPane.addChild(createStatNameLabel("Attack", pwrNamePosition))
-        statsPane.addChild(createStatNameLabel("Spell", splNamePosition))
-        statsPane.addChild(createStatNameLabel("Hit", hitNamePosition))
-        statsPane.addChild(createStatNameLabel("Block", blkNamePosition))
-        statsPane.addChild(createStatNameLabel("Dodge", dgeNamePosition))
-        statsPane.addChild(createStatNameLabel("Parry", pryNamePosition))
+        statsPane.addChild(createStatNameLabel("Attack", position: pwrNamePosition))
+        statsPane.addChild(createStatNameLabel("Spell", position: splNamePosition))
+        statsPane.addChild(createStatNameLabel("Hit", position: hitNamePosition))
+        statsPane.addChild(createStatNameLabel("Block", position: blkNamePosition))
+        statsPane.addChild(createStatNameLabel("Dodge", position: dgeNamePosition))
+        statsPane.addChild(createStatNameLabel("Parry", position: pryNamePosition))
         
         strLabel = createStatValueLabel(strLabelPosition)
         intLabel = createStatValueLabel(intLabelPosition)
@@ -124,8 +124,8 @@ class CharacterMenuScene : GameplayScene, TouchSpriteListener {
         let weaponValuePosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.8)
         let armorValuePosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.725)
         
-        let weaponNameLabel = createStatNameLabel("Weapon", weaponNamePosition)
-        let armorNameLabel  = createStatNameLabel("Armor",  armorNamePosition)
+        let weaponNameLabel = createStatNameLabel("Weapon", position: weaponNamePosition)
+        let armorNameLabel  = createStatNameLabel("Armor",  position: armorNamePosition)
         
         wpnLabel = createStatValueLabel(weaponValuePosition)
         amrLabel = createStatValueLabel(armorValuePosition)
@@ -136,7 +136,7 @@ class CharacterMenuScene : GameplayScene, TouchSpriteListener {
         addChild(amrLabel)
         
         let backButton = TouchSprite(color: SKColor.greenColor(), size: CGSizeMake(150, 50))
-        backButton.anchorPoint = CGPoint.zeroPoint
+        backButton.anchorPoint = CGPoint.zero
         backButton.position = CGPointMake(50, 50)
         backButton.addListener(self)
         

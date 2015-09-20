@@ -11,7 +11,7 @@ import SpriteKit
 class GameplayScene : BaseScene {
     
     let player : Entity
-    var viewSize : CGSize = CGSize.zeroSize
+    var viewSize : CGSize = CGSize.zero
     
     init(player : Entity) {
         self.player = player

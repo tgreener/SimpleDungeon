@@ -48,33 +48,35 @@ class BattleModel {
             self.model = model
         }
         
-        func receivesDamage(#target: Entity, amount: Int) {
+        func receivesDamage(target target: Entity, amount: Int) {
             target.characterComponent?.health.decrease(amount)
+            target.graphicComponent?.battleGraphic?.showDamagePopup(amount)
             
-            println((target === model.player ? "Player" : "Target") + " HP : \(target.characterComponent!.health.currentValue)")
+            print((target === model.player ? "Player" : "Target") + " HP : \(target.characterComponent!.health.currentValue)")
             if target.characterComponent?.health.currentValue == 0 {
                 model.notifier.notify() { listener in listener.onEntityDestroyed(target) }
                 model.badGuys = model.badGuys.filter() { $0 !== target }
             }
         }
         
-        func receivesHealing(#target: Entity, amount: Int) {
+        func receivesHealing(target target: Entity, amount: Int) {
             
         }
         
-        func receivesBuff(#target: Entity, buff: AnyObject?) {
+        func receivesBuff(target target: Entity, buff: AnyObject?) {
             
         }
         
-        func blocksAttack(#target: Entity, baseDamage: Int) {
-            println((target === model.player ? "Player" : "Target") + " blocks!")
+        func blocksAttack(target target: Entity, baseDamage: Int) {
+            target.graphicComponent?.battleGraphic?.showBlockPopup()
+            print((target === model.player ? "Player" : "Target") + " blocks!")
         }
         
-        func dodgesAttack(#target: Entity, baseDamage: Int) {
+        func dodgesAttack(target target: Entity, baseDamage: Int) {
             
         }
         
-        func parriesAttack(#target: Entity, baseDamage: Int) {
+        func parriesAttack(target target: Entity, baseDamage: Int) {
             
         }
     }
@@ -83,7 +85,7 @@ class BattleModel {
         self.player = player
         self.badGuys = badGuys
         
-        for (index, g) in enumerate(self.badGuys) {
+        for (index, g) in self.badGuys.enumerate() {
             if let guy = g { entityIndexes[guy] = index }
         }
         

@@ -22,7 +22,7 @@ class Notifier<ListenerType> {
         listenerIndexes[name] = listeners.endIndex - 1
     }
     
-    func removeListener(#named : String) {
+    func removeListener(named named : String) {
         if let index = listenerIndexes[named] { listeners.removeAtIndex(index) }
     }
     

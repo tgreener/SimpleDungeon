@@ -15,8 +15,8 @@ protocol TouchSpriteListener {
 class TouchSprite : SKSpriteNode {
     let notifier : Notifier<TouchSpriteListener> = Notifier<TouchSpriteListener>()
     
-    init(texture : SKTexture!) {
-        super.init(texture: texture, color: nil, size: texture.size())
+    init(texture : SKTexture?) {
+        super.init(texture: texture, color: UIColor.clearColor(), size: texture!.size())
         self.userInteractionEnabled = true
     }
     
@@ -29,7 +29,7 @@ class TouchSprite : SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         notifier.notify({ listener in  listener.onSpriteTouched(self) })
     }
     

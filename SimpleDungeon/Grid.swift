@@ -11,7 +11,7 @@ import SpriteKit
 protocol SpacialSpriteGrid  {
     var xSize : Int { get }
     var ySize : Int { get }
-    func getSpriteAt(#x : Int, y : Int) -> TileSprite
+    func getSpriteAt(x x : Int, y : Int) -> TileSprite
 }
 
 struct BaseGrid : SpacialSpriteGrid {
@@ -27,16 +27,16 @@ struct BaseGrid : SpacialSpriteGrid {
         container = [TileSprite](count: x * y, repeatedValue: TileSprite(color: SKColor.whiteColor(), size: CGSizeMake(16, 16)))
     }
     
-    mutating func setSpriteAt(#x : Int, y : Int, sprite : TileSprite) {
+    mutating func setSpriteAt(x x : Int, y : Int, sprite : TileSprite) {
         sprite.userInteractionEnabled = true
-        sprite.anchorPoint = CGPoint.zeroPoint
+        sprite.anchorPoint = CGPoint.zero
         sprite.position = CGPointMake(CGFloat(x) * (sprite.frame.width + 1), CGFloat(y) * (sprite.frame.height + 1))
         sprite.gridPosition = IPoint(x: x, y: y)
         
         container[(xSize * y) + x] = sprite
     }
     
-    func getSpriteAt(#x : Int, y : Int) -> TileSprite {
+    func getSpriteAt(x x : Int, y : Int) -> TileSprite {
         return container[(xSize * y) + x]
     }
 }
@@ -60,13 +60,13 @@ struct ColoredGrid : SpacialSpriteGrid {
         }
     }
     
-    mutating func setSpriteAt(#x : Int, y : Int, color : SKColor, squareDimension : CGFloat, listener : TileSpriteListener) {
+    mutating func setSpriteAt(x x : Int, y : Int, color : SKColor, squareDimension : CGFloat, listener : TileSpriteListener) {
         let sprite = TileSprite(color: color, size: CGSizeMake(squareDimension, squareDimension))
         sprite.addListener(listener)
         innerGrid.setSpriteAt(x: x, y: y, sprite: sprite)
     }
     
-    func getSpriteAt(#x : Int, y : Int) -> TileSprite {
+    func getSpriteAt(x x : Int, y : Int) -> TileSprite {
         return innerGrid.container[(innerGrid.xSize * y) + x]
     }
 }
@@ -90,13 +90,13 @@ struct TexturedGrid : SpacialSpriteGrid {
         }
     }
     
-    mutating func setSpriteAt(#x : Int, y : Int, texture : SKTexture, listener : TileSpriteListener) {
+    mutating func setSpriteAt(x x : Int, y : Int, texture : SKTexture, listener : TileSpriteListener) {
         let sprite = TileSprite(texture: texture)
         sprite.addListener(listener)
         innerGrid.setSpriteAt(x: x, y: y, sprite: sprite)
     }
     
-    func getSpriteAt(#x : Int, y : Int) -> TileSprite {
+    func getSpriteAt(x x : Int, y : Int) -> TileSprite {
         return innerGrid.container[(innerGrid.xSize * y) + x]
     }
 }
@@ -107,8 +107,6 @@ class GridNode : SKNode {
     init(grid: SpacialSpriteGrid) {
         self.grid = grid
         super.init()
-        
-        var color = SKColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         for var x = 0 ; x < grid.xSize ; x++ {
             for var y = 0 ; y < grid.ySize ; y++ {

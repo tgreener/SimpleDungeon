@@ -53,8 +53,8 @@ class ExploreScene : GameplayScene, TileSpriteListener, TouchSpriteListener {
                 
                 var badGuys = [Entity?]()
                 
-                if random(1, 100) > 60 {
-                    for i in 0...0 {
+                if random(1, maxVal: 100) > 60 {
+                    for _ in 0...0 {
                         let badGuyGraphic = BattleGraphic(color: SKColor.yellowColor(), size: CGSizeMake(10, 10))
                         let badCharacter = GameCharacter(strVal: 2, intVal: 2, wilVal: 2)
                         
