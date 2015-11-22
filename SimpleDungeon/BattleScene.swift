@@ -19,6 +19,8 @@ class BattleScene : GameplayScene, BattleListener {
     
     var touchEnabled : Bool = true
     
+    var playerActionCommand : PlayerActionCommand! = nil
+    
     override func createSceneContents() {
         super.createSceneContents()
         
@@ -34,10 +36,7 @@ class BattleScene : GameplayScene, BattleListener {
         ]
     }
     
-    
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
-        
+    func setupAbilityButtons() {
         func createBattleButton(color : SKColor) -> TouchSprite {
             let battleButton = TouchSprite(color: color, size: CGSize(width: 100, height: 40))
             battleButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -62,34 +61,32 @@ class BattleScene : GameplayScene, BattleListener {
         setBattleSpriteScale(player.graphicComponent!.battleGraphic!)
         
         class AbilityButtonListener : TouchSpriteListener {
-            let battle : BattleModel
             let ability : Ability
             let scene : BattleScene
             
-            init(battle : BattleModel, ability : Ability, scene : BattleScene) {
-                self.battle = battle
+            init(ability : Ability, scene : BattleScene) {
                 self.ability = ability
                 self.scene = scene
             }
             
             func onSpriteTouched(sprite: TouchSprite) {
                 if scene.touchEnabled {
-                    battle.setAbility(ability)
-                    scene.abilityChosen(sprite)
-                    // battle.actWhenReady()
+                    scene.abilityChosen(sprite, ability: ability)
                 }
             }
         }
         
-        strengthBattleButton.addListener(AbilityButtonListener(battle: battle, ability : Ability.Str, scene : self))
-        intelligenceBattleButton.addListener(AbilityButtonListener(battle: battle, ability : Ability.Int, scene : self))
-        willBattleButton.addListener(AbilityButtonListener(battle: battle, ability : Ability.Wil, scene : self))
+        strengthBattleButton.addListener(AbilityButtonListener(ability : Ability.Str, scene : self))
+        intelligenceBattleButton.addListener(AbilityButtonListener(ability : Ability.Int, scene : self))
+        willBattleButton.addListener(AbilityButtonListener(ability : Ability.Wil, scene : self))
         
         addChild(strengthBattleButton)
         addChild(intelligenceBattleButton)
         addChild(willBattleButton)
         addChild(player.graphicComponent!.battleGraphic!)
-        
+    }
+    
+    func setupEnemyInteractions() {
         for (index, guy) in battle.badGuys.enumerate() {
             if !(index < 6) { break }
             
@@ -97,31 +94,39 @@ class BattleScene : GameplayScene, BattleListener {
                 
                 class BadGuySpriteListener : TouchSpriteListener {
                     let guy : Entity
-                    let battle : BattleModel
                     let scene : BattleScene
-                    init(guy : Entity, battle : BattleModel, scene : BattleScene) {
+                    init(guy : Entity, scene : BattleScene) {
                         self.guy = guy
-                        self.battle = battle
                         self.scene = scene
                     }
                     
                     func onSpriteTouched(sprite: TouchSprite) {
-                        if battle.currentSkill != nil && scene.touchEnabled {
-                            battle.setTarget(guy)
-                            scene.primaryTargetChosen(sprite)
-                            battle.actWhenReady()
+                        if scene.playerActionCommand.selectedAbility != nil && scene.touchEnabled {
+                            scene.primaryTargetChosen(sprite, target: guy)
                         }
                     }
                 }
                 
                 battleSprite.position = badGuyPositions[index]
                 battleSprite.setScale((viewSize.height / battleSprite.frame.height) * 0.16)
-                battleSprite.addListener(BadGuySpriteListener(guy: guy!, battle: battle, scene : self))
+                battleSprite.addListener(BadGuySpriteListener(guy: guy!, scene : self))
                 addChild(battleSprite)
             }
         }
+    }
+    
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
+        
+        setupAbilityButtons()
+        setupEnemyInteractions()
         
         battle.notifier.addListenerWithName(self, name: BATTLE_LISTENER_KEY)
+        player.graphicComponent?.battleGraphic?.addCallback { entity in
+            self.sceneController?.gotoCharacterMenuScene()
+        }
+        
+        playerActionCommand = PlayerActionCommand(battle: battle)
     }
     
     override func willMoveFromView(view: SKView) {
@@ -135,13 +140,19 @@ class BattleScene : GameplayScene, BattleListener {
         battle.notifier.removeListener(named: BATTLE_LISTENER_KEY)
     }
     
-    func primaryTargetChosen(sprite : SKSpriteNode) {
+    func primaryTargetChosen(sprite : SKSpriteNode, target: Entity) {
+        playerActionCommand.primaryTarget = target
+        
         targetRectangle.position = sprite.position
         targetRectangle.setScale(sprite.xScale)
         if targetRectangle.parent == nil { addChild(targetRectangle) }
+        
+        playerActionCommand.runCommand()
     }
     
-    func abilityChosen(sprite : SKSpriteNode) {
+    func abilityChosen(sprite : SKSpriteNode, ability: Ability) {
+        playerActionCommand.selectedAbility = ability
+        
         abilityRectangle.position = sprite.position
         abilityRectangle.setScale(sprite.xScale)
         if abilityRectangle.parent == nil { addChild(abilityRectangle) }
@@ -161,13 +172,36 @@ class BattleScene : GameplayScene, BattleListener {
             SKAction.waitForDuration(0.2),
             SKAction.runBlock({
                 self.targetRectangle.removeFromParent()
-                self.touchEnabled = true
             })
         ]))
     }
     
     func onTurnChanged(turn: Turn) {
-        touchEnabled = turn == Turn.Player
-        if turn == Turn.Enemy { battle.performBadGuyActions() }
+        switch turn {
+        case Turn.Player:
+            touchEnabled = true
+            playerActionCommand = PlayerActionCommand(battle: battle)
+        case Turn.Enemy:
+            touchEnabled = false
+            
+            let badGuyActionFunctions = battle.generateBadGuyActions()
+            
+            func runBadGuyActions(actions : [()->Void]) {
+                runAction(SKAction.sequence([
+                    SKAction.waitForDuration(0.4),
+                    SKAction.runBlock {
+                        if actions.count > 0 {
+                            actions[0]()
+                            runBadGuyActions(Array(actions[1..<actions.count]))
+                        }
+                        else {
+                            self.touchEnabled = true
+                        }
+                    }
+                    ]))
+            }
+            
+            runBadGuyActions(badGuyActionFunctions)
+        }
     }
 }

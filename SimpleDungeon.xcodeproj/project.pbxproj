@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5378C151BF9872B0099956F /* BattleFactory.swift */; };
+		F53D9FD21C00D06A00261631 /* PlayerActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D9FD11C00D06A00261631 /* PlayerActionCommand.swift */; };
+		F53D9FD41C00D07B00261631 /* BadGuyActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D9FD31C00D07B00261631 /* BadGuyActionCommand.swift */; };
+		F53D9FD61C00D30F00261631 /* PlayerActionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D9FD51C00D30F00261631 /* PlayerActionRule.swift */; };
+		F59413331BFAD2A800A55098 /* TurnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59413321BFAD2A800A55098 /* TurnRule.swift */; };
 		F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */; };
 		F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */; };
 		F5B67CE31B731BDC0036D56C /* SimpleDungeonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */; };
@@ -49,6 +54,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F5378C151BF9872B0099956F /* BattleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleFactory.swift; sourceTree = "<group>"; };
+		F53D9FD11C00D06A00261631 /* PlayerActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerActionCommand.swift; sourceTree = "<group>"; };
+		F53D9FD31C00D07B00261631 /* BadGuyActionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadGuyActionCommand.swift; sourceTree = "<group>"; };
+		F53D9FD51C00D30F00261631 /* PlayerActionRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerActionRule.swift; sourceTree = "<group>"; };
+		F59413321BFAD2A800A55098 /* TurnRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRule.swift; sourceTree = "<group>"; };
 		F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemFactory.swift; sourceTree = "<group>"; };
 		F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleGraphic.swift; sourceTree = "<group>"; };
 		F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleDungeon.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +112,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F53D9FD01C00D05A00261631 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				F53D9FD11C00D06A00261631 /* PlayerActionCommand.swift */,
+				F53D9FD31C00D07B00261631 /* BadGuyActionCommand.swift */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
+		F59413311BFAD26F00A55098 /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				F59413321BFAD2A800A55098 /* TurnRule.swift */,
+				F53D9FD51C00D30F00261631 /* PlayerActionRule.swift */,
+			);
+			name = Rules;
+			sourceTree = "<group>";
+		};
 		F5B3DA411B9CCBA60072A4F9 /* BattleScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,7 +178,10 @@
 		F5B3DA461B9CCC920072A4F9 /* Battle */ = {
 			isa = PBXGroup;
 			children = (
+				F53D9FD01C00D05A00261631 /* Commands */,
+				F59413311BFAD26F00A55098 /* Rules */,
 				F5D5B89D1B7C532C0067BBD2 /* Battle.swift */,
+				F5378C151BF9872B0099956F /* BattleFactory.swift */,
 			);
 			name = Battle;
 			sourceTree = "<group>";
@@ -177,10 +208,10 @@
 		F5B67CC51B731BDC0036D56C /* SimpleDungeon */ = {
 			isa = PBXGroup;
 			children = (
-				F5B3DA431B9CCC220072A4F9 /* Model */,
-				F5B67DEB1B73274C0036D56C /* Util */,
-				F5B67DED1B7327640036D56C /* Scenes */,
 				F5B67DEC1B7327590036D56C /* App */,
+				F5B67DEB1B73274C0036D56C /* Util */,
+				F5B67DF91B732AAD0036D56C /* UI */,
+				F5B3DA431B9CCC220072A4F9 /* Model */,
 				F5B67CC61B731BDC0036D56C /* Supporting Files */,
 				F5B67E041B7479CC0036D56C /* Icons.xcassets */,
 			);
@@ -234,7 +265,6 @@
 		F5B67DED1B7327640036D56C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				F5B67DF91B732AAD0036D56C /* UI */,
 				F5B67DF81B732AA20036D56C /* PlayScenes */,
 				F5B67DE41B7327240036D56C /* BaseScene.swift */,
 				F5B67DEE1B7327730036D56C /* TitleScene.swift */,
@@ -264,6 +294,7 @@
 		F5B67DF91B732AAD0036D56C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F5B67DED1B7327640036D56C /* Scenes */,
 				F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */,
 				F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */,
 				F5B67DFA1B732AC40036D56C /* Grid.swift */,
@@ -394,12 +425,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F53D9FD21C00D06A00261631 /* PlayerActionCommand.swift in Sources */,
+				F53D9FD41C00D07B00261631 /* BadGuyActionCommand.swift in Sources */,
 				F5B67DFD1B746F510036D56C /* TileSprite.swift in Sources */,
 				F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */,
 				F5D5B89E1B7C532C0067BBD2 /* Battle.swift in Sources */,
 				F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */,
 				F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
+				F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */,
+				F59413331BFAD2A800A55098 /* TurnRule.swift in Sources */,
 				F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */,
 				F5B67DEA1B7327240036D56C /* Notifier.swift in Sources */,
 				F5D5B89C1B7852050067BBD2 /* CharacterMenuScene.swift in Sources */,
@@ -410,6 +445,7 @@
 				F5B67DF11B7328760036D56C /* ExploreScene.swift in Sources */,
 				F5B67E031B7477B30036D56C /* Entity.swift in Sources */,
 				F5B67DFF1B74760B0036D56C /* IPoint.swift in Sources */,
+				F53D9FD61C00D30F00261631 /* PlayerActionRule.swift in Sources */,
 				F5D5B8961B77AACC0067BBD2 /* TouchSprite.swift in Sources */,
 				F5D5B89A1B7818E50067BBD2 /* InventoryItem.swift in Sources */,
 				F5D5B8981B78187F0067BBD2 /* Inventory.swift in Sources */,

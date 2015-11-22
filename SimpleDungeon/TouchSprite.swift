@@ -14,6 +14,7 @@ protocol TouchSpriteListener {
 
 class TouchSprite : SKSpriteNode {
     let notifier : Notifier<TouchSpriteListener> = Notifier<TouchSpriteListener>()
+    var callbacks : [(sprite : TouchSprite) -> Void] = Array<(sprite : TouchSprite) -> Void>()
     
     init(texture : SKTexture?) {
         super.init(texture: texture, color: UIColor.clearColor(), size: texture!.size())
@@ -31,9 +32,14 @@ class TouchSprite : SKSpriteNode {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         notifier.notify({ listener in  listener.onSpriteTouched(self) })
+        callbacks.forEach { callback in callback(sprite: self) }
     }
     
     func addListener(listener : TouchSpriteListener) {
         notifier.addListener(listener)
+    }
+    
+    func addCallback(callback : (sprite : TouchSprite) -> Void) {
+        callbacks.append(callback)
     }
 }

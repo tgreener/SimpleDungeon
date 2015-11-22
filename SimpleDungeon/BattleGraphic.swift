@@ -9,7 +9,7 @@
 import SpriteKit
 
 class BattleGraphic: TouchSprite {
-    
+
     func createPopUp(text : String, color : SKColor) -> SKLabelNode {
         let popup = SKLabelNode(text: text)
         popup.fontColor = color
@@ -32,8 +32,8 @@ class BattleGraphic: TouchSprite {
         addChild(createPopUp("\(damage)", color: SKColor.orangeColor()))
     }
     
-    func showHealingPopup() {
-        
+    func showHealingPopup(amount : Int) {
+        addChild(createPopUp("\(amount)", color: SKColor.greenColor()))
     }
     
     func showBlockPopup() {
@@ -41,11 +41,10 @@ class BattleGraphic: TouchSprite {
     }
     
     func showParryPopup() {
-        
+        addChild(createPopUp("PARRY", color: SKColor.whiteColor()))
     }
     
     func showDodgePopup() {
-        
+        addChild(createPopUp("DODGE", color: SKColor.whiteColor()))
     }
-    
 }

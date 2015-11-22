@@ -55,8 +55,16 @@ class Skill {
         let defenseRoll : Int = Int(random(0, maxVal: 99))
         let baseDamage : Int = character.power
         
-        if defenseRoll < target.characterComponent?.block {
+        guard let characterComponent = target.characterComponent else { return }
+        
+        if defenseRoll < characterComponent.block {
             skillListener.blocksAttack(target: target, baseDamage: baseDamage)
+        }
+        else if defenseRoll < (characterComponent.block + characterComponent.dodge) {
+            skillListener.dodgesAttack(target: target, baseDamage: baseDamage)
+        }
+        else if defenseRoll < (characterComponent.block + characterComponent.dodge + characterComponent.parry) {
+            skillListener.parriesAttack(target: target, baseDamage: baseDamage)
         }
         else {
             skillListener.receivesDamage(target: target, amount: baseDamage)

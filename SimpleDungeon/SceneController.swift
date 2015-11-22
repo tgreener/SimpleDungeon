@@ -28,8 +28,8 @@ class SceneController {
         titleScene.sceneController = self
     }
     
-    func gotoBattleScene(badGuys : [Entity?]) {
-        let battle = BattleModel(player: battleScene.player, badGuys: badGuys)
+    func gotoBattleScene() {
+        let battle = BattleFactory.createBattle(battleScene.player)
         battleScene.battle = battle
         
         let transitionScene = SKScene()

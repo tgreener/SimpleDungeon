@@ -22,10 +22,6 @@ enum Ability {
 }
 // End jankiness //
 
-enum Turn {
-    case Player, Enemy
-}
-
 class BattleModel {
     let notifier : Notifier<BattleListener> = Notifier<BattleListener>()
     
@@ -60,7 +56,8 @@ class BattleModel {
         }
         
         func receivesHealing(target target: Entity, amount: Int) {
-            
+            target.characterComponent?.health.increase(amount)
+            target.graphicComponent?.battleGraphic?.showHealingPopup(amount)
         }
         
         func receivesBuff(target target: Entity, buff: AnyObject?) {
@@ -73,11 +70,13 @@ class BattleModel {
         }
         
         func dodgesAttack(target target: Entity, baseDamage: Int) {
-            
+            target.graphicComponent?.battleGraphic?.showDodgePopup()
+            print((target === model.player ? "Player" : "Target") + " dodges!")
         }
         
         func parriesAttack(target target: Entity, baseDamage: Int) {
-            
+            target.graphicComponent?.battleGraphic?.showParryPopup()
+            print((target === model.player ? "Player" : "Target") + " parries!")
         }
     }
     
@@ -132,16 +131,18 @@ class BattleModel {
         if hasTarget && hasAbility { performAction() }
     }
     
-    func performBadGuyActions() {
+    func generateBadGuyActions() -> [()->Void]{
+        var actionFunctions : [() -> Void] = Array<()->Void>()
+        
         for guy in badGuys {
             let badSkill = Skill(character: guy!.characterComponent!, targetFilterCreator: skillTargetNone)
             badSkill.setTarget([], primary: player)
-            badSkill.perform(SkillListener(model: self))
+            
+            actionFunctions.append {
+                badSkill.perform(SkillListener(model: self))
+            }
         }
         
-        currentTurn = Turn.Player
-        notifier.notify() { listener in listener.onTurnChanged(self.currentTurn) }
-        
-        if player.characterComponent?.health.currentValue <= 0 { notifier.notify { listener in listener.onBattleEnded() } }
+        return actionFunctions
     }
 }
