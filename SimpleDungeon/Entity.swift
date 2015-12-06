@@ -17,6 +17,8 @@ class Entity : Hashable {
         graphicComponent = graphic
         positionComponent = position
         characterComponent = character
+        
+        graphicComponent?.battleGraphic?.entity = self
     }
     
     var hashValue : Int {

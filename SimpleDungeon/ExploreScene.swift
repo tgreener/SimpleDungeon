@@ -27,7 +27,10 @@ class ExploreScene : GameplayScene, TileSpriteListener {
 
         addChild(gridNode)
         
-        player.graphicComponent!.exploreGraphic!.addCallback { (sprite : TouchSprite) in self.sceneController?.gotoCharacterMenuScene() }
+        player.graphicComponent!.exploreGraphic!.addTouchHandler { sprite in
+            guard self.hasFinishedMove else { return }
+            self.sceneController?.gotoCharacterMenuScene()
+        }
     }
     
     override func didMoveToView(view: SKView) {

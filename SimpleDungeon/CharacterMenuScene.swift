@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CharacterMenuScene : GameplayScene, TouchSpriteListener {
+class CharacterMenuScene : GameplayScene {
     
     var strLabel : SKLabelNode!
     var intLabel : SKLabelNode!
@@ -138,7 +138,7 @@ class CharacterMenuScene : GameplayScene, TouchSpriteListener {
         let backButton = TouchSprite(color: SKColor.greenColor(), size: CGSizeMake(150, 50))
         backButton.anchorPoint = CGPoint.zero
         backButton.position = CGPointMake(50, 50)
-        backButton.addListener(self)
+        backButton.addTouchHandler(self.onBackButtonTouched)
         
         addChild(statsPane)
         addChild(backButton)
@@ -162,7 +162,7 @@ class CharacterMenuScene : GameplayScene, TouchSpriteListener {
         amrLabel.text = player.characterComponent!.inventory.equipment.slotMap[Equipment.EquipmentSlot.Armor]!.name
     }
     
-    func onSpriteTouched(sprite: TouchSprite) {
+    func onBackButtonTouched(sprite: TouchSprite) {
         sceneController?.gotoExploreScene()
     }
     

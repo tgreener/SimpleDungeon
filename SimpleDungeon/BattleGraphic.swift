@@ -10,6 +10,8 @@ import SpriteKit
 
 class BattleGraphic: TouchSprite {
 
+    var entity: Entity!
+    
     func createPopUp(text : String, color : SKColor) -> SKLabelNode {
         let popup = SKLabelNode(text: text)
         popup.fontColor = color

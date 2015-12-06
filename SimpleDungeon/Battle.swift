@@ -10,6 +10,7 @@ import Foundation
 
 protocol BattleListener {
     func onEntityDestroyed(entity : Entity) -> Void
+    func didSetPrimaryTarget(entity : Entity) -> Void
     func onBattleEnded() -> Void
     
     func onActionPerformed() -> Void
@@ -30,6 +31,12 @@ class BattleModel {
     
     let player  : Entity
     var currentSkill : Skill?
+    var primaryTarget: Entity? {
+        didSet {
+            guard let t = primaryTarget else { return }
+            notifier.notify { listener in listener.didSetPrimaryTarget(t) }
+        }
+    }
     
     let strSkill : Skill
     let intSkill : Skill
@@ -95,40 +102,6 @@ class BattleModel {
         strSkill.updateTargetFilter(self)
         intSkill.updateTargetFilter(self)
         wilSkill.updateTargetFilter(self)
-    }
-    
-    func setAbility(a : Ability) {
-        switch a {
-        case Ability.Str : currentSkill = strSkill
-        case Ability.Int : currentSkill = intSkill
-        case Ability.Wil : currentSkill = wilSkill
-        default : currentSkill = nil
-        }
-    }
-    
-    func setTarget(guy : Entity) {
-        if let s = currentSkill {
-            s.setTarget(badGuys, primary: guy)
-        }
-    }
-    
-    func performAction() {
-        if let s = currentSkill {
-            s.perform(SkillListener(model: self))
-            currentTurn = Turn.Enemy
-            
-            notifier.notify() { listener in listener.onActionPerformed() }
-            notifier.notify() { listener in listener.onTurnChanged(self.currentTurn) }
-            
-            if badGuys.count == 0 { notifier.notify({ listener in listener.onBattleEnded() }) }
-        }
-    }
-    
-    func actWhenReady() {
-        let hasTarget = currentSkill?.primaryTarget != nil
-        let hasAbility = currentSkill != nil
-        
-        if hasTarget && hasAbility { performAction() }
     }
     
     func generateBadGuyActions() -> [()->Void]{
