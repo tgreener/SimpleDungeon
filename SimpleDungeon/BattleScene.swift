@@ -74,7 +74,65 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate {
         case Turn.Enemy:
             battleView.touchEnabled = false
             
-            let badGuyActionFunctions = battle.generateBadGuyActions()
+            struct SkillListener : SkillApplicationListener {
+                let model : BattleModel
+                
+                init(model : BattleModel) {
+                    self.model = model
+                }
+                
+                func receivesDamage(target target: Entity, amount: Int) {
+                    target.characterComponent?.health.decrease(amount)
+                    target.graphicComponent?.battleGraphic?.showDamagePopup(amount)
+                    
+                    print((target === model.player ? "Player" : "Target") + " HP : \(target.characterComponent!.health.currentValue)")
+                    if target.characterComponent?.health.currentValue == 0 {
+                        model.notifier.notify() { listener in listener.onEntityDestroyed(target) }
+                        model.badGuys = model.badGuys.filter() { $0 !== target }
+                    }
+                }
+                
+                func receivesHealing(target target: Entity, amount: Int) {
+                    target.characterComponent?.health.increase(amount)
+                    target.graphicComponent?.battleGraphic?.showHealingPopup(amount)
+                }
+                
+                func receivesBuff(target target: Entity, buff: AnyObject?) {
+                    
+                }
+                
+                func blocksAttack(target target: Entity, baseDamage: Int) {
+                    target.graphicComponent?.battleGraphic?.showBlockPopup()
+                    print((target === model.player ? "Player" : "Target") + " blocks!")
+                }
+                
+                func dodgesAttack(target target: Entity, baseDamage: Int) {
+                    target.graphicComponent?.battleGraphic?.showDodgePopup()
+                    print((target === model.player ? "Player" : "Target") + " dodges!")
+                }
+                
+                func parriesAttack(target target: Entity, baseDamage: Int) {
+                    target.graphicComponent?.battleGraphic?.showParryPopup()
+                    print((target === model.player ? "Player" : "Target") + " parries!")
+                }
+            }
+            
+            func generateBadGuyActions() -> [()->Void]{
+                var actionFunctions : [() -> Void] = Array<()->Void>()
+                
+                for guy in battle.badGuys {
+                    let badSkill = Skill(character: guy!.characterComponent!, targetFilterCreator: skillTargetNone)
+                    badSkill.setTarget([], primary: player)
+                    
+                    actionFunctions.append {
+                        badSkill.perform(SkillListener(model: self.battle))
+                    }
+                }
+                
+                return actionFunctions
+            }
+            
+            let badGuyActionFunctions = generateBadGuyActions()
             
             func runBadGuyActions(actions : [()->Void]) {
                 runAction(SKAction.sequence([
@@ -86,6 +144,11 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate {
                         }
                         else {
                             self.battleView.touchEnabled = true
+                            let badGuyTurnCompleteRules = GKRuleSystem()
+                            badGuyTurnCompleteRules.assertFact(String(TurnFacts.AITurnComplete))
+                            
+                            badGuyTurnCompleteRules.addRule(TurnRule(battle: self.battle))
+                            badGuyTurnCompleteRules.evaluate()
                         }
                     }
                     ]))
@@ -110,5 +173,7 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate {
     
     func onTargetTouched(target: Entity) -> Void {
         battleCommandController.runSingleCommand(TargetSelectedCommand(battle: self.battle, target: target))
+        
+        if battle.badGuys.count == 0 { self.battle.notifier.notify({ listener in listener.onBattleEnded() }) }
     }
 }

@@ -23,16 +23,14 @@ class TargetSelectedRule: GKRule {
     }
     
     override func performActionWithSystem(system: GKRuleSystem) {
+        guard let currentSkill = self.model.currentSkill else { return }
         self.model.primaryTarget = target
-        self.model.currentSkill!.setTarget(self.model.badGuys, primary: target)
-        
-        self.model.currentSkill!.perform(SkillListener(model: self.model))
-        self.model.currentTurn = Turn.Enemy
+        currentSkill.setTarget(self.model.badGuys, primary: target)
+        currentSkill.perform(SkillListener(model: self.model))
         
         self.model.notifier.notify() { listener in listener.onActionPerformed() }
-        self.model.notifier.notify() { listener in listener.onTurnChanged(self.model.currentTurn) }
         
-        if self.model.badGuys.count == 0 { self.model.notifier.notify({ listener in listener.onBattleEnded() }) }
+        system.assertFact(String(TurnFacts.PlayerTurnComplete))
     }
     
     struct SkillListener : SkillApplicationListener {

@@ -23,6 +23,7 @@ struct TargetSelectedCommand : BattleCommand {
         let actionsRuleSystem : GKRuleSystem = GKRuleSystem()
         
         actionsRuleSystem.addRule(TargetSelectedRule(battle: self.model, target: self.target))
+        actionsRuleSystem.addRule(TurnRule(battle: self.model))
         
         actionsRuleSystem.evaluate()
     }

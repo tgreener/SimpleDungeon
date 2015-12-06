@@ -6,20 +6,30 @@
 //  Copyright © 2015 Todd Greener. All rights reserved.
 //
 
-import Foundation
+import GameplayKit
 
 enum Turn {
     case Player, Enemy
 }
 
-class TurnRule {
+enum TurnFacts : String {
+    case PlayerTurnComplete, AITurnComplete
+}
+
+class TurnRule : GKRule {
+    
     unowned let battle : BattleModel
     
-    init(battle : BattleModel) {
+    init(battle: BattleModel) {
         self.battle = battle
     }
     
-    func applyRule() {
-        battle.currentTurn = battle.currentTurn == Turn.Player ? Turn.Enemy : Turn.Player
+    override func evaluatePredicateWithSystem(system: GKRuleSystem) -> Bool {
+        return system.gradeForFact(String(TurnFacts.PlayerTurnComplete)) == 1.0 ||
+               system.gradeForFact(String(TurnFacts.AITurnComplete)) == 1.0
+    }
+    
+    override func performActionWithSystem(system: GKRuleSystem) {
+        self.battle.currentTurn = self.battle.currentTurn == Turn.Player ? Turn.Enemy : Turn.Player
     }
 }
