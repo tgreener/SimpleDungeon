@@ -10,7 +10,7 @@ import SpriteKit
 
 class BattleGraphic: TouchSprite {
 
-    var entity: Entity!
+    weak var entity: Entity!
     
     func createPopUp(text : String, color : SKColor) -> SKLabelNode {
         let popup = SKLabelNode(text: text)
@@ -32,21 +32,36 @@ class BattleGraphic: TouchSprite {
     
     func showDamagePopup(damage : Int) {
         addChild(createPopUp("\(damage)", color: SKColor.orangeColor()))
+        
+        guard let character = entity.characterComponent else { return }
+        print((character.isPlayer ? "Player" : "Target") + " HP : \(character.health.currentValue)")
     }
     
     func showHealingPopup(amount : Int) {
         addChild(createPopUp("\(amount)", color: SKColor.greenColor()))
+        
+        guard let character = entity.characterComponent else { return }
+        print((character.isPlayer ? "Player" : "Target") + " HP : \(character.health.currentValue)")
     }
     
     func showBlockPopup() {
         addChild(createPopUp("BLOCK", color: SKColor.whiteColor()))
+        
+        guard let character = entity.characterComponent else { return }
+        print((character.isPlayer ? "Player" : "Target") + " blocks!")
     }
     
     func showParryPopup() {
         addChild(createPopUp("PARRY", color: SKColor.whiteColor()))
+        
+        guard let character = entity.characterComponent else { return }
+        print((character.isPlayer ? "Player" : "Target") + " parries!")
     }
     
     func showDodgePopup() {
         addChild(createPopUp("DODGE", color: SKColor.whiteColor()))
+        
+        guard let character = entity.characterComponent else { return }
+        print((character.isPlayer ? "Player" : "Target") + " dodges!")
     }
 }

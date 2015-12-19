@@ -24,14 +24,17 @@ class GameCharacter {
     var parry : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Parry) } }
     
     let inventory : Inventory = Inventory()
+    let isPlayer  : Bool
     
-    init(strVal : UInt, intVal : UInt, wilVal : UInt) {
+    init(strVal : UInt, intVal : UInt, wilVal : UInt, isPlayer : Bool = false) {
         strength = CharacterStatistic(name : "Strength", beginningValue: strVal)
         intelligence = CharacterStatistic(name : "Intelligence", beginningValue: intVal)
         will = CharacterStatistic(name : "Will", beginningValue: wilVal)
         
         health = BaseCharacterResource()
         magic  = BaseCharacterResource()
+        
+        self.isPlayer = isPlayer
     }
     
     func onSuccessfulStrengthChallenge(difficulty difficulty : UInt) {

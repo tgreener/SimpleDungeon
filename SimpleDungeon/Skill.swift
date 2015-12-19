@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Todd Greener. All rights reserved.
 //
 
-import Foundation
+import GameplayKit
 
 protocol SkillApplicationListener {
     func receivesDamage(target target : Entity, amount : Int) -> Void
@@ -40,34 +40,5 @@ class Skill {
     
     func updateTargetFilter(battle: BattleModel) {
         self.targetFilter = targetFilterGenerator(skill: self, battle: battle)
-    }
-    
-    func perform(skillListener : SkillApplicationListener) -> Void {
-        if let target = self.primaryTarget {
-            apply(target : target, skillListener : skillListener)
-            for guy in targets {
-                apply(target : guy!, skillListener : skillListener)
-            }
-        }
-    }
-    
-    func apply(target target : Entity, skillListener : SkillApplicationListener) {
-        let defenseRoll : Int = Int(random(0, maxVal: 99))
-        let baseDamage : Int = character.power
-        
-        guard let characterComponent = target.characterComponent else { return }
-        
-        if defenseRoll < characterComponent.block {
-            skillListener.blocksAttack(target: target, baseDamage: baseDamage)
-        }
-        else if defenseRoll < (characterComponent.block + characterComponent.dodge) {
-            skillListener.dodgesAttack(target: target, baseDamage: baseDamage)
-        }
-        else if defenseRoll < (characterComponent.block + characterComponent.dodge + characterComponent.parry) {
-            skillListener.parriesAttack(target: target, baseDamage: baseDamage)
-        }
-        else {
-            skillListener.receivesDamage(target: target, amount: baseDamage)
-        }
     }
 }

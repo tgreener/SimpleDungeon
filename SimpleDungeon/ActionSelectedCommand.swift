@@ -9,15 +9,16 @@
 import Foundation
 
 struct ActionSelectedCommand : BattleCommand {
-    unowned let model : BattleModel
+    unowned let ref : BattleRef
     unowned let skill : Skill
     
-    init(model : BattleModel, skill : Skill) {
-        self.model = model
+    init(ref : BattleRef, skill : Skill) {
+        self.ref = ref
         self.skill = skill
     }
     
     func runCommand() -> Void {
-        self.model.currentSkill = self.skill
+        ref.battle.currentSkill = self.skill
+        ref.battleFlowRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected))
     }
 }

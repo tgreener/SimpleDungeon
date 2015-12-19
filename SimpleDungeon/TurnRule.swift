@@ -8,20 +8,16 @@
 
 import GameplayKit
 
-enum Turn {
-    case Player, Enemy
-}
-
 enum TurnFacts : String {
     case PlayerTurnComplete, AITurnComplete
 }
 
 class TurnRule : GKRule {
     
-    unowned let battle : BattleModel
+    unowned let ref : BattleRef
     
-    init(battle: BattleModel) {
-        self.battle = battle
+    init(ref: BattleRef) {
+        self.ref = ref
     }
     
     override func evaluatePredicateWithSystem(system: GKRuleSystem) -> Bool {
@@ -30,6 +26,6 @@ class TurnRule : GKRule {
     }
     
     override func performActionWithSystem(system: GKRuleSystem) {
-        self.battle.currentTurn = self.battle.currentTurn == Turn.Player ? Turn.Enemy : Turn.Player
+        ref.battle.currentTurn = ref.battle.currentTurn == Turn.Player ? Turn.Enemy : Turn.Player
     }
 }

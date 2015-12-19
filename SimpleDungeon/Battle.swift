@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum Turn {
+    case Player, Enemy
+}
+
 protocol BattleListener {
     func onEntityDestroyed(entity : Entity) -> Void
     func didSetPrimaryTarget(entity : Entity) -> Void

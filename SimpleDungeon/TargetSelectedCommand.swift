@@ -11,20 +11,20 @@ import GameplayKit
 
 struct TargetSelectedCommand : BattleCommand {
     
-    unowned let model : BattleModel
+    unowned let ref : BattleRef
     unowned let target: Entity
     
-    init(battle : BattleModel, target : Entity) {
-        self.model  = battle
+    init(ref : BattleRef, target : Entity) {
+        self.ref  = ref
         self.target = target
     }
     
     func runCommand() {
-        let actionsRuleSystem : GKRuleSystem = GKRuleSystem()
         
-        actionsRuleSystem.addRule(TargetSelectedRule(battle: self.model, target: self.target))
-        actionsRuleSystem.addRule(TurnRule(battle: self.model))
+        guard let currentSkill = ref.battle.currentSkill else { return }
+        ref.battle.primaryTarget = target
+        currentSkill.setTarget(ref.battle.badGuys, primary: target)
         
-        actionsRuleSystem.evaluate()
+        ref.battleFlowRuleSystem.assertFact(String(BattleFlowFacts.TargetSelected))
     }
 }
