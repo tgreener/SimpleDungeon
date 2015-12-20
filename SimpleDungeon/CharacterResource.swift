@@ -18,15 +18,13 @@ protocol CharacterResource {
 struct BaseCharacterResource : CharacterResource {
     var currentValue : Int
     
-    let MAX_VALUE : Int
+    let MAX_VALUE : Int = 100
     
     init() {
-        MAX_VALUE = 100
         currentValue = MAX_VALUE
     }
     
     init(startingValue: Int) {
-        MAX_VALUE = 100
         currentValue = startingValue
     }
     

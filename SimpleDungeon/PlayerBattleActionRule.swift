@@ -25,35 +25,10 @@ class PlayerBattleActionRule : GKRule {
             ref.battle.currentTurn == Turn.Player
     }
     
-    func performAction(skill: Skill) {
-        guard let primaryTarget = skill.primaryTarget else {return}
-        performActionOnTarget(primaryTarget, attacker: skill.character)
-        
-        for guy in skill.targets {
-            guard let target = guy else { continue }
-            performActionOnTarget(target, attacker: skill.character)
-        }
-    }
-    
-    func performActionOnTarget(target: Entity, attacker: GameCharacter) {
-        guard let targetCharacter = target.characterComponent else { return }
-        
-        let skillApplicationRuleSystem = GKRuleSystem()
-        skillApplicationRuleSystem.addRule(SkillApplicationRule(target: targetCharacter))
-        skillApplicationRuleSystem.addRule(DidBlockRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(DidParryRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(DidDodgeRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(FailedDefenseRule(ref: ref, defender: target, attacker: attacker))
-        
-        skillApplicationRuleSystem.evaluate()
-    }
-    
     override func performActionWithSystem(system: GKRuleSystem) {
         guard let currentSkill = ref.battle.currentSkill else { return }
         
-        performAction(currentSkill)
+        currentSkill.perform(ref)
         ref.battle.notifier.notify() { listener in listener.onActionPerformed() }
-        
-        system.assertFact(String(TurnFacts.PlayerTurnComplete))
     }
 }

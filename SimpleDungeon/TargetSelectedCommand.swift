@@ -25,6 +25,6 @@ struct TargetSelectedCommand : BattleCommand {
         ref.battle.primaryTarget = target
         currentSkill.setTarget(ref.battle.badGuys, primary: target)
         
-        ref.battleFlowRuleSystem.assertFact(String(BattleFlowFacts.TargetSelected))
+        ref.playerInteractionRuleSystem.assertFact(String(BattleFlowFacts.TargetSelected))
     }
 }

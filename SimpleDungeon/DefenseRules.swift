@@ -91,9 +91,9 @@ class FailedDefenseRule : GKRule {
         defender.characterComponent?.health.decrease(attacker.power)
         defender.graphicComponent?.battleGraphic?.showDamagePopup(attacker.power)
 
-        if defender.characterComponent?.health.currentValue == 0 {
+        if defender.characterComponent!.isDead {
             ref.battle.notifier.notify() { listener in listener.onEntityDestroyed(self.defender) }
-            ref.battle.badGuys = ref.battle.badGuys.filter() { $0 !== self.defender }
+//            ref.battle.badGuys = ref.battle.badGuys.filter() { $0 !== self.defender }
         }
     }
 }

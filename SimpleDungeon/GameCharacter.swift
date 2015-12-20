@@ -23,6 +23,8 @@ class GameCharacter {
     var block : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Block) } }
     var parry : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Parry) } }
     
+    var isDead : Bool { get { return health.currentValue == 0 } }
+    
     let inventory : Inventory = Inventory()
     let isPlayer  : Bool
     

@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5378C151BF9872B0099956F /* BattleFactory.swift */; };
+		F53B57BF1C260EC400396A4B /* CharacterTurnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53B57BE1C260EC400396A4B /* CharacterTurnRule.swift */; };
 		F5432A471C056B8F000AD666 /* BattleUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5432A461C056B8F000AD666 /* BattleUI.swift */; };
 		F563BCEC1C1A465A00DBEA1E /* DefenseRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */; };
 		F563BCF01C1A4AE100DBEA1E /* SkillApplicationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */; };
-		F59413331BFAD2A800A55098 /* TurnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59413321BFAD2A800A55098 /* TurnRule.swift */; };
 		F5B0D4871C13E73F000F46C5 /* ActionSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */; };
 		F5B0D4891C13F24E000F46C5 /* TargetSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */; };
 		F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */; };
@@ -60,10 +60,10 @@
 
 /* Begin PBXFileReference section */
 		F5378C151BF9872B0099956F /* BattleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleFactory.swift; sourceTree = "<group>"; };
+		F53B57BE1C260EC400396A4B /* CharacterTurnRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterTurnRule.swift; sourceTree = "<group>"; };
 		F5432A461C056B8F000AD666 /* BattleUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleUI.swift; sourceTree = "<group>"; };
 		F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefenseRules.swift; sourceTree = "<group>"; };
 		F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillApplicationRule.swift; sourceTree = "<group>"; };
-		F59413321BFAD2A800A55098 /* TurnRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRule.swift; sourceTree = "<group>"; };
 		F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSelectedCommand.swift; sourceTree = "<group>"; };
 		F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetSelectedCommand.swift; sourceTree = "<group>"; };
 		F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemFactory.swift; sourceTree = "<group>"; };
@@ -150,9 +150,9 @@
 		F59413311BFAD26F00A55098 /* Rules */ = {
 			isa = PBXGroup;
 			children = (
-				F59413321BFAD2A800A55098 /* TurnRule.swift */,
 				F5E888311C1FA92F00F215D2 /* PlayerBattleActionRule.swift */,
 				F5E888331C1FF79A00F215D2 /* BadGuyBattleActionRule.swift */,
+				F53B57BE1C260EC400396A4B /* CharacterTurnRule.swift */,
 			);
 			name = Rules;
 			sourceTree = "<group>";
@@ -476,8 +476,8 @@
 				F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
 				F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */,
+				F53B57BF1C260EC400396A4B /* CharacterTurnRule.swift in Sources */,
 				F5432A471C056B8F000AD666 /* BattleUI.swift in Sources */,
-				F59413331BFAD2A800A55098 /* TurnRule.swift in Sources */,
 				F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */,
 				F5B67DEA1B7327240036D56C /* Notifier.swift in Sources */,
 				F5D5B89C1B7852050067BBD2 /* CharacterMenuScene.swift in Sources */,

@@ -19,6 +19,6 @@ struct ActionSelectedCommand : BattleCommand {
     
     func runCommand() -> Void {
         ref.battle.currentSkill = self.skill
-        ref.battleFlowRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected))
+        ref.playerInteractionRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected))
     }
 }

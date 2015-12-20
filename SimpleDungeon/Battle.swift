@@ -18,7 +18,6 @@ protocol BattleListener {
     func onBattleEnded() -> Void
     
     func onActionPerformed() -> Void
-    func onTurnChanged(turn : Turn) -> Void
 }
 
 // Super janky proto-demo/just-make-it work code
@@ -30,7 +29,7 @@ enum Ability {
 class BattleModel {
     let notifier : Notifier<BattleListener> = Notifier<BattleListener>()
     
-    var badGuys : [Entity?]
+    var badGuys : [Entity]
     var entityIndexes : [Entity : Int] = [Entity : Int]()
     
     let player  : Entity
@@ -44,16 +43,14 @@ class BattleModel {
     let intSkill : Skill
     let wilSkill : Skill
     
-    var currentTurn : Turn = Turn.Player { didSet {
-        notifier.notify { listener in listener.onTurnChanged(self.currentTurn) }
-    }}
-
-    init(player : Entity, badGuys : [Entity?]) {
+    var currentTurn : Turn = Turn.Player
+    
+    init(player : Entity, badGuys : [Entity]) {
         self.player = player
         self.badGuys = badGuys
         
-        for (index, g) in self.badGuys.enumerate() {
-            if let guy = g { entityIndexes[guy] = index }
+        for (index, guy) in self.badGuys.enumerate() {
+            entityIndexes[guy] = index
         }
         
         strSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetNone)

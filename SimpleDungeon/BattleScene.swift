@@ -21,7 +21,7 @@ enum BattleFlowFacts : String {
 protocol BattleRef : class {
     var battle     : BattleModel! { get }
     var battleView : BattleUI!    { get }
-    var battleFlowRuleSystem : GKRuleSystem { get }
+    var playerInteractionRuleSystem : GKRuleSystem { get }
 }
 
 class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
@@ -30,13 +30,15 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
     var battleView : BattleUI!
     var battleCommandController = BattleCommandController()
     
-    let battleFlowRuleSystem = GKRuleSystem()
+    var characterTurnCounter : UInt = 0
+    
+    let playerInteractionRuleSystem = GKRuleSystem()
+    let battleTurnRuleSystem = GKRuleSystem()
 
     override func createSceneContents() {
         super.createSceneContents()
         
-        battleFlowRuleSystem.addRule(PlayerBattleActionRule(ref: self))
-        battleFlowRuleSystem.addRule(TurnRule(ref: self))
+        playerInteractionRuleSystem.addRule(PlayerBattleActionRule(ref: self))
         
         player.graphicComponent?.battleGraphic?.addTouchHandler { sprite in
             self.sceneController?.gotoCharacterMenuScene()
@@ -46,29 +48,65 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
         
+        // Setup View
         var badGuyGraphics : [BattleGraphic] = [BattleGraphic]()
         
         for guy in battle.badGuys {
-            if let graphic = guy?.graphicComponent?.battleGraphic {
+            if let graphic = guy.graphicComponent?.battleGraphic {
                 badGuyGraphics.append(graphic)
             }
         }
         
-        battleView = BattleUI(viewSize: self.viewSize, playerGraphic: player.graphicComponent!.battleGraphic!, badGuyGraphics: badGuyGraphics, delegate: self, battle: battle);
+        battleView = BattleUI(viewSize: self.viewSize,
+            playerGraphic  : player.graphicComponent!.battleGraphic!,
+            badGuyGraphics : badGuyGraphics,
+            delegate       : self);
+        
         battleView.didMoveToView(view)
         addChild(battleView)
         
+        // Let's try to get rid of this weirdness
         battle.notifier.addListenerWithName(self, name: BATTLE_LISTENER_KEY)
         
-        battleFlowRuleSystem.reset()
+        // Setup Rules
+        playerInteractionRuleSystem.reset()
+        
+        battleTurnRuleSystem.removeAllRules()
+        battleTurnRuleSystem.reset()
+        
+        let badGuyTurnAction = { (system : GKRuleSystem, entity : Entity) in self.onBadGuyAction(entity) }
+        let playerTurnAction = { (system : GKRuleSystem, entity : Entity) in self.onPlayerAction() }
+        
+        battleTurnRuleSystem.addRule(CharacterTurnRule(turnValue: 0, entity: self.player, actionFunction: playerTurnAction))
+        
+        var counter : UInt = 1
+        for guy in battle.badGuys {
+            battleTurnRuleSystem.addRule(CharacterTurnRule(turnValue: counter, entity: guy, actionFunction: badGuyTurnAction))
+            counter++
+        }
+        
+        self.characterTurnCounter = 0
+        evaluateTurnOrder()
     }
     
     override func willMoveFromView(view: SKView) {
         battleView.willMoveFromView(view)
         battleView.removeFromParent()
         battle.notifier.removeListener(named: BATTLE_LISTENER_KEY)
+        battle = nil
     }
 
+    // MARK: Battle Behavior Methods
+    func evaluateTurnOrder() {
+        battleTurnRuleSystem.assertFact(NSNumber(unsignedInteger: self.characterTurnCounter))
+        battleTurnRuleSystem.evaluate()
+        battleTurnRuleSystem.reset()
+        
+        let numFighters : UInt = 1 + UInt(battle.badGuys.count)
+        self.characterTurnCounter = (characterTurnCounter + 1) % numFighters
+    }
+    
+    // MARK: Battle model event listeners
     func didSetPrimaryTarget(entity: Entity) {
         battleView.primaryTargetChosen(entity.graphicComponent!.battleGraphic!, target: entity)
     }
@@ -85,81 +123,46 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         battleView.onActionPerformed()
     }
     
-    func onTurnChanged(turn: Turn) {
-        switch turn {
-        case Turn.Player:
-            battleView.touchEnabled = true
-            battleFlowRuleSystem.reset()
-            
-            guard let _ = battle.currentSkill else { break }
-            battleFlowRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected))
-        case Turn.Enemy:
-            battleView.touchEnabled = false
-            
-//            func performActionOnTarget(target: Entity, attacker: GameCharacter) {
-//                guard let targetCharacter = target.characterComponent else { return }
-//                
-//                let skillApplicationRuleSystem = GKRuleSystem()
-//                skillApplicationRuleSystem.addRule(SkillApplicationRule(target: targetCharacter))
-//                skillApplicationRuleSystem.addRule(DidBlockRule(ref: self, defender: target, attacker: attacker))
-//                skillApplicationRuleSystem.addRule(DidParryRule(ref: self, defender: target, attacker: attacker))
-//                skillApplicationRuleSystem.addRule(DidDodgeRule(ref: self, defender: target, attacker: attacker))
-//                skillApplicationRuleSystem.addRule(FailedDefenseRule(ref: self, defender: target, attacker: attacker))
-//                
-//                skillApplicationRuleSystem.evaluate()
-//            }
-//            
-//            func performAction(skill: Skill) {
-//                guard let primaryTarget = skill.primaryTarget else {return}
-//                performActionOnTarget(primaryTarget, attacker: skill.character)
-//                
-//                for guy in skill.targets {
-//                    guard let target = guy else { continue }
-//                    performActionOnTarget(target, attacker: skill.character)
-//                }
-//            }
-//
-//            func generateBadGuyActions() -> [()->Void]{
-//                var actionFunctions : [() -> Void] = Array<()->Void>()
-//                
-//                for guy in battle.badGuys {
-//                    let badSkill = Skill(character: guy!.characterComponent!, targetFilterCreator: skillTargetNone)
-//                    badSkill.setTarget([], primary: player)
-//                    
-//                    actionFunctions.append {
-//                        performAction(badSkill)
-//                    }
-//                }
-//                
-//                return actionFunctions
-//            }
-//            
-//            let badGuyActionFunctions = generateBadGuyActions()
-//            
-//            func runBadGuyActions(actions : [()->Void]) {
-//                runAction(SKAction.sequence([
-//                    SKAction.waitForDuration(0.4),
-//                    SKAction.runBlock {
-//                        if actions.count > 0 {
-//                            actions[0]()
-//                            runBadGuyActions(Array(actions[1..<actions.count]))
-//                        }
-//                        else {
-//                            self.battleView.touchEnabled = true
-//                            let badGuyTurnCompleteRules = GKRuleSystem()
-//                            badGuyTurnCompleteRules.assertFact(String(TurnFacts.AITurnComplete))
-//                            
-//                            badGuyTurnCompleteRules.addRule(TurnRule(ref: self))
-//                            badGuyTurnCompleteRules.evaluate()
-//                        }
-//                    }
-//                    ]))
-//            }
-//            
-//            runBadGuyActions(badGuyActionFunctions)
+    // MARK: UI Action Completion Listener
+    func onActionAnimationFinished() {
+        let allDead = battle.badGuys.reduce(true) { (allDead : Bool, entity : Entity) in
+            return allDead && entity.characterComponent!.isDead
         }
+        
+        let playerDead = player.characterComponent!.isDead
+        
+        if allDead || playerDead {
+            self.battle.notifier.notify({ listener in listener.onBattleEnded() })
+            return
+        }
+        
+        evaluateTurnOrder()
     }
     
+    // MARK: Entity Action Methods.
+    // battleTurnRuleSystem.evaluate() CANNOT be called by these methods
+    func onBadGuyAction(guy : Entity) {
+        if guy.characterComponent!.isDead {
+            runAction(SKAction.runBlock { self.onActionAnimationFinished() })
+            return
+        }
+        
+        let badSkill = Skill(character: guy.characterComponent!, targetFilterCreator: skillTargetNone)
+        badSkill.setTarget([], primary: player)
+        
+        badSkill.perform(self)
+        onActionPerformed()
+    }
+    
+    func onPlayerAction() {
+        battleView.touchEnabled = true
+        playerInteractionRuleSystem.reset()
+        
+        if let _ = battle.currentSkill { playerInteractionRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected)) }
+    }
+    
+    
+    // MARK: BattleUI Button Listeners
     func onAbilityButtonTouched(ability : Ability) -> Void {
         var skill : Skill? = nil
         switch ability {
@@ -171,13 +174,11 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         
         guard let s = skill else { return }
         battleCommandController.runSingleCommand(ActionSelectedCommand(ref: self, skill: s))
-        battleFlowRuleSystem.evaluate()
+        playerInteractionRuleSystem.evaluate()
     }
     
     func onTargetTouched(target: Entity) -> Void {
         battleCommandController.runSingleCommand(TargetSelectedCommand(ref: self, target: target))
-        battleFlowRuleSystem.evaluate()
-        
-        if battle.badGuys.count == 0 { self.battle.notifier.notify({ listener in listener.onBattleEnded() }) }
+        playerInteractionRuleSystem.evaluate()
     }
 }

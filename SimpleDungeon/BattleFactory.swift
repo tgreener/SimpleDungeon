@@ -11,7 +11,7 @@ import SpriteKit
 struct BattleFactory {
     
     static func createBattle(player : Entity) -> BattleModel {
-        var badGuys = [Entity?]()
+        var badGuys = [Entity]()
         
         for _ in 0...5 {
             let badGuyGraphic = BattleGraphic(color: SKColor.yellowColor(), size: CGSizeMake(10, 10))

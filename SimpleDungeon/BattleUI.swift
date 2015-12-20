@@ -11,11 +11,12 @@ import SpriteKit
 protocol BattleUIDelegate : class {
     func onAbilityButtonTouched(ability : Ability) -> Void
     func onTargetTouched(target: Entity) -> Void
+    
+    func onActionAnimationFinished() -> Void
 }
 
 class BattleUI : SKNode {
     var badGuyPositions : [CGPoint] = []
-    let battle : BattleModel
     let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
     let abilityRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 100, 40), nil), centered: true)
     
@@ -26,7 +27,7 @@ class BattleUI : SKNode {
     let badGuyGraphics: [BattleGraphic]
     unowned let delegate : BattleUIDelegate
     
-    init(viewSize : CGSize, playerGraphic : BattleGraphic, badGuyGraphics : [BattleGraphic], delegate : BattleUIDelegate, battle : BattleModel) {
+    init(viewSize : CGSize, playerGraphic : BattleGraphic, badGuyGraphics : [BattleGraphic], delegate : BattleUIDelegate) {
         self.viewSize = viewSize
         self.playerGraphic = playerGraphic
         self.badGuyGraphics = badGuyGraphics
@@ -42,7 +43,6 @@ class BattleUI : SKNode {
         ]
         
         self.delegate = delegate
-        self.battle = battle
         
         super.init()
     }
@@ -145,8 +145,9 @@ class BattleUI : SKNode {
     func onActionPerformed() {
         touchEnabled = false
         runAction(SKAction.sequence([
-            SKAction.waitForDuration(0.2),
+            SKAction.waitForDuration(0.4),
             SKAction.runBlock({
+                self.delegate.onActionAnimationFinished()
                 self.targetRectangle.removeFromParent()
             })
             ]))
