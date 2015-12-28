@@ -83,9 +83,15 @@ class BattleGraphic: TouchSprite {
     }
     
     func doBattleAnimation() {
+        let wiggleAction = SKAction.sequence([
+            SKAction.moveBy(CGVector(dx: 5, dy: 0), duration: 0.1),
+            SKAction.moveBy(CGVector(dx: -10, dy: 0), duration: 0.2),
+            SKAction.moveBy(CGVector(dx: 5, dy: 0), duration: 0.1)
+            ])
+        
         delegate?.battleAnimationBeginning(self, entity: self.entity)
         runAction(SKAction.sequence([
-            SKAction.waitForDuration(0.4),
+            wiggleAction,
             SKAction.runBlock({ [weak delegate] in
                 delegate?.battleAnimationComplete(self, entity: self.entity)
             })

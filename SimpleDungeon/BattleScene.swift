@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 Todd Greener. All rights reserved.
 //
 
-//TODO: UI maintains provides valid state to commands
-//TODO: Commands apply rules
-
 import SpriteKit
 import GameKit
 

@@ -143,17 +143,6 @@ class BattleUI : SKNode, BattleGraphicDelegate {
         if abilityRectangle.parent == nil { addChild(abilityRectangle) }
     }
     
-    func onActionPerformed() {
-        touchEnabled = false
-        runAction(SKAction.sequence([
-            SKAction.waitForDuration(0.4),
-            SKAction.runBlock({
-                self.delegate.onActionAnimationFinished()
-                self.targetRectangle.removeFromParent()
-            })
-            ]))
-    }
-    
     func battleAnimationBeginning(battleGraphice: BattleGraphic, entity: Entity) {
         self.touchEnabled = false
     }
