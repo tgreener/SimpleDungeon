@@ -42,25 +42,25 @@ class Skill {
         self.targetFilter = targetFilterGenerator(skill: self, battle: battle)
     }
     
-    func perform(ref : BattleRef) {
+    func perform() {
         guard let primaryTarget = self.primaryTarget else { return }
-        performActionOnTarget(primaryTarget, attacker: self.character, ref: ref)
+        performActionOnTarget(primaryTarget, attacker: self.character)
         
         for guy in self.targets {
             guard !(guy.characterComponent!.isDead) else { continue }
-            performActionOnTarget(guy, attacker: self.character, ref: ref)
+            performActionOnTarget(guy, attacker: self.character)
         }
     }
     
-    func performActionOnTarget(target: Entity, attacker: GameCharacter, ref : BattleRef) {
+    func performActionOnTarget(target: Entity, attacker: GameCharacter) {
         guard let targetCharacter = target.characterComponent else { return }
         
         let skillApplicationRuleSystem = GKRuleSystem()
         skillApplicationRuleSystem.addRule(SkillApplicationRule(target: targetCharacter))
-        skillApplicationRuleSystem.addRule(DidBlockRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(DidParryRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(DidDodgeRule(ref: ref, defender: target, attacker: attacker))
-        skillApplicationRuleSystem.addRule(FailedDefenseRule(ref: ref, defender: target, attacker: attacker))
+        skillApplicationRuleSystem.addRule(DidBlockRule(defender: target, attacker: attacker))
+        skillApplicationRuleSystem.addRule(DidParryRule(defender: target, attacker: attacker))
+        skillApplicationRuleSystem.addRule(DidDodgeRule(defender: target, attacker: attacker))
+        skillApplicationRuleSystem.addRule(FailedDefenseRule(defender: target, attacker: attacker))
         
         skillApplicationRuleSystem.evaluate()
     }

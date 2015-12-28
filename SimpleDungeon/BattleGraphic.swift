@@ -8,9 +8,16 @@
 
 import SpriteKit
 
+protocol BattleGraphicDelegate : class {
+    func battleAnimationComplete(battleGraphice : BattleGraphic, entity: Entity) -> Void
+    func battleAnimationBeginning(battleGraphice : BattleGraphic, entity: Entity) -> Void
+}
+
 class BattleGraphic: TouchSprite {
 
     weak var entity: Entity!
+    weak var delegate: BattleGraphicDelegate?
+    let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
     
     func createPopUp(text : String, color : SKColor) -> SKLabelNode {
         let popup = SKLabelNode(text: text)
@@ -63,5 +70,38 @@ class BattleGraphic: TouchSprite {
         
         guard let character = entity.characterComponent else { return }
         print((character.isPlayer ? "Player" : "Target") + " dodges!")
+    }
+    
+    func setAsTarget() {
+        if targetRectangle.parent == nil {
+            targetRectangle.strokeColor = SKColor.whiteColor()
+            targetRectangle.position = CGPoint.zero
+            addChild(targetRectangle)
+        }
+        
+        targetRectangle.hidden = false
+    }
+    
+    func doBattleAnimation() {
+        delegate?.battleAnimationBeginning(self, entity: self.entity)
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(0.4),
+            SKAction.runBlock({ [weak delegate] in
+                delegate?.battleAnimationComplete(self, entity: self.entity)
+            })
+            ]))
+    }
+    
+    func didDie() {
+        guard let _ = self.parent else { return }
+        removeFromParent()
+    }
+    
+    func didReceiveDamage(value : UInt) {
+        showDamagePopup(Int(value))
+    }
+    
+    func didReceiveHealing(value : UInt) {
+        showHealingPopup(Int(value))
     }
 }

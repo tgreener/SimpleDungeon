@@ -15,7 +15,7 @@ protocol BattleUIDelegate : class {
     func onActionAnimationFinished() -> Void
 }
 
-class BattleUI : SKNode {
+class BattleUI : SKNode, BattleGraphicDelegate {
     var badGuyPositions : [CGPoint] = []
     let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
     let abilityRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 100, 40), nil), centered: true)
@@ -43,8 +43,13 @@ class BattleUI : SKNode {
         ]
         
         self.delegate = delegate
-        
+
         super.init()
+        
+        self.playerGraphic.delegate = self
+        for guy in self.badGuyGraphics {
+            guy.delegate = self
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -138,10 +143,6 @@ class BattleUI : SKNode {
         if abilityRectangle.parent == nil { addChild(abilityRectangle) }
     }
     
-    func onEntityDestroyed(entity: Entity) {
-        entity.graphicComponent?.battleGraphic?.removeFromParent()
-    }
-    
     func onActionPerformed() {
         touchEnabled = false
         runAction(SKAction.sequence([
@@ -151,5 +152,18 @@ class BattleUI : SKNode {
                 self.targetRectangle.removeFromParent()
             })
             ]))
+    }
+    
+    func battleAnimationBeginning(battleGraphice: BattleGraphic, entity: Entity) {
+        self.touchEnabled = false
+    }
+    
+    func battleAnimationComplete(battleGraphice: BattleGraphic, entity: Entity) {
+        self.targetRectangle.removeFromParent()
+        self.delegate.onActionAnimationFinished()
+    }
+    
+    func beginPlayerTurn() {
+        self.touchEnabled = true
     }
 }

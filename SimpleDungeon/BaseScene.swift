@@ -13,7 +13,7 @@ public class BaseScene : SKScene {
     var sceneController : SceneController? = nil
     
     override init() {
-        super.init(size: UIScreen.mainScreen().applicationFrame.size)
+        super.init(size: UIScreen.mainScreen().bounds.size)
     }
 
     required public init?(coder aDecoder: NSCoder) {

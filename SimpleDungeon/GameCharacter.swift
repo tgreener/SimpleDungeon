@@ -8,6 +8,12 @@
 
 import Foundation
 
+protocol GameCharacterDelegate : class{
+    func didDie() -> Void
+    func didReceiveDamage(damageValue: UInt) -> Void
+    func didReceiveHealing(healingValue: UInt) -> Void
+}
+
 class GameCharacter {
     var strength     : DescriptiveStatistic
     var intelligence : DescriptiveStatistic
@@ -27,6 +33,18 @@ class GameCharacter {
     
     let inventory : Inventory = Inventory()
     let isPlayer  : Bool
+    
+    weak var delegate : GameCharacterDelegate? {
+        didSet {
+            health.addListener { [weak delegate, weak self] (currentValue: UInt, delta: UInt, change: CharacterResourceChange) in
+                guard let s = self else { return }
+                
+                if s.isDead { delegate?.didDie() }
+                if change == CharacterResourceChange.Increase { delegate?.didReceiveHealing(delta) }
+                if change == CharacterResourceChange.Decrease { delegate?.didReceiveDamage(delta) }
+            }
+        }
+    }
     
     init(strVal : UInt, intVal : UInt, wilVal : UInt, isPlayer : Bool = false) {
         strength = CharacterStatistic(name : "Strength", beginningValue: strVal)

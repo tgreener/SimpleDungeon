@@ -14,7 +14,7 @@ import GameKit
 
 let BATTLE_LISTENER_KEY = "BATTLE_LISTENER_KEY"
 
-enum BattleFlowFacts : String {
+enum PlayerBattleFlowFacts : String {
     case SkillSelected, TargetSelected
 }
 
@@ -111,16 +111,12 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         battleView.primaryTargetChosen(entity.graphicComponent!.battleGraphic!, target: entity)
     }
     
-    func onEntityDestroyed(entity: Entity) {
-        battleView.onEntityDestroyed(entity)
-    }
-    
     func onBattleEnded() {
         sceneController?.gotoExploreScene()
     }
     
     func onActionPerformed() {
-        battleView.onActionPerformed()
+        player.graphicComponent?.battleGraphic?.doBattleAnimation()
     }
     
     // MARK: UI Action Completion Listener
@@ -150,15 +146,15 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         let badSkill = Skill(character: guy.characterComponent!, targetFilterCreator: skillTargetNone)
         badSkill.setTarget([], primary: player)
         
-        badSkill.perform(self)
-        onActionPerformed()
+        badSkill.perform()
+        guy.graphicComponent?.battleGraphic?.doBattleAnimation()
     }
     
     func onPlayerAction() {
-        battleView.touchEnabled = true
+        battleView.beginPlayerTurn()
         playerInteractionRuleSystem.reset()
         
-        if let _ = battle.currentSkill { playerInteractionRuleSystem.assertFact(String(BattleFlowFacts.SkillSelected)) }
+        if let _ = battle.currentSkill { playerInteractionRuleSystem.assertFact(String(PlayerBattleFlowFacts.SkillSelected)) }
     }
     
     

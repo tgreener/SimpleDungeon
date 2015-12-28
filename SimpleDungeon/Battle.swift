@@ -13,7 +13,6 @@ enum Turn {
 }
 
 protocol BattleListener {
-    func onEntityDestroyed(entity : Entity) -> Void
     func didSetPrimaryTarget(entity : Entity) -> Void
     func onBattleEnded() -> Void
     

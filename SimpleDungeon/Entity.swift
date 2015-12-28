@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Entity : Hashable {
+class Entity : Hashable, GameCharacterDelegate {
     let graphicComponent : GraphicComponent?
     let characterComponent : GameCharacter?
     var positionComponent : IPoint?
@@ -19,12 +19,25 @@ class Entity : Hashable {
         characterComponent = character
         
         graphicComponent?.battleGraphic?.entity = self
+        characterComponent?.delegate = self
     }
     
     var hashValue : Int {
         get {
             return Int(ObjectIdentifier(self).uintValue)
         }
+    }
+    
+    func didDie() {
+        graphicComponent?.battleGraphic?.didDie()
+    }
+    
+    func didReceiveDamage(damageValue: UInt) {
+        graphicComponent?.battleGraphic?.didReceiveDamage(damageValue)
+    }
+    
+    func didReceiveHealing(healingValue: UInt) {
+        graphicComponent?.battleGraphic?.didReceiveHealing(healingValue)
     }
 }
 
