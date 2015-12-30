@@ -52,9 +52,13 @@ class BattleModel {
             entityIndexes[guy] = index
         }
         
-        strSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetNone)
-        intSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetRow)
-        wilSkill = Skill(character: player.characterComponent!, targetFilterCreator: skillTargetNextInColumn)
+        let strBuilder = SkillBuilder()
+        let intBuilder = SkillBuilder()
+        let wilBuilder = SkillBuilder()
+        
+        strSkill = try! strBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normStr).set(skillTargetNone).build()
+        intSkill = try! intBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normInt).set(skillTargetRow).build()
+        wilSkill = try! wilBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normWil).set(skillTargetNextInColumn).build()
         
         strSkill.updateTargetFilter(self)
         intSkill.updateTargetFilter(self)

@@ -10,6 +10,7 @@
 		F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5378C151BF9872B0099956F /* BattleFactory.swift */; };
 		F53B57BF1C260EC400396A4B /* CharacterTurnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53B57BE1C260EC400396A4B /* CharacterTurnRule.swift */; };
 		F5432A471C056B8F000AD666 /* BattleUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5432A461C056B8F000AD666 /* BattleUI.swift */; };
+		F54624081C334D3000C82D94 /* CharacterDescriptionVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54624071C334D3000C82D94 /* CharacterDescriptionVector.swift */; };
 		F563BCEC1C1A465A00DBEA1E /* DefenseRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */; };
 		F563BCF01C1A4AE100DBEA1E /* SkillApplicationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */; };
 		F5B0D4871C13E73F000F46C5 /* ActionSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */; };
@@ -62,6 +63,7 @@
 		F5378C151BF9872B0099956F /* BattleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleFactory.swift; sourceTree = "<group>"; };
 		F53B57BE1C260EC400396A4B /* CharacterTurnRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterTurnRule.swift; sourceTree = "<group>"; };
 		F5432A461C056B8F000AD666 /* BattleUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleUI.swift; sourceTree = "<group>"; };
+		F54624071C334D3000C82D94 /* CharacterDescriptionVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterDescriptionVector.swift; sourceTree = "<group>"; };
 		F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefenseRules.swift; sourceTree = "<group>"; };
 		F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillApplicationRule.swift; sourceTree = "<group>"; };
 		F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSelectedCommand.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				F5B67E0C1B75B0CB0036D56C /* GameCharacter.swift */,
 				F5B67E081B759C7E0036D56C /* CharacterResource.swift */,
 				F5B67E091B759C7E0036D56C /* DescriptiveStatistic.swift */,
+				F54624071C334D3000C82D94 /* CharacterDescriptionVector.swift */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				F5D5B89E1B7C532C0067BBD2 /* Battle.swift in Sources */,
 				F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */,
 				F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */,
+				F54624081C334D3000C82D94 /* CharacterDescriptionVector.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
 				F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */,
 				F53B57BF1C260EC400396A4B /* CharacterTurnRule.swift in Sources */,

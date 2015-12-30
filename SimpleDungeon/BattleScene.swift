@@ -140,7 +140,8 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
             return
         }
         
-        let badSkill = Skill(character: guy.characterComponent!, targetFilterCreator: skillTargetNone)
+        let skillBuilder = SkillBuilder()
+        let badSkill = try! skillBuilder.set(guy.characterComponent!).set(CharacterDescriptionVector.zero).set(skillTargetNone).build()
         badSkill.setTarget([], primary: player)
         
         badSkill.perform()

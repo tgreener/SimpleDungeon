@@ -30,16 +30,24 @@ class GameCharacter {
     var parry : Int { get { return inventory.equipment.calculateBonus(EquipmentAffix.Bonus.Parry) } }
     
     var isDead : Bool { get { return health.currentValue == 0 } }
+    var statVec: CharacterDescriptionVector {
+        get {
+            return CharacterDescriptionVector(
+                intellect: Float(intelligence.currentValue),
+                strength: Float(strength.currentValue),
+                will: Float(will.currentValue)
+            )
+        }
+    }
     
     let inventory : Inventory = Inventory()
     let isPlayer  : Bool
+    let MIN_VEC_LENGTH : Float = sqrtf(powf(Float(CharacterStatistic.MIN_VALUE), 2) * 3)
     
     weak var delegate : GameCharacterDelegate? {
         didSet {
-            health.addListener { [weak delegate, weak self] (currentValue: UInt, delta: UInt, change: CharacterResourceChange) in
-                guard let s = self else { return }
-                
-                if s.isDead { delegate?.didDie() }
+            health.addListener { [weak delegate, unowned self] (currentValue: UInt, delta: UInt, change: CharacterResourceChange) in
+                if self.isDead { delegate?.didDie() }
                 if change == CharacterResourceChange.Increase { delegate?.didReceiveHealing(delta) }
                 if change == CharacterResourceChange.Decrease { delegate?.didReceiveDamage(delta) }
             }
@@ -56,24 +64,7 @@ class GameCharacter {
         
         self.isPlayer = isPlayer
     }
-    
-    func onSuccessfulStrengthChallenge(difficulty difficulty : UInt) {
-        onSuccessfulChallenge(difficulty: difficulty, stat: strength)
-    }
-    
-    func onSuccessfulIntelligenceChallenge(difficulty difficulty : UInt) {
-        onSuccessfulChallenge(difficulty: difficulty, stat: intelligence)
-    }
-    
-    func onSuccessfulWillChallenge(difficulty difficulty : UInt) {
-        onSuccessfulChallenge(difficulty: difficulty, stat: will)
-    }
-    
-    func onSuccessfulChallenge(difficulty difficulty : UInt, stat : DescriptiveStatistic) {
-        let boundedDifficulty = min(max(difficulty, 1), 10)
-        stat.grow([Float(boundedDifficulty) / 50])
-    }
-    
+        
     func gameClockAdvanced(dt : Float) {
         
         func makeRandomizedDecay(numerator : Float) -> Float {
@@ -88,11 +79,37 @@ class GameCharacter {
         intelligence.decay([makeRandomizedDecay(dt)])
         will.decay([makeRandomizedDecay(dt)])
         
-        NSLog("*** Current Character Stats ***")
-        NSLog("Str  : %d", strength.currentValue)
-        NSLog("Int  : %d", intelligence.currentValue)
-        NSLog("Will : %d", will.currentValue)
-        NSLog("*******************************")
+        printCharacterStats()
     }
     
+    func calculateChangeFromVector(vec: CharacterDescriptionVector) {
+        guard vec.strength >= 0 && vec.intellect >= 0 && vec.will >= 0 else { return }
+        
+        let coefficient = vectorCoefficient(self.statVec.length)
+        let finalVector = vec.normalize() * coefficient
+        
+        strength.grow([finalVector.strength])
+        intelligence.grow([finalVector.intellect])
+        will.grow([finalVector.will])
+        
+        printCharacterStats()
+    }
+    
+    func vectorCoefficient(vectorLength : Float) -> Float {
+        let exponent : Float = 3
+        let slopeCoefficient : Float = 0.05
+        
+        let numerator = slopeCoefficient * powf((vectorLength - MIN_VEC_LENGTH), exponent)
+        let denominator = numerator + 1
+        
+        return 1 - (numerator / denominator)
+    }
+    
+    func printCharacterStats() {
+        NSLog("*** Current Character Stats ***")
+        NSLog("Str  : %d, %f", strength.currentValue, strength.currentProgression)
+        NSLog("Int  : %d, %f", intelligence.currentValue, intelligence.currentProgression)
+        NSLog("Will : %d, %f", will.currentValue, will.currentProgression)
+        NSLog("*******************************")
+    }
 }

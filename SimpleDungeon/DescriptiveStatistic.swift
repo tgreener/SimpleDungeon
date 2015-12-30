@@ -10,6 +10,7 @@ import Foundation
 
 protocol DescriptiveStatistic {
     var currentValue : UInt { get }
+    var currentProgression : Float { get }
     var name : String { get }
     
     func grow(parameters: [Float]?)
@@ -17,17 +18,21 @@ protocol DescriptiveStatistic {
     
     func setGrowthFunction(growthFunction: (startingValue: Float, parameters: [Float]?) -> Float) -> Void
     func setDecayFunction(decayFunction: (startingValue: Float, parameters: [Float]?) -> Float) -> Void
+    
+    static var MAX_VALUE : UInt { get }
+    static var MIN_VALUE : UInt { get }
 }
 
 class CharacterStatistic : DescriptiveStatistic {
     var growthFunction : (startingValue: Float, parameters: [Float]?) -> Float
     var decayFunction  : (startingValue: Float, parameters: [Float]?) -> Float
-    var name : String
-    
-    var currentValue : UInt = 0
-    let MAX_VALUE : UInt = 100
-    
+
     var currentProgression : Float = 0.5
+    var currentValue : UInt = 0
+    
+    let name : String
+    static let MAX_VALUE : UInt = 100
+    static let MIN_VALUE : UInt = 1
     
     init(name : String) {
         growthFunction = { (startingValue: Float, parameters: [Float]?) -> Float in
@@ -69,13 +74,13 @@ class CharacterStatistic : DescriptiveStatistic {
     func resolveProgression() {
         if currentProgression >= 1 {
             currentProgression = currentProgression - 1
-            currentValue = min(currentValue + 1, MAX_VALUE)
+            currentValue = min(currentValue + 1, CharacterStatistic.MAX_VALUE)
             
             resolveProgression()
         }
         else if currentProgression < -0.0000001 {
             currentProgression = currentProgression + 1
-            currentValue = max(UInt(currentValue - 1), UInt(1))
+            currentValue = max(UInt(currentValue - 1), CharacterStatistic.MIN_VALUE)
             
             resolveProgression()
         }
