@@ -27,7 +27,13 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     let badGuyGraphics: [BattleGraphic]
     unowned let delegate : BattleUIDelegate
     
-    init(viewSize : CGSize, playerGraphic : BattleGraphic, badGuyGraphics : [BattleGraphic], delegate : BattleUIDelegate) {
+    init(viewSize : CGSize,
+        playerGraphic : BattleGraphic,
+        badGuyGraphics : [BattleGraphic],
+        delegate : BattleUIDelegate,
+        playerSkills : [SkillUIInfo]
+        )
+    {
         self.viewSize = viewSize
         self.playerGraphic = playerGraphic
         self.badGuyGraphics = badGuyGraphics

@@ -8,25 +8,33 @@
 
 import GameplayKit
 
-class Skill {
-    let targetFilterGenerator : (skill : Skill, battle : BattleModel) -> ((Entity) -> Bool)
+
+protocol SkillUIInfo {
+    var name : String { get }
+}
+
+class Skill : SkillUIInfo {
+    let targetFilterGenerator : SkillTargetFilterGenerator
     var targetFilter : ((Entity) -> Bool)!
     
     let characterChangeVector : CharacterDescriptionVector
+    let name : String
     
     var targets : [Entity] = []
     var primaryTarget : Entity!
     weak var character : GameCharacter!
     
-    init(
-        character : GameCharacter,
+    init(name                 : String,
+        character             : GameCharacter,
         characterChangeVector : CharacterDescriptionVector,
-        targetFilterCreator : (Skill, BattleModel) -> ((Entity) -> Bool))
+        targetFilterCreator   : SkillTargetFilterGenerator
+        )
     {
         self.targetFilter = nil
         self.targetFilterGenerator = targetFilterCreator
         self.character = character
         self.characterChangeVector = characterChangeVector.normalize()
+        self.name = name
     }
     
     func setTarget(entities : [Entity], primary : Entity) {
@@ -46,6 +54,9 @@ class Skill {
             guard !(guy.characterComponent!.isDead) else { continue }
             performActionOnTarget(guy, attacker: self.character)
         }
+        
+        character.calculateChangeFromVector(characterChangeVector)
+        character.gameClockAdvanced(0.5)
     }
     
     func performActionOnTarget(target: Entity, attacker: GameCharacter) {

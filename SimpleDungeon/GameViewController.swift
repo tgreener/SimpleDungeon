@@ -32,7 +32,12 @@ class GameViewController: UIViewController {
         let playerAdventureSquare = TouchSprite(color: SKColor.redColor(), size: CGSizeMake(10, 10))
         let playerBattleSquare = BattleGraphic(color: SKColor.redColor(), size: CGSizeMake(10, 10))
         let graphicComponent = GraphicComponent(explore: playerAdventureSquare, battle: playerBattleSquare)
-        let character = GameCharacter(strVal: 5, intVal: 5, wilVal: 5, isPlayer: true)
+        let character = GameCharacter(
+            strVal: CharacterStatistic.MIN_VALUE,
+            intVal: CharacterStatistic.MIN_VALUE,
+            wilVal: CharacterStatistic.MIN_VALUE,
+            isPlayer: true
+        )
         let player = Entity(graphic: graphicComponent, position: IPoint(x: 0, y: 0), character : character)
         
         player.characterComponent?.inventory.equipment.setEquipment(ItemFactory.createBoringSword(25))

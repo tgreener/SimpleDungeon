@@ -52,7 +52,7 @@ class ExploreScene : GameplayScene, TileSpriteListener {
             
             gridNode.moveSpriteToLocation(player.positionComponent!, sprite: player.graphicComponent!.exploreGraphic!) {
                 self.hasFinishedMove = true
-                self.advanceGameClock(5.0)
+                self.advanceGameClock(0.5)
                 
                 if random(1, maxVal: 100) > 60 {
                     self.sceneController?.gotoBattleScene()

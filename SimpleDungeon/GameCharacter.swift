@@ -40,6 +40,8 @@ class GameCharacter {
         }
     }
     
+    var skills : [Skill] = [Skill]()
+    
     let inventory : Inventory = Inventory()
     let isPlayer  : Bool
     let MIN_VEC_LENGTH : Float = sqrtf(powf(Float(CharacterStatistic.MIN_VALUE), 2) * 3)
@@ -55,14 +57,28 @@ class GameCharacter {
     }
     
     init(strVal : UInt, intVal : UInt, wilVal : UInt, isPlayer : Bool = false) {
+        let growFunction : (Float, [Float]?) -> Float = { startVal, params in
+            guard let delta = params?[0] else { return startVal }
+            return startVal + (delta * 0.05)
+        }
+        
         strength = CharacterStatistic(name : "Strength", beginningValue: strVal)
         intelligence = CharacterStatistic(name : "Intelligence", beginningValue: intVal)
         will = CharacterStatistic(name : "Will", beginningValue: wilVal)
+        
+        intelligence.setGrowthFunction(growFunction)
+        strength.setGrowthFunction(growFunction)
+        will.setGrowthFunction(growFunction)
         
         health = BaseCharacterResource()
         magic  = BaseCharacterResource()
         
         self.isPlayer = isPlayer
+    }
+    
+    func equip(item : InventoryItem) {
+        inventory.equipment.setEquipment(item)
+        skills = inventory.equipment.getAllSkillsGenerators().map { [unowned self] generator in return generator(character: self) }
     }
         
     func gameClockAdvanced(dt : Float) {
@@ -72,7 +88,7 @@ class GameCharacter {
             let randomSignDecider : Float = Float(random(1, maxVal: 100))
             let sign : Float = randomSignDecider < 50 ? 1 : -1
             
-            return dt / (50 + (randomModiferAmount * sign))
+            return numerator / (50 + (randomModiferAmount * sign))
         }
         
         strength.decay([makeRandomizedDecay(dt)])
@@ -85,8 +101,7 @@ class GameCharacter {
     func calculateChangeFromVector(vec: CharacterDescriptionVector) {
         guard vec.strength >= 0 && vec.intellect >= 0 && vec.will >= 0 else { return }
         
-        let coefficient = vectorCoefficient(self.statVec.length)
-        let finalVector = vec.normalize() * coefficient
+        let finalVector = vec.normalize() * calculateGrowthCoefficient(self.statVec.length)
         
         strength.grow([finalVector.strength])
         intelligence.grow([finalVector.intellect])
@@ -95,7 +110,7 @@ class GameCharacter {
         printCharacterStats()
     }
     
-    func vectorCoefficient(vectorLength : Float) -> Float {
+    func calculateGrowthCoefficient(vectorLength : Float) -> Float {
         let exponent : Float = 3
         let slopeCoefficient : Float = 0.05
         
@@ -106,6 +121,8 @@ class GameCharacter {
     }
     
     func printCharacterStats() {
+        guard isPlayer else { return }
+        
         NSLog("*** Current Character Stats ***")
         NSLog("Str  : %d, %f", strength.currentValue, strength.currentProgression)
         NSLog("Int  : %d, %f", intelligence.currentValue, intelligence.currentProgression)

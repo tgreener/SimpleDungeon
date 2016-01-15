@@ -56,9 +56,24 @@ class BattleModel {
         let intBuilder = SkillBuilder()
         let wilBuilder = SkillBuilder()
         
-        strSkill = try! strBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normStr).set(skillTargetNone).build()
-        intSkill = try! intBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normInt).set(skillTargetRow).build()
-        wilSkill = try! wilBuilder.set(player.characterComponent!).set(CharacterDescriptionVector.normWil).set(skillTargetNextInColumn).build()
+        strSkill = try! strBuilder
+            .set("Strength Skill")
+            .set(player.characterComponent!)
+            .set(CharacterDescriptionVector.normStr)
+            .set(skillTargetNone)
+            .build()
+        intSkill = try! intBuilder
+            .set("Intelligence Skill")
+            .set(player.characterComponent!)
+            .set(CharacterDescriptionVector.normInt)
+            .set(skillTargetRow)
+            .build()
+        wilSkill = try! wilBuilder
+            .set("Will Skill")
+            .set(player.characterComponent!)
+            .set(CharacterDescriptionVector.normWil)
+            .set(skillTargetNextInColumn)
+            .build()
         
         strSkill.updateTargetFilter(self)
         intSkill.updateTargetFilter(self)

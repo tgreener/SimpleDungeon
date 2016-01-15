@@ -27,7 +27,7 @@ class CharacterStatistic : DescriptiveStatistic {
     var growthFunction : (startingValue: Float, parameters: [Float]?) -> Float
     var decayFunction  : (startingValue: Float, parameters: [Float]?) -> Float
 
-    var currentProgression : Float = 0.5
+    var currentProgression : Float = 0
     var currentValue : UInt = 0
     
     let name : String
@@ -73,16 +73,23 @@ class CharacterStatistic : DescriptiveStatistic {
     
     func resolveProgression() {
         if currentProgression >= 1 {
-            currentProgression = currentProgression - 1
             currentValue = min(currentValue + 1, CharacterStatistic.MAX_VALUE)
             
-            resolveProgression()
+            if currentValue == CharacterStatistic.MAX_VALUE { currentProgression = 1 }
+            else {
+                currentProgression = currentProgression - 1
+                resolveProgression()
+            }
+            
         }
         else if currentProgression < -0.0000001 {
-            currentProgression = currentProgression + 1
             currentValue = max(UInt(currentValue - 1), CharacterStatistic.MIN_VALUE)
             
-            resolveProgression()
+            if currentValue == CharacterStatistic.MIN_VALUE { currentProgression = 0 }
+            else {
+                currentProgression = currentProgression + 1
+                resolveProgression()
+            }
         }
     }
 }

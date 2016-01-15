@@ -57,7 +57,9 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         battleView = BattleUI(viewSize: self.viewSize,
             playerGraphic  : player.graphicComponent!.battleGraphic!,
             badGuyGraphics : badGuyGraphics,
-            delegate       : self);
+            delegate       : self,
+            playerSkills   : player.characterComponent!.skills
+        );
         
         battleView.didMoveToView(view)
         addChild(battleView)
@@ -109,6 +111,7 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
     }
     
     func onBattleEnded() {
+        player.characterComponent!.health.increase(100)
         sceneController?.gotoExploreScene()
     }
     
@@ -141,7 +144,12 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         }
         
         let skillBuilder = SkillBuilder()
-        let badSkill = try! skillBuilder.set(guy.characterComponent!).set(CharacterDescriptionVector.zero).set(skillTargetNone).build()
+        let badSkill = try! skillBuilder
+            .set("Bad Guy Skill")
+            .set(guy.characterComponent!)
+            .set(CharacterDescriptionVector.normStr)
+            .set(skillTargetNone)
+            .build()
         badSkill.setTarget([], primary: player)
         
         badSkill.perform()

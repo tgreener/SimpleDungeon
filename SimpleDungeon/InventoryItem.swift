@@ -35,6 +35,7 @@ class ConsumableItem : Consumable {
 protocol Equipable {
     func isEquipment() -> Bool
     func getBonus(bonus : EquipmentAffix.Bonus) -> Int
+    func getSkills() -> [SkillCreationFunction]
     
     var affixes : [EquipmentAffix] { get }
     var slot : Equipment.EquipmentSlot? { get }
@@ -46,6 +47,7 @@ struct EquipmentAffix {
     }
     
     var bonus : [Bonus : Int] = [Bonus : Int]()
+    var skills : [SkillCreationFunction] = [SkillCreationFunction]()
 }
 
 class EquipableItem : Equipable {
@@ -70,6 +72,14 @@ class EquipableItem : Equipable {
             return accum + bonusVal
         })
     }
+    
+    func getSkills() -> [SkillCreationFunction] {
+        return affixes.map({ (affix: EquipmentAffix) -> [SkillCreationFunction] in
+            return affix.skills
+        }).reduce([SkillCreationFunction]()) { accum, skills in
+            return accum + skills
+        }
+    }
 }
 
 class InventoryItem : Equipable, Stackable, Consumable {
@@ -80,8 +90,8 @@ class InventoryItem : Equipable, Stackable, Consumable {
     
     var affixes : [EquipmentAffix] {
         get {
-            if let e = equipable { return e.affixes }
-            return []
+            guard let e = equipable else { return [] }
+            return e.affixes
         }
     }
     
@@ -99,23 +109,28 @@ class InventoryItem : Equipable, Stackable, Consumable {
     }
     
     func isEquipment() -> Bool {
-        if let e = equipable { return e.isEquipment() }
-        return false
+        guard let e = equipable else { return false }
+        return e.isEquipment()
     }
     
     func getBonus(bonus: EquipmentAffix.Bonus) -> Int {
-        if let e = equipable { return e.getBonus(bonus) }
-        return 0
+        guard let e = equipable else { return 0 }
+        return e.getBonus(bonus)
+    }
+    
+    func getSkills() -> [SkillCreationFunction] {
+        guard let e = equipable else { return [] }
+        return e.getSkills()
     }
     
     func isConsumable() -> Bool {
-        if let c = consumable { return c.isConsumable() }
-        return false
+        guard let c = consumable else { return false }
+        return c.isConsumable()
     }
     
     func isStackable() -> Bool {
-        if let s = stackable { return s.isStackable() }
-        return false
+        guard let s = stackable else { return false }
+        return s.isStackable()
     }
 }
 

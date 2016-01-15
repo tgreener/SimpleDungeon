@@ -8,7 +8,8 @@
 
 import Foundation
 
-typealias SkillCreationFunction = () -> Skill
+typealias SkillCreationFunction = (character: GameCharacter) -> Skill
+typealias SkillTargetFilterGenerator = (skill: Skill, battle: BattleModel) -> (Entity) -> Bool
 
 let skillTargetRow = { (skill : Skill, battle : BattleModel) -> (Entity) -> Bool  in
     return { [unowned battle, unowned skill] g in
@@ -46,15 +47,21 @@ class SkillBuilder {
     }
     
     weak var character : GameCharacter! = nil
-    var targetFilterGenerator : ((Skill, BattleModel) -> ((Entity) -> Bool))!
+    var targetFilterGenerator : SkillTargetFilterGenerator!
     var characterChangeVector : CharacterDescriptionVector!
+    var name : String!
+    
+    func set(name : String) -> SkillBuilder {
+        self.name = name
+        return self
+    }
     
     func set(character : GameCharacter) -> SkillBuilder {
         self.character = character
         return self
     }
     
-    func set(targetFilterGenerator : (Skill, BattleModel) -> ((Entity) -> Bool)) -> SkillBuilder {
+    func set(targetFilterGenerator : SkillTargetFilterGenerator) -> SkillBuilder {
         self.targetFilterGenerator = targetFilterGenerator
         return self
     }
@@ -65,10 +72,10 @@ class SkillBuilder {
     }
     
     func build() throws -> Skill {
-        guard let c = self.character, t = self.targetFilterGenerator, v = self.characterChangeVector else {
+        guard let n = self.name, c = self.character, t = self.targetFilterGenerator, v = self.characterChangeVector else {
             throw Error.BuildErrorUnsetValues
         }
         
-        return Skill(character: c, characterChangeVector: v, targetFilterCreator: t)
+        return Skill(name: n, character: c, characterChangeVector: v, targetFilterCreator: t)
     }
 }
