@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol BattleUIDelegate : class {
-    func onAbilityButtonTouched(ability : Ability) -> Void
+    func onSkillButtonTouched(skillIndex : Int) -> Void
     func onTargetTouched(target: Entity) -> Void
     
     func onActionAnimationFinished() -> Void
@@ -18,12 +18,13 @@ protocol BattleUIDelegate : class {
 class BattleUI : SKNode, BattleGraphicDelegate {
     var badGuyPositions : [CGPoint] = []
     let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
-    let abilityRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 100, 40), nil), centered: true)
+    var currentlySelectedSkill : TouchSprite? = nil
     
     var touchEnabled : Bool = true
     
     let viewSize : CGSize
     let playerGraphic : BattleGraphic
+    let playerSkills  : [SkillUIInfo]
     let badGuyGraphics: [BattleGraphic]
     unowned let delegate : BattleUIDelegate
     
@@ -36,6 +37,7 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     {
         self.viewSize = viewSize
         self.playerGraphic = playerGraphic
+        self.playerSkills  = playerSkills
         self.badGuyGraphics = badGuyGraphics
         targetRectangle.strokeColor = SKColor.whiteColor()
         
@@ -62,48 +64,52 @@ class BattleUI : SKNode, BattleGraphicDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupAbilityButtons() {
-        func createBattleButton(color : SKColor, ability : Ability) -> TouchSprite {
-            let battleButton = TouchSprite(color: color, size: CGSize(width: 100, height: 40))
-            battleButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            battleButton.position = CGPoint(x: viewSize.width * 0.75, y: viewSize.height * 0.5)
-            battleButton.userInteractionEnabled = true
+    func setupSkillButtons() {
+        func createSkillButton(index : Int, skill : SkillUIInfo) -> LabeledTouchSprite {
+            let skillButton = LabeledTouchSprite(label: skill.name, size: CGSize(width: 100, height: 40))
             
-            battleButton.addTouchHandler { sprite in
-                guard self.touchEnabled else { return }
-                self.abilityChosen(sprite, ability: ability)
+            skillButton.position = CGPoint(x: viewSize.width * 0.75, y: viewSize.height * 0.75)
+            skillButton.userInteractionEnabled = true
+            skillButton.setBorder()
+            
+            skillButton.addTouchHandler { [unowned self] sprite in
+                if let current = self.currentlySelectedSkill {
+                    current.setBorderGlowValue(0)
+                }
+                
+                self.currentlySelectedSkill = sprite
+                sprite.setBorderGlowValue(3.5)
+                self.skillChosen(index)
             }
             
-            return battleButton
+            return skillButton
         }
         
-        func setBattleSpriteScale(sprite : SKSpriteNode) {
-            sprite.setScale(1.0)
-            sprite.setScale((viewSize.height / sprite.frame.height) * 0.16)
+        for (index, skill) in playerSkills.enumerate() {
+            let skillButton = createSkillButton(index, skill: skill)
+            skillButton.position = CGPoint(x: skillButton.position.x, y: skillButton.position.y - (CGFloat(index) * 50))
+            addChild(skillButton)
         }
-        
-        let strengthBattleButton = createBattleButton(SKColor.redColor(), ability: Ability.Str)
-        let intelligenceBattleButton = createBattleButton(SKColor.blueColor(), ability: Ability.Int)
-        let willBattleButton = createBattleButton(SKColor.greenColor(), ability: Ability.Wil)
-        
-        strengthBattleButton.position = CGPointMake(strengthBattleButton.position.x, strengthBattleButton.position.y + 50)
-        willBattleButton.position = CGPointMake(willBattleButton.position.x, willBattleButton.position.y - 50)
-        
+    }
+    
+    func setBattleSpriteScale(sprite : SKSpriteNode) {
+        sprite.setScale(1.0)
+        sprite.setScale((viewSize.height / sprite.frame.height) * 0.16)
+    }
+    
+    func setupPlayerGraphic() {
         playerGraphic.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5)
         setBattleSpriteScale(playerGraphic)
         
-        addChild(strengthBattleButton)
-        addChild(intelligenceBattleButton)
-        addChild(willBattleButton)
         addChild(playerGraphic)
     }
     
-    func setupEnemyInteractions() {
+    func setupEnemyGraphics() {
         for (index, guy) in badGuyGraphics.enumerate() {
             if !(index < 6) { break }
             
             guy.position = badGuyPositions[index]
-            guy.setScale((viewSize.height / guy.frame.height) * 0.16)
+            setBattleSpriteScale(guy)
             
             guy.addTouchHandler { sprite in
                 guard self.touchEnabled else { return }
@@ -115,8 +121,9 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     }
     
     func didMoveToView(view: SKView) {
-        setupAbilityButtons()
-        setupEnemyInteractions()
+        setupSkillButtons()
+        setupPlayerGraphic()
+        setupEnemyGraphics()
     }
     
     func willMoveFromView(view: SKView) {
@@ -141,12 +148,8 @@ class BattleUI : SKNode, BattleGraphicDelegate {
         if targetRectangle.parent == nil { addChild(targetRectangle) }
     }
     
-    func abilityChosen(sprite : SKSpriteNode, ability: Ability) {
-        delegate.onAbilityButtonTouched(ability)
-        
-        abilityRectangle.position = sprite.position
-        abilityRectangle.setScale(sprite.xScale)
-        if abilityRectangle.parent == nil { addChild(abilityRectangle) }
+    func skillChosen(skillIndex : Int) {
+         delegate.onSkillButtonTouched(skillIndex)
     }
     
     func battleAnimationBeginning(battleGraphice: BattleGraphic, entity: Entity) {

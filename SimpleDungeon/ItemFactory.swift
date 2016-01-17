@@ -17,7 +17,7 @@ class  ItemFactory {
             return try! SkillBuilder().set(character)
                 .set("Slash")
                 .set(CharacterDescriptionVector(intellect: 1, strength: 1, will: 0))
-                .set(skillTargetRow)
+                .set(skillTargetNextInColumn)
                 .build()
         }
         swordAffix.skills.append(swordSkillCreator)
@@ -40,7 +40,7 @@ class  ItemFactory {
             return try! SkillBuilder().set(character)
                 .set("Shield Bash")
                 .set(CharacterDescriptionVector(intellect: 0, strength: 1, will: 1))
-                .set(skillTargetNextInColumn)
+                .set(skillTargetRow)
                 .build()
         }
         shieldAffix.skills.append(shieldSkillCreator)

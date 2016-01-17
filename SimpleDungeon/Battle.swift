@@ -19,12 +19,6 @@ protocol BattleListener {
     func onActionPerformed() -> Void
 }
 
-// Super janky proto-demo/just-make-it work code
-enum Ability {
-    case Str, Int, Wil, None
-}
-// End jankiness //
-
 class BattleModel {
     let notifier : Notifier<BattleListener> = Notifier<BattleListener>()
     

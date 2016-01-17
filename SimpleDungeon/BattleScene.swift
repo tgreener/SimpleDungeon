@@ -53,12 +53,15 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
                 badGuyGraphics.append(graphic)
             }
         }
+
+        player.characterComponent?.skills.forEach { skill in skill.updateTargetFilter(battle) }
+        let playerSkills : [SkillUIInfo] = player.characterComponent!.skills.map { skill in return skill as SkillUIInfo }
         
         battleView = BattleUI(viewSize: self.viewSize,
             playerGraphic  : player.graphicComponent!.battleGraphic!,
             badGuyGraphics : badGuyGraphics,
             delegate       : self,
-            playerSkills   : player.characterComponent!.skills
+            playerSkills   : playerSkills
         );
         
         battleView.didMoveToView(view)
@@ -165,17 +168,10 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
     
     
     // MARK: BattleUI Button Listeners
-    func onAbilityButtonTouched(ability : Ability) -> Void {
-        var skill : Skill? = nil
-        switch ability {
-        case Ability.Str : skill = battle.strSkill
-        case Ability.Int : skill = battle.intSkill
-        case Ability.Wil : skill = battle.wilSkill
-        default : skill = nil
-        }
+    func onSkillButtonTouched(skillIndex: Int) {
+        guard let skill = player.characterComponent?.skills[skillIndex] else { return }
         
-        guard let s = skill else { return }
-        battleCommandController.runSingleCommand(ActionSelectedCommand(ref: self, skill: s))
+        battleCommandController.runSingleCommand(ActionSelectedCommand(ref: self, skill: skill))
         playerInteractionRuleSystem.evaluate()
     }
     

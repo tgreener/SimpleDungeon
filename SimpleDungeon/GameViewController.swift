@@ -40,8 +40,8 @@ class GameViewController: UIViewController {
         )
         let player = Entity(graphic: graphicComponent, position: IPoint(x: 0, y: 0), character : character)
         
-        player.characterComponent?.inventory.equipment.setEquipment(ItemFactory.createBoringSword(25))
-        player.characterComponent?.inventory.equipment.setEquipment(ItemFactory.createBoringShield(20))
+        player.characterComponent?.equip(ItemFactory.createBoringSword(25))
+        player.characterComponent?.equip(ItemFactory.createBoringShield(20))
         
         let titleScene = TitleScene()
         let explore = ExploreScene(player : player)

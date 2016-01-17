@@ -39,7 +39,9 @@ class Skill : SkillUIInfo {
     
     func setTarget(entities : [Entity], primary : Entity) {
         primaryTarget = primary
-        if entities.count > 0 { targets = entities.filter(targetFilter) }
+        if entities.count > 0 {
+            targets = entities.filter(targetFilter)
+        }
     }
     
     func updateTargetFilter(battle: BattleModel) {

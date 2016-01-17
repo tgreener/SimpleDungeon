@@ -13,6 +13,7 @@
 		F54624081C334D3000C82D94 /* CharacterDescriptionVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54624071C334D3000C82D94 /* CharacterDescriptionVector.swift */; };
 		F563BCEC1C1A465A00DBEA1E /* DefenseRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */; };
 		F563BCF01C1A4AE100DBEA1E /* SkillApplicationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */; };
+		F5AC8F151C4C0ECC004EF1E1 /* RepeatableRuleSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AC8F141C4C0ECB004EF1E1 /* RepeatableRuleSystem.swift */; };
 		F5B0D4871C13E73F000F46C5 /* ActionSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */; };
 		F5B0D4891C13F24E000F46C5 /* TargetSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */; };
 		F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */; };
@@ -66,6 +67,7 @@
 		F54624071C334D3000C82D94 /* CharacterDescriptionVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterDescriptionVector.swift; sourceTree = "<group>"; };
 		F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefenseRules.swift; sourceTree = "<group>"; };
 		F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillApplicationRule.swift; sourceTree = "<group>"; };
+		F5AC8F141C4C0ECB004EF1E1 /* RepeatableRuleSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatableRuleSystem.swift; sourceTree = "<group>"; };
 		F5B0D4861C13E73F000F46C5 /* ActionSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSelectedCommand.swift; sourceTree = "<group>"; };
 		F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetSelectedCommand.swift; sourceTree = "<group>"; };
 		F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemFactory.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				F5B67DE61B7327240036D56C /* Notifier.swift */,
 				F5B67DFE1B74760B0036D56C /* IPoint.swift */,
 				F5B67E0E1B75B67B0036D56C /* Math.swift */,
+				F5AC8F141C4C0ECB004EF1E1 /* RepeatableRuleSystem.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				F5B67DFD1B746F510036D56C /* TileSprite.swift in Sources */,
 				F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */,
 				F5E888341C1FF79A00F215D2 /* BadGuyBattleActionRule.swift in Sources */,
+				F5AC8F151C4C0ECC004EF1E1 /* RepeatableRuleSystem.swift in Sources */,
 				F563BCF01C1A4AE100DBEA1E /* SkillApplicationRule.swift in Sources */,
 				F5B0D4891C13F24E000F46C5 /* TargetSelectedCommand.swift in Sources */,
 				F563BCEC1C1A465A00DBEA1E /* DefenseRules.swift in Sources */,
