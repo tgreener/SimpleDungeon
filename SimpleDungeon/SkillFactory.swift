@@ -50,6 +50,7 @@ class SkillBuilder {
     var targetFilterGenerator : SkillTargetFilterGenerator!
     var characterChangeVector : CharacterDescriptionVector!
     var name : String!
+    var targetRules : RepeatableRuleSystem!
     
     func set(name : String) -> SkillBuilder {
         self.name = name
@@ -71,11 +72,16 @@ class SkillBuilder {
         return self
     }
     
+    func set(targetRules : RepeatableRuleSystem) -> SkillBuilder {
+        self.targetRules = targetRules
+        return self
+    }
+    
     func build() throws -> Skill {
-        guard let n = self.name, c = self.character, t = self.targetFilterGenerator, v = self.characterChangeVector else {
+        guard let n = self.name, c = self.character, t = self.targetFilterGenerator, v = self.characterChangeVector, tr = self.targetRules else {
             throw Error.BuildErrorUnsetValues
         }
         
-        return Skill(name: n, character: c, characterChangeVector: v, targetFilterCreator: t)
+        return Skill(name: n, character: c, characterChangeVector: v, targetFilterCreator: t, targetSelectionRules: tr)
     }
 }

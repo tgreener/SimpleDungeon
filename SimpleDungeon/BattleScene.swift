@@ -152,6 +152,7 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
             .set(guy.characterComponent!)
             .set(CharacterDescriptionVector.normStr)
             .set(skillTargetNone)
+            .set(RepeatableRuleSystem())
             .build()
         badSkill.setTarget([], primary: player)
         

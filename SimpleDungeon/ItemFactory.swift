@@ -13,14 +13,24 @@ class  ItemFactory {
         var swordAffix : EquipmentAffix = EquipmentAffix()
         swordAffix.bonus[EquipmentAffix.Bonus.Power] = atkVal
         
-        let swordSkillCreator : SkillCreationFunction = { character in
+        let slashSkillCreator : SkillCreationFunction = { character in
             return try! SkillBuilder().set(character)
                 .set("Slash")
-                .set(CharacterDescriptionVector(intellect: 1, strength: 1, will: 0))
-                .set(skillTargetNextInColumn)
+                .set(CharacterDescriptionVector(intellect: 0, strength: 1, will: 0))
+                .set(skillTargetNone)
+                .set(RepeatableRuleSystem())
                 .build()
         }
-        swordAffix.skills.append(swordSkillCreator)
+        let cleaveSkillCreator : SkillCreationFunction = { character in
+            return try! SkillBuilder().set(character)
+                .set("Cleave")
+                .set(CharacterDescriptionVector(intellect: 1, strength: 1, will: 0))
+                .set(skillTargetNextInColumn)
+                .set(RepeatableRuleSystem())
+                .build()
+        }
+        swordAffix.skills.append(slashSkillCreator)
+        swordAffix.skills.append(cleaveSkillCreator)
         
         let swordEquipable : Equipable = EquipableItem(slot: Equipment.EquipmentSlot.Weapon, affixes: [swordAffix])
         let sword : InventoryItem = InventoryItem(name: "Sword", stackable: nil, consumable: nil, equipable: swordEquipable)
@@ -41,6 +51,7 @@ class  ItemFactory {
                 .set("Shield Bash")
                 .set(CharacterDescriptionVector(intellect: 0, strength: 1, will: 1))
                 .set(skillTargetRow)
+                .set(RepeatableRuleSystem())
                 .build()
         }
         shieldAffix.skills.append(shieldSkillCreator)

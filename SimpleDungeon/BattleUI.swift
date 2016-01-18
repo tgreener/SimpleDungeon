@@ -73,6 +73,8 @@ class BattleUI : SKNode, BattleGraphicDelegate {
             skillButton.setBorder()
             
             skillButton.addTouchHandler { [unowned self] sprite in
+                guard self.touchEnabled else { return }
+                
                 if let current = self.currentlySelectedSkill {
                     current.setBorderGlowValue(0)
                 }

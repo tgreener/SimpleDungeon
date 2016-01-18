@@ -13,8 +13,13 @@ protocol SkillUIInfo {
     var name : String { get }
 }
 
+enum SkillRuleStateKey : Int {
+    case PrimaryTargetPosition, TargetDelta, TargetList, Battle
+}
+
 class Skill : SkillUIInfo {
     let targetFilterGenerator : SkillTargetFilterGenerator
+    let targetSelectionRules : RepeatableRuleSystem
     var targetFilter : ((Entity) -> Bool)!
     
     let characterChangeVector : CharacterDescriptionVector
@@ -27,7 +32,8 @@ class Skill : SkillUIInfo {
     init(name                 : String,
         character             : GameCharacter,
         characterChangeVector : CharacterDescriptionVector,
-        targetFilterCreator   : SkillTargetFilterGenerator
+        targetFilterCreator   : SkillTargetFilterGenerator,
+        targetSelectionRules  : RepeatableRuleSystem
         )
     {
         self.targetFilter = nil
@@ -35,6 +41,7 @@ class Skill : SkillUIInfo {
         self.character = character
         self.characterChangeVector = characterChangeVector.normalize()
         self.name = name
+        self.targetSelectionRules = targetSelectionRules
     }
     
     func setTarget(entities : [Entity], primary : Entity) {
@@ -46,6 +53,10 @@ class Skill : SkillUIInfo {
     
     func updateTargetFilter(battle: BattleModel) {
         self.targetFilter = targetFilterGenerator(skill: self, battle: battle)
+    }
+    
+    func updateTargetRules(battle : BattleModel) {
+        self.targetSelectionRules.state[SkillRuleStateKey.Battle.rawValue] = battle
     }
     
     func perform() {

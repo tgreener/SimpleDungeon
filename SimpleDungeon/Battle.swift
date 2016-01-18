@@ -32,10 +32,6 @@ class BattleModel {
         notifier.notify { listener in listener.didSetPrimaryTarget(t) }
     }}
     
-    let strSkill : Skill
-    let intSkill : Skill
-    let wilSkill : Skill
-    
     var currentTurn : Turn = Turn.Player
     
     init(player : Entity, badGuys : [Entity]) {
@@ -45,32 +41,5 @@ class BattleModel {
         for (index, guy) in self.badGuys.enumerate() {
             entityIndexes[guy] = index
         }
-        
-        let strBuilder = SkillBuilder()
-        let intBuilder = SkillBuilder()
-        let wilBuilder = SkillBuilder()
-        
-        strSkill = try! strBuilder
-            .set("Strength Skill")
-            .set(player.characterComponent!)
-            .set(CharacterDescriptionVector.normStr)
-            .set(skillTargetNone)
-            .build()
-        intSkill = try! intBuilder
-            .set("Intelligence Skill")
-            .set(player.characterComponent!)
-            .set(CharacterDescriptionVector.normInt)
-            .set(skillTargetRow)
-            .build()
-        wilSkill = try! wilBuilder
-            .set("Will Skill")
-            .set(player.characterComponent!)
-            .set(CharacterDescriptionVector.normWil)
-            .set(skillTargetNextInColumn)
-            .build()
-        
-        strSkill.updateTargetFilter(self)
-        intSkill.updateTargetFilter(self)
-        wilSkill.updateTargetFilter(self)
     }
 }
