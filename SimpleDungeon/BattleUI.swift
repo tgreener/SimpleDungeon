@@ -16,7 +16,7 @@ protocol BattleUIDelegate : class {
 }
 
 class BattleUI : SKNode, BattleGraphicDelegate {
-    var badGuyPositions : [CGPoint] = []
+    let badGuyPositions : [CGPoint]
     let targetRectangle : SKShapeNode = SKShapeNode(path: CGPathCreateWithRect(CGRectMake(0, 0, 10, 10), nil), centered: true)
     var currentlySelectedSkill : TouchSprite? = nil
     
@@ -25,12 +25,12 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     let viewSize : CGSize
     let playerGraphic : BattleGraphic
     let playerSkills  : [SkillUIInfo]
-    let badGuyGraphics: [BattleGraphic]
+    let battleGrid: BattleGrid
     unowned let delegate : BattleUIDelegate
     
     init(viewSize : CGSize,
         playerGraphic : BattleGraphic,
-        badGuyGraphics : [BattleGraphic],
+        battleGrid : BattleGrid,
         delegate : BattleUIDelegate,
         playerSkills : [SkillUIInfo]
         )
@@ -38,7 +38,7 @@ class BattleUI : SKNode, BattleGraphicDelegate {
         self.viewSize = viewSize
         self.playerGraphic = playerGraphic
         self.playerSkills  = playerSkills
-        self.badGuyGraphics = badGuyGraphics
+        self.battleGrid = battleGrid
         targetRectangle.strokeColor = SKColor.whiteColor()
         
         badGuyPositions = [
@@ -53,15 +53,26 @@ class BattleUI : SKNode, BattleGraphicDelegate {
         self.delegate = delegate
 
         super.init()
-        
-        self.playerGraphic.delegate = self
-        for guy in self.badGuyGraphics {
-            guy.delegate = self
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func didMoveToView(view: SKView) {
+        setupSkillButtons()
+        setupPlayerGraphic()
+        setupEnemyGraphics()
+    }
+    
+    func willMoveFromView(view: SKView) {
+        for position in battleGrid.positions {
+            if let graphic = position.entity?.graphicComponent?.battleGraphic { graphic.removeFromParent() }
+        }
+        playerGraphic.removeFromParent()
+        
+        self.removeAllChildren()
+        self.removeFromParent()
     }
     
     func setupSkillButtons() {
@@ -100,47 +111,45 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     }
     
     func setupPlayerGraphic() {
+        self.playerGraphic.delegate = self
         playerGraphic.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5)
         setBattleSpriteScale(playerGraphic)
         
         addChild(playerGraphic)
     }
     
+    func getBattlePosition(gridPosition : BattleGridPosition) -> CGPoint {
+        let position : UIPoint = gridPosition.position
+        let index = Int((position.x * battleGrid.numRows) + position.y)
+        return badGuyPositions[index]
+    }
+    
     func setupEnemyGraphics() {
-        for (index, guy) in badGuyGraphics.enumerate() {
-            if !(index < 6) { break }
+        for position in battleGrid.positions {
+            guard let guy = position.entity else { continue }
+            guard let guyGraphic = guy.graphicComponent?.battleGraphic else { continue }
             
-            guy.position = badGuyPositions[index]
-            setBattleSpriteScale(guy)
+            guyGraphic.delegate = self
+            guyGraphic.position = getBattlePosition(position)
+            setBattleSpriteScale(guyGraphic)
             
-            guy.addTouchHandler { sprite in
+            guyGraphic.addTouchHandler { sprite in
                 guard self.touchEnabled else { return }
-                self.targetTouched(sprite, target: guy.entity)
+                self.targetTouched(sprite, position: position)
             }
             
-            addChild(guy)
+            addChild(guyGraphic)
         }
-    }
-    
-    func didMoveToView(view: SKView) {
-        setupSkillButtons()
-        setupPlayerGraphic()
-        setupEnemyGraphics()
-    }
-    
-    func willMoveFromView(view: SKView) {
-        for guy in badGuyGraphics {
-            if let _ = guy.parent { guy.removeFromParent() }
-        }
-        playerGraphic.removeFromParent()
-        
-        self.removeAllChildren()
-        self.removeFromParent()
     }
     
     // MARK: UI Behaviors
     
     func targetTouched(sprite : SKSpriteNode, target: Entity) {
+        delegate.onTargetTouched(target)
+    }
+    
+    func targetTouched(sprite : SKSpriteNode, position: BattleGridPosition) {
+        guard let target = position.entity else { return }
         delegate.onTargetTouched(target)
     }
     

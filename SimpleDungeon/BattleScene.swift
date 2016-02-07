@@ -46,20 +46,12 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         super.didMoveToView(view)
         
         // Setup View
-        var badGuyGraphics : [BattleGraphic] = [BattleGraphic]()
-        
-        for guy in battle.badGuys {
-            if let graphic = guy.graphicComponent?.battleGraphic {
-                badGuyGraphics.append(graphic)
-            }
-        }
-
         player.characterComponent?.skills.forEach { skill in skill.updateTargetFilter(battle) }
         let playerSkills : [SkillUIInfo] = player.characterComponent!.skills.map { skill in return skill as SkillUIInfo }
         
         battleView = BattleUI(viewSize: self.viewSize,
             playerGraphic  : player.graphicComponent!.battleGraphic!,
-            badGuyGraphics : badGuyGraphics,
+            battleGrid     : battle.battleGrid,
             delegate       : self,
             playerSkills   : playerSkills
         );

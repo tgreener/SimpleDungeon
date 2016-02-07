@@ -18,6 +18,7 @@
 		F5B0D4891C13F24E000F46C5 /* TargetSelectedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */; };
 		F5B3DA401B96B1280072A4F9 /* ItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */; };
 		F5B3DA481B9CCF480072A4F9 /* BattleGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */; };
+		F5B469DD1C55E0C400456B57 /* BattleGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B469DC1C55E0C400456B57 /* BattleGrid.swift */; };
 		F5B67CE31B731BDC0036D56C /* SimpleDungeonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67CE21B731BDC0036D56C /* SimpleDungeonTests.swift */; };
 		F5B67DE71B7327240036D56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67DE31B7327240036D56C /* AppDelegate.swift */; };
 		F5B67DE81B7327240036D56C /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67DE41B7327240036D56C /* BaseScene.swift */; };
@@ -38,6 +39,7 @@
 		F5B67E131B75C1060036D56C /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B67E121B75C1060036D56C /* SceneController.swift */; };
 		F5B8803F1B86D30300AF7645 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B8803E1B86D30300AF7645 /* Skill.swift */; };
 		F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B880401B89048100AF7645 /* SkillFactory.swift */; };
+		F5D1FA751C63EFCC003F99EE /* TargetSelectionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D1FA741C63EFCC003F99EE /* TargetSelectionRule.swift */; };
 		F5D5B8921B779A4F0067BBD2 /* GameplayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */; };
 		F5D5B8941B77A8140067BBD2 /* GraphicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */; };
 		F5D5B8961B77AACC0067BBD2 /* TouchSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */; };
@@ -72,6 +74,7 @@
 		F5B0D4881C13F24E000F46C5 /* TargetSelectedCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetSelectedCommand.swift; sourceTree = "<group>"; };
 		F5B3DA3F1B96B1280072A4F9 /* ItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemFactory.swift; sourceTree = "<group>"; };
 		F5B3DA471B9CCF480072A4F9 /* BattleGraphic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleGraphic.swift; sourceTree = "<group>"; };
+		F5B469DC1C55E0C400456B57 /* BattleGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleGrid.swift; sourceTree = "<group>"; };
 		F5B67CC31B731BDC0036D56C /* SimpleDungeon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleDungeon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5B67CC71B731BDC0036D56C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5B67CDC1B731BDC0036D56C /* SimpleDungeonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleDungeonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +99,7 @@
 		F5B67E121B75C1060036D56C /* SceneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
 		F5B8803E1B86D30300AF7645 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
 		F5B880401B89048100AF7645 /* SkillFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillFactory.swift; sourceTree = "<group>"; };
+		F5D1FA741C63EFCC003F99EE /* TargetSelectionRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetSelectionRule.swift; sourceTree = "<group>"; };
 		F5D5B8911B779A4F0067BBD2 /* GameplayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayScene.swift; sourceTree = "<group>"; };
 		F5D5B8931B77A8140067BBD2 /* GraphicComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphicComponent.swift; sourceTree = "<group>"; };
 		F5D5B8951B77AACC0067BBD2 /* TouchSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchSprite.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 			children = (
 				F563BCEB1C1A465A00DBEA1E /* DefenseRules.swift */,
 				F563BCEF1C1A4AE100DBEA1E /* SkillApplicationRule.swift */,
+				F5D1FA741C63EFCC003F99EE /* TargetSelectionRule.swift */,
 			);
 			name = Rules;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 				F59413311BFAD26F00A55098 /* Rules */,
 				F5D5B89D1B7C532C0067BBD2 /* Battle.swift */,
 				F5378C151BF9872B0099956F /* BattleFactory.swift */,
+				F5B469DC1C55E0C400456B57 /* BattleGrid.swift */,
 			);
 			name = Battle;
 			sourceTree = "<group>";
@@ -483,6 +489,7 @@
 				F5B880411B89048100AF7645 /* SkillFactory.swift in Sources */,
 				F54624081C334D3000C82D94 /* CharacterDescriptionVector.swift in Sources */,
 				F5B67E131B75C1060036D56C /* SceneController.swift in Sources */,
+				F5B469DD1C55E0C400456B57 /* BattleGrid.swift in Sources */,
 				F5378C161BF9872B0099956F /* BattleFactory.swift in Sources */,
 				F53B57BF1C260EC400396A4B /* CharacterTurnRule.swift in Sources */,
 				F5432A471C056B8F000AD666 /* BattleUI.swift in Sources */,
@@ -505,6 +512,7 @@
 				F5E08FAF1C0251D40031157A /* BattleCommandController.swift in Sources */,
 				F5B67DFB1B732AC40036D56C /* Grid.swift in Sources */,
 				F5B67E0D1B75B0CB0036D56C /* GameCharacter.swift in Sources */,
+				F5D1FA751C63EFCC003F99EE /* TargetSelectionRule.swift in Sources */,
 				F5B67E111B75BE300036D56C /* BattleScene.swift in Sources */,
 				F5B8803F1B86D30300AF7645 /* Skill.swift in Sources */,
 				F5B67DEF1B7327730036D56C /* TitleScene.swift in Sources */,
@@ -620,10 +628,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleDungeon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.toddgreener.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -632,10 +642,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleDungeon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.toddgreener.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

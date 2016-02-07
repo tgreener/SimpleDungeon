@@ -12,8 +12,9 @@ struct BattleFactory {
     
     static func createBattle(player : Entity) -> BattleModel {
         var badGuys = [Entity]()
+        var grid : BattleGrid = BaseBattleGrid()
         
-        for _ in 0...5 {
+        for index : UInt in 0...5 {
             let badGuyGraphic = BattleGraphic(color: SKColor.yellowColor(), size: CGSizeMake(10, 10))
             let badCharacter = GameCharacter(strVal: 2, intVal: 2, wilVal: 2)
             
@@ -22,9 +23,11 @@ struct BattleFactory {
             
             let badGuy = Entity(graphic: GraphicComponent(explore: nil, battle: badGuyGraphic), position: nil, character: badCharacter)
             badGuys.append(badGuy)
+            
+            do { try grid.placeEntity(badGuy, column: index / 3, row: index % 3) } catch { continue }
         }
         
-        return BattleModel(player: player, badGuys: badGuys)
+        return BattleModel(player: player, badGuys: badGuys, battleGrid: grid)
     }
 }
 

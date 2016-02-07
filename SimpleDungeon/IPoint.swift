@@ -17,3 +17,13 @@ struct IPoint {
         self.y = y
     }
 }
+
+struct UIPoint {
+    let x : UInt
+    let y : UInt
+    
+    init(x : UInt, y : UInt) {
+        self.x = x
+        self.y = y
+    }
+}

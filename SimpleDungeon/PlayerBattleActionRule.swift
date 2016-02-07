@@ -21,8 +21,7 @@ class PlayerBattleActionRule : GKRule {
         guard let _ = ref.battle.primaryTarget else { return false }
         
         return system.gradeForFact(String(PlayerBattleFlowFacts.SkillSelected)) == 1.0 &&
-            system.gradeForFact(String(PlayerBattleFlowFacts.TargetSelected)) == 1.0 &&
-            ref.battle.currentTurn == Turn.Player
+            system.gradeForFact(String(PlayerBattleFlowFacts.TargetSelected)) == 1.0
     }
     
     override func performActionWithSystem(system: GKRuleSystem) {
