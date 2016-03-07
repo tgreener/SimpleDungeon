@@ -12,19 +12,18 @@ import GameplayKit
 struct TargetSelectedCommand : BattleCommand {
     
     unowned let ref : BattleRef
-    unowned let target: Entity
+    let target: BattleGridPosition
     
-    init(ref : BattleRef, target : Entity) {
+    init(ref : BattleRef, target : BattleGridPosition) {
         self.ref  = ref
         self.target = target
     }
     
     func runCommand() {
-        
         guard let currentSkill = ref.battle.currentSkill else { return }
-        ref.battle.primaryTarget = target
-        currentSkill.setTarget(ref.battle.badGuys, primary: target)
+        currentSkill.setTarget(target)
         
+        ref.battleView.primaryTargetChosen(target.entity!.graphicComponent!.battleGraphic!, target: target.entity!)
         ref.playerInteractionRuleSystem.assertFact(String(PlayerBattleFlowFacts.TargetSelected))
     }
 }

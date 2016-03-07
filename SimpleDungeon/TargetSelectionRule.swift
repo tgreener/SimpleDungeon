@@ -23,24 +23,30 @@ class TargetSelectionRule : GKRule {
     }
     
     override func evaluatePredicateWithSystem(system: GKRuleSystem) -> Bool {
-        guard let battle = system.state[SkillRuleStateKey.Battle.rawValue] as? BattleModel else { return onFalsePredicate() }
-        guard let primaryTargetPosition = battle.primaryTargetPosition else { return onFalsePredicate() }
-        let grid = battle.battleGrid
+        guard let state = (system.state[SkillRuleStateKey.State.rawValue] as? SkillRuleState) else { return onFalsePredicate() }
+        guard let grid = state.battle?.battleGrid else { return onFalsePredicate() }
+        guard let primaryTargetPosition = state.primaryTarget?.position else { return onFalsePredicate() }
         
         do {
-            if let t = try grid.getEntityAt(UInt(primaryTargetPosition.x + delta.x), row: UInt(primaryTargetPosition.y + delta.y)) {
+            let x : Int = primaryTargetPosition.ix + delta.x
+            let y : Int = primaryTargetPosition.iy + delta.y
+            
+            guard x >= 0 && y >= 0 else { return onFalsePredicate() }
+            
+            if let t = try grid.getEntityAt(UInt(x), row: UInt(y)) {
                 target = t
                 return true
             }
-        } catch {}
+        }
+        catch BaseBattleGrid.BattleGridError.OutOfBoundsError {}
+        catch {}
         return onFalsePredicate()
     }
     
     override func performActionWithSystem(system: GKRuleSystem) {
-        guard var targetList = system.state[SkillRuleStateKey.TargetList.rawValue] as? [Entity] else { return }
+        guard let state = (system.state[SkillRuleStateKey.State.rawValue] as? SkillRuleState) else { return }
         guard let t = target else { return }
         
-        targetList.append(t)
-        system.state[SkillRuleStateKey.TargetList.rawValue] = targetList
+        state.targetEntities.append(t)
     }
 }

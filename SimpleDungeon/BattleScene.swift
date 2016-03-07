@@ -46,7 +46,9 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         super.didMoveToView(view)
         
         // Setup View
-        player.characterComponent?.skills.forEach { skill in skill.updateTargetFilter(battle) }
+        player.characterComponent?.skills.forEach { skill in
+            skill.resetTargetRules(battle)
+        }
         let playerSkills : [SkillUIInfo] = player.characterComponent!.skills.map { skill in return skill as SkillUIInfo }
         
         battleView = BattleUI(viewSize: self.viewSize,
@@ -110,10 +112,6 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         sceneController?.gotoExploreScene()
     }
     
-    func onActionPerformed() {
-        player.graphicComponent?.battleGraphic?.doBattleAnimation()
-    }
-    
     // MARK: UI Action Completion Listener
     func onActionAnimationFinished() {
         let allDead = battle.badGuys.reduce(true) { (allDead : Bool, entity : Entity) in
@@ -123,7 +121,7 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         let playerDead = player.characterComponent!.isDead
         
         if allDead || playerDead {
-            self.battle.notifier.notify({ listener in listener.onBattleEnded() })
+            self.onBattleEnded()
             return
         }
         
@@ -143,10 +141,10 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
             .set("Bad Guy Skill")
             .set(guy.characterComponent!)
             .set(CharacterDescriptionVector.normStr)
-            .set(skillTargetNone)
             .set(RepeatableRuleSystem())
             .build()
-        badSkill.setTarget([], primary: player)
+        badSkill.resetTargetRules(battle)
+        badSkill.setTarget(battle.playerPosition)
         
         badSkill.perform()
         guy.graphicComponent?.battleGraphic?.doBattleAnimation()
@@ -168,7 +166,7 @@ class BattleScene : GameplayScene, BattleListener, BattleUIDelegate, BattleRef {
         playerInteractionRuleSystem.evaluate()
     }
     
-    func onTargetTouched(target: Entity) -> Void {
+    func onTargetTouched(target: BattleGridPosition) {
         battleCommandController.runSingleCommand(TargetSelectedCommand(ref: self, target: target))
         playerInteractionRuleSystem.evaluate()
     }

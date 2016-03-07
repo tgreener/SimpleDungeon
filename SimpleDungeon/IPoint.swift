@@ -22,6 +22,9 @@ struct UIPoint {
     let x : UInt
     let y : UInt
     
+    var ix : Int { get { return Int(x) } }
+    var iy : Int { get { return Int(y) } }
+    
     init(x : UInt, y : UInt) {
         self.x = x
         self.y = y

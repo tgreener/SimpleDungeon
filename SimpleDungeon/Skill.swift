@@ -14,58 +14,59 @@ protocol SkillUIInfo {
 }
 
 enum SkillRuleStateKey : Int {
-    case PrimaryTargetPosition, TargetDelta, TargetList, Battle
+    case TargetList, State
+}
+
+class SkillRuleState {
+    var primaryTarget : BattleGridPosition? = nil
+    var battle : BattleModel? = nil
+    var targetEntities : [Entity] = [Entity]()
 }
 
 class Skill : SkillUIInfo {
-    let targetFilterGenerator : SkillTargetFilterGenerator
     let targetSelectionRules : RepeatableRuleSystem
-    var targetFilter : ((Entity) -> Bool)!
     
     let characterChangeVector : CharacterDescriptionVector
     let name : String
     
-    var targets : [Entity] = []
-    var primaryTarget : Entity!
+    var target : BattleGridPosition? { get { return skillRuleState.primaryTarget } }
+    var skillRuleState : SkillRuleState! { get {
+        return self.targetSelectionRules.state[SkillRuleStateKey.State.rawValue] as! SkillRuleState
+        }
+    }
     weak var character : GameCharacter!
     
     init(name                 : String,
         character             : GameCharacter,
         characterChangeVector : CharacterDescriptionVector,
-        targetFilterCreator   : SkillTargetFilterGenerator,
         targetSelectionRules  : RepeatableRuleSystem
         )
     {
-        self.targetFilter = nil
-        self.targetFilterGenerator = targetFilterCreator
         self.character = character
         self.characterChangeVector = characterChangeVector.normalize()
         self.name = name
         self.targetSelectionRules = targetSelectionRules
+        self.targetSelectionRules.state[SkillRuleStateKey.State.rawValue] = SkillRuleState()
     }
     
-    func setTarget(entities : [Entity], primary : Entity) {
-        primaryTarget = primary
-        if entities.count > 0 {
-            targets = entities.filter(targetFilter)
-        }
+    func setTarget(target: BattleGridPosition) {
+        skillRuleState.primaryTarget = target
+        skillRuleState.targetEntities.removeAll()
+        targetSelectionRules.evaluate()
     }
     
-    func updateTargetFilter(battle: BattleModel) {
-        self.targetFilter = targetFilterGenerator(skill: self, battle: battle)
-    }
-    
-    func updateTargetRules(battle : BattleModel) {
-        self.targetSelectionRules.state[SkillRuleStateKey.Battle.rawValue] = battle
+    func resetTargetRules(battle : BattleModel) {
+        skillRuleState.battle = battle
+        skillRuleState.primaryTarget = nil
+        skillRuleState.targetEntities.removeAll()
     }
     
     func perform() {
-        guard let primaryTarget = self.primaryTarget else { return }
+        guard let primaryTarget = skillRuleState.primaryTarget?.entity else { return }
         performActionOnTarget(primaryTarget, attacker: self.character)
         
-        for guy in self.targets {
-            guard !(guy.characterComponent!.isDead) else { continue }
-            performActionOnTarget(guy, attacker: self.character)
+        for target in skillRuleState.targetEntities {
+            performActionOnTarget(target, attacker: self.character)
         }
         
         character.calculateChangeFromVector(characterChangeVector)

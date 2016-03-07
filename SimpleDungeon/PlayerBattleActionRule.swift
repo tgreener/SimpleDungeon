@@ -17,8 +17,8 @@ class PlayerBattleActionRule : GKRule {
     }
     
     override func evaluatePredicateWithSystem(system: GKRuleSystem) -> Bool {
-        guard let _ = ref.battle.currentSkill  else { return false }
-        guard let _ = ref.battle.primaryTarget else { return false }
+        guard let skill = ref.battle.currentSkill  else { return false }
+        guard let _ = skill.target else { return false }
         
         return system.gradeForFact(String(PlayerBattleFlowFacts.SkillSelected)) == 1.0 &&
             system.gradeForFact(String(PlayerBattleFlowFacts.TargetSelected)) == 1.0
@@ -28,6 +28,6 @@ class PlayerBattleActionRule : GKRule {
         guard let currentSkill = ref.battle.currentSkill else { return }
         
         currentSkill.perform()
-        ref.battle.notifier.notify() { listener in listener.onActionPerformed() }
+        ref.battleView.playerGraphic.doBattleAnimation()
     }
 }

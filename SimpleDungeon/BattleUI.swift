@@ -10,7 +10,7 @@ import SpriteKit
 
 protocol BattleUIDelegate : class {
     func onSkillButtonTouched(skillIndex : Int) -> Void
-    func onTargetTouched(target: Entity) -> Void
+    func onTargetTouched(target: BattleGridPosition) -> Void
     
     func onActionAnimationFinished() -> Void
 }
@@ -119,7 +119,7 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     }
     
     func getBattlePosition(gridPosition : BattleGridPosition) -> CGPoint {
-        let position : UIPoint = gridPosition.position
+        guard let position = gridPosition.position else { return CGPointMake(0, 0)}
         let index = Int((position.x * battleGrid.numRows) + position.y)
         return badGuyPositions[index]
     }
@@ -144,13 +144,8 @@ class BattleUI : SKNode, BattleGraphicDelegate {
     
     // MARK: UI Behaviors
     
-    func targetTouched(sprite : SKSpriteNode, target: Entity) {
-        delegate.onTargetTouched(target)
-    }
-    
     func targetTouched(sprite : SKSpriteNode, position: BattleGridPosition) {
-        guard let target = position.entity else { return }
-        delegate.onTargetTouched(target)
+        delegate.onTargetTouched(position)
     }
     
     func primaryTargetChosen(sprite : SKSpriteNode, target: Entity) {

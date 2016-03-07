@@ -20,7 +20,7 @@ protocol BattleGrid {
 
 protocol BattleGridPosition {
     var entity : Entity? { get }
-    var position : UIPoint { get }
+    var position : UIPoint? { get }
 }
 
 struct BaseBattleGrid : BattleGrid {
@@ -31,10 +31,15 @@ struct BaseBattleGrid : BattleGrid {
     
     struct GridPosition : BattleGridPosition {
         let entity : Entity?
-        let position : UIPoint
+        let position : UIPoint?
         init(entity : Entity?, position : UIPoint) {
             self.entity = entity
             self.position = position
+        }
+        
+        init(entity : Entity?) {
+            self.entity = entity
+            self.position = nil
         }
     }
     

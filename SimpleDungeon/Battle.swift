@@ -14,38 +14,23 @@ enum Turn {
 
 protocol BattleListener {
     func didSetPrimaryTarget(entity : Entity) -> Void
-    func onBattleEnded() -> Void
-    
-    func onActionPerformed() -> Void
 }
 
 class BattleModel {
     let notifier : Notifier<BattleListener> = Notifier<BattleListener>()
-    
-    /* Data about current battle */
-    
-    var badGuys : [Entity]
-    var entityIndexes : [Entity : Int] = [Entity : Int]() // Used for determining skill targets (currently reworking)
-    
+
     let player  : Entity
-    let battleGrid : BattleGrid
+    let playerPosition : BattleGridPosition
     
-    /* View Model stuff */
+    let battleGrid : BattleGrid
+    var badGuys : [Entity]
     
     var currentSkill : Skill?
-    var primaryTarget: Entity? { didSet {
-        guard let t = primaryTarget else { return }
-        notifier.notify { listener in listener.didSetPrimaryTarget(t) }
-    }}
-    var primaryTargetPosition: IPoint?
-    
+
     init(player : Entity, badGuys : [Entity], battleGrid : BattleGrid) {
         self.player = player
+        self.playerPosition = BaseBattleGrid.GridPosition(entity: player)
         self.badGuys = badGuys
-        
-        for (index, guy) in self.badGuys.enumerate() {
-            entityIndexes[guy] = index
-        }
         
         self.battleGrid = battleGrid
     }

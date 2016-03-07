@@ -17,16 +17,18 @@ class  ItemFactory {
             return try! SkillBuilder().set(character)
                 .set("Slash")
                 .set(CharacterDescriptionVector(intellect: 0, strength: 1, will: 0))
-                .set(skillTargetNone)
                 .set(RepeatableRuleSystem())
                 .build()
         }
         let cleaveSkillCreator : SkillCreationFunction = { character in
+            let targetRuleSystem = RepeatableRuleSystem()
+            targetRuleSystem.addRule(TargetSelectionRule(dX: 0, dY: 1))
+            targetRuleSystem.addRule(TargetSelectionRule(dX: 0, dY: -1))
+            
             return try! SkillBuilder().set(character)
                 .set("Cleave")
                 .set(CharacterDescriptionVector(intellect: 1, strength: 1, will: 0))
-                .set(skillTargetNextInColumn)
-                .set(RepeatableRuleSystem())
+                .set(targetRuleSystem)
                 .build()
         }
         swordAffix.skills.append(slashSkillCreator)
@@ -47,11 +49,13 @@ class  ItemFactory {
         shieldAffix.bonus[EquipmentAffix.Bonus.Block] = blkVal
         
         let shieldSkillCreator : SkillCreationFunction = { character in
+            let targetRuleSystem = RepeatableRuleSystem()
+            targetRuleSystem.addRule(TargetSelectionRule(dX: 1, dY: 0))
+            
             return try! SkillBuilder().set(character)
                 .set("Shield Bash")
                 .set(CharacterDescriptionVector(intellect: 0, strength: 1, will: 1))
-                .set(skillTargetRow)
-                .set(RepeatableRuleSystem())
+                .set(targetRuleSystem)
                 .build()
         }
         shieldAffix.skills.append(shieldSkillCreator)

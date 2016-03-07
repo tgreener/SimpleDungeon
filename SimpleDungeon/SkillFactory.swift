@@ -9,32 +9,6 @@
 import Foundation
 
 typealias SkillCreationFunction = (character: GameCharacter) -> Skill
-typealias SkillTargetFilterGenerator = (skill: Skill, battle: BattleModel) -> (Entity) -> Bool
-
-let skillTargetRow = { (skill : Skill, battle : BattleModel) -> (Entity) -> Bool  in
-    return { [unowned battle, unowned skill] g in
-        if g.characterComponent!.isDead { return false }
-        
-        let primaryIndex = battle.entityIndexes[skill.primaryTarget]
-        let currentIndex = battle.entityIndexes[g]
-        let modDifference = abs((primaryIndex! % 3) - (currentIndex! % 3))
-        
-        return modDifference == 0 && (primaryIndex != currentIndex)
-    }
-}
-
-let skillTargetNextInColumn = { (skill : Skill, battle : BattleModel) -> (Entity) -> Bool in
-    return { [unowned battle, unowned skill] g in
-        if g.characterComponent!.isDead { return false }
-        
-        let primaryIndex = battle.entityIndexes[skill.primaryTarget]
-        let currentIndex = battle.entityIndexes[g]
-        let difference = abs(primaryIndex! - currentIndex!)
-        let modDifference = abs((primaryIndex! % 3) - (currentIndex! % 3))
-        
-        return difference == 1 && modDifference == 1
-    }
-}
 
 let skillTargetNone = { (skill : Skill, battle : BattleModel) -> (Entity) -> Bool in
     return { guy in return false }
@@ -47,7 +21,6 @@ class SkillBuilder {
     }
     
     weak var character : GameCharacter! = nil
-    var targetFilterGenerator : SkillTargetFilterGenerator!
     var characterChangeVector : CharacterDescriptionVector!
     var name : String!
     var targetRules : RepeatableRuleSystem!
@@ -62,11 +35,6 @@ class SkillBuilder {
         return self
     }
     
-    func set(targetFilterGenerator : SkillTargetFilterGenerator) -> SkillBuilder {
-        self.targetFilterGenerator = targetFilterGenerator
-        return self
-    }
-    
     func set(characterChangeVector : CharacterDescriptionVector) -> SkillBuilder {
         self.characterChangeVector = characterChangeVector
         return self
@@ -78,10 +46,10 @@ class SkillBuilder {
     }
     
     func build() throws -> Skill {
-        guard let n = self.name, c = self.character, t = self.targetFilterGenerator, v = self.characterChangeVector, tr = self.targetRules else {
+        guard let n = self.name, c = self.character, v = self.characterChangeVector, tr = self.targetRules else {
             throw Error.BuildErrorUnsetValues
         }
         
-        return Skill(name: n, character: c, characterChangeVector: v, targetFilterCreator: t, targetSelectionRules: tr)
+        return Skill(name: n, character: c, characterChangeVector: v, targetSelectionRules: tr)
     }
 }
